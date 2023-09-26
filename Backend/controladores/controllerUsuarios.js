@@ -1,10 +1,10 @@
 import ServicioUsuario from "../servicios/usuarios.js";
 
-class ControladorUsuario{
+class ControllerUsuario{
 
     constructor(){
         this.servicioUsuario = new ServicioUsuario()
     }
 }
 
-export default ControladorUsuario
+export default ControllerUsuario
