@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({extended: true}));//para datos de formularios
 app.use(cors());
 
 
-const port = process.env.PORT || 5000;
+const port = process.env.MI_PUERTO || 5000;
 
 app.listen(port, () => {
     console.log(`Servidor escuchando en http://localhost:${port}`);
