@@ -1,6 +1,7 @@
 import express  from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import RouterUsuario from "./routers/usuarios.js";
 
 const app = express();
 // facilidad de usar json
@@ -9,6 +10,8 @@ app.use(bodyParser.urlencoded({extended: true}));//para datos de formularios
 
 //regula las solicitudes de un dominio diferente al servidor en el que se encuentra la app
 app.use(cors());
+
+app.use('/usuarios', new RouterUsuario().start())
 
 
 const port = process.env.MI_PUERTO || 5000;

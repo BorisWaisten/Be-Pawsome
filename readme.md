@@ -39,7 +39,7 @@ Be Pawsome es una aplicación web diseñada con el propósito de reducir la cant
 
 ## Ejecución del Proyecto
 
-1. **Iniciar el Servidor**: Ejecuta `npm start` en la carpeta del servidor.
+1. **Iniciar el Servidor**: Ejecuta `node main.js` en la carpeta del servidor.
 2. **Iniciar el Cliente**: Ejecuta `npm start` en la carpeta del cliente.
 
 ## Contribución
