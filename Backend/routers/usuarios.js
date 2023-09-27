@@ -1,5 +1,5 @@
 import  express  from "express";
-import ControladorUsuario from "../controladores/usuarios.js";
+import ControladorUsuario from "../controladores/controllerUsuarios.js";
 
 class RouterUsuario{
     constructor(){
