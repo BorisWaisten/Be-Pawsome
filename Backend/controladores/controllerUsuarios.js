@@ -10,10 +10,11 @@ class ControllerUsuario{
         const usuario = req.body
         try {
             const newUser = await this.servicioUsuario.register(usuario);
+            console.log(newUser + "controller");
             res.status(200).json(newUser);
         }
         catch (error) {
-          res.status(401).json(error.message);
+          res.status(401).json("controller "+error.message);
         }
       };
 }

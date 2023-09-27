@@ -1,0 +1,1 @@
+export default "./perfilDefault1.jpg";

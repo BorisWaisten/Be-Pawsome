@@ -1,4 +1,7 @@
 import ConexionMongo from "./conexionMongoDb.js";
+import Usuario from "../modelos/modeloUsuarios.js";
+import Default from "../recursosDefault/recursosDefault.js"
+import {DatabaseError} from "../errores.js";
 
 class RepositorioUser{
 
@@ -18,9 +21,31 @@ class RepositorioUser{
                 this.usuariosCollection = nuevaConexionMongo.usuariosColeccion();
             }
         }catch(error){
-            console.log(error);
+            throw new DatabaseError(error)
         }
     }
+
+    async registro(usuario){
+        try{
+            const newUser = new Usuario(usuario.nombre, usuario.apellido, usuario.mail, 
+                usuario.password,usuario.celular, usuario.localidad, usuario.provincia, usuario.nacionalidad, 
+                usuario.codigoPostal, Default.perfilDefault1, false);
+                await this.usuariosCollection.insertOne(newUser);
+            return newUser;
+        }catch(error){
+            throw new DatabaseError("Error al registrar usuario: " + error);
+        }
+    }
+
+    async buscarEmail(mail){
+        return await this.usuariosCollection.findOne({ mail: mail });
+    }
+
+
+    async buscarUsername(nombre,apellido){
+      return await this.usuariosCollection.findOne({ nombre: nombre, apellido: apellido });
+    }
+
 }
 
 export default RepositorioUser

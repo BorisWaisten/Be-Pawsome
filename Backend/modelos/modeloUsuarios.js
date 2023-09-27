@@ -1,8 +1,9 @@
 class Usuario {
-    constructor(nombre, apellido, mail, celular, localidad, provincia, nacionalidad, codigoPostal, imagenPerfil, esAdmin) {
+    constructor(nombre, apellido, mail,password , celular, localidad, provincia, nacionalidad, codigoPostal, imagenPerfil, esAdmin) {
       this.nombre = nombre;
       this.apellido = apellido;
       this.mail = mail;
+      this.password = password;
       this.celular = celular;
       this.localidad = localidad;
       this.provincia = provincia;
@@ -12,5 +13,4 @@ class Usuario {
       this.esAdmin = esAdmin;
     }
   }
-  
-  module.exports = Usuario;
+export default Usuario;

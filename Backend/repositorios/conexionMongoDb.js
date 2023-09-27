@@ -7,7 +7,7 @@ class ConexionMongo {
     }
 
     this.url =
-      'mongodb+srv://bepawsome:proyectbepawsome@cluster0.rk1ambn.mongodb.net/';
+      'mongodb+srv://bepawsome:proyectbepawsome@cluster0.rk1ambn.mongodb.net/bePawsome';
     ConexionMongo.instance = this;
     this.conectar();
   }
@@ -25,7 +25,7 @@ class ConexionMongo {
   }
 
   usuariosColeccion() {
-    this.usuariosDB = mongoose.connection.collection('usuarios');
+    this.usuariosDB = mongoose.connection.collection('Usuarios');
     return this.usuariosDB;
   }
 }
