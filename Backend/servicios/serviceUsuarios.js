@@ -12,16 +12,12 @@ class ServicioUsuario{
         try{
             UserRequest.validacionRegister(usuario)
             console.log("servicio1");
-            const validarEmail = await this.model.buscarEmail(usuario.email)
-            console.log("servicio1");
-            const validarUsername = await this.model.buscarUsername(usuario.nombre, usuario.apellido)
-            console.log("servicio1");
+            const validarEmail = await this.model.buscarEmail(usuario.mail)
+            console.log(validarEmail);
             if (validarEmail){
-              throw new InvalidCredentialsError("El email " + usuario.email + " ya se encuentra registrado!")
+              console.log("servicio2");
+              throw new InvalidCredentialsError("El email " + usuario.mail + " ya se encuentra registrado!")
             } 
-            if (validarUsername) {
-              throw new InvalidCredentialsError("El username " + usuario.nombre+" "+ usuario.apellido + " ya se encuentra registrado!")
-            }
             return  await this.model.registro(usuario)
           } catch (error) {
             throw error;
