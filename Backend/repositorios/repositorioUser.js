@@ -27,9 +27,12 @@ class RepositorioUser{
 
     async registro(usuario){
         try{
+            if(usuario.imagenPerfil === ""){
+                usuario.imagenPerfil = Default.perfilDefault1;
+            }
             const newUser = new Usuario(usuario.nombre, usuario.apellido, usuario.mail, 
                 usuario.password,usuario.celular, usuario.localidad, usuario.provincia, usuario.nacionalidad, 
-                usuario.codigoPostal, Default.perfilDefault1, false);
+                usuario.codigoPostal, usuario.imagenPerfil, false);
                 await this.usuariosCollection.insertOne(newUser);
             return newUser;
         }catch(error){
@@ -40,8 +43,7 @@ class RepositorioUser{
     async buscarEmail(mail){
         return await this.usuariosCollection.findOne({ mail: mail });
     }
-
-
+    
     async buscarUsername(nombre,apellido){
       return await this.usuariosCollection.findOne({ nombre: nombre, apellido: apellido });
     }
