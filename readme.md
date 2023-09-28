@@ -25,7 +25,7 @@ Be Pawsome es una aplicación web diseñada con el propósito de reducir la cant
 ## Tecnologías Utilizadas
 
 - **Frontend**: HTML, CSS, JavaScript,Axios.js, Vue.js
-- **Backend**: Node.js, Express.js
+- **Backend**: Node.js,Express.js,Body-Parser,Cors,Joi
 - **Base de Datos**: MongoDB (No Relacional)
 - **Autenticación**: JWT (JSON Web Tokens)
 - **Almacenamiento de Imágenes**: Almacenamiento en la nube (por ejemplo, AWS S3 o Firebase Storage)
@@ -34,13 +34,13 @@ Be Pawsome es una aplicación web diseñada con el propósito de reducir la cant
 ## Configuración del Proyecto
 
 1. **Clonar el Repositorio**: `git clone https://github.com/BorisWaisten/Be-Pawsome`
-2. **Instalar Dependencias**: `npm install` en la carpeta raíz del proyecto y también en la carpeta del cliente (si es un proyecto con estructura cliente-servidor).
+2. **Instalar Dependencias**: Ingresar a la carpeta Backend: `npm install`; Ingresar a la carpeta Frontend:`npm install` 
 3. **Configurar Variables de Entorno**: Crea un archivo `.env` para configurar las variables de entorno necesarias (por ejemplo, las credenciales de la base de datos, la clave secreta JWT, etc.).
 
 ## Ejecución del Proyecto
 
-1. **Iniciar el Servidor**: Ejecuta `node main.js` en la carpeta del servidor.
-2. **Iniciar el Cliente**: Ejecuta `npm start` en la carpeta del cliente.
+1. **Iniciar el Backend**: Ejecuta `npm start` en la carpeta del Backend.
+2. **Iniciar el Frontend**: Ejecuta `no realizado` en la carpeta del Frontend.
 
 ## Contribución
 
