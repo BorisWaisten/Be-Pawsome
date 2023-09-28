@@ -11,11 +11,9 @@ class ServicioUsuario{
     register = async (usuario) =>{
         try{
             UserRequest.validacionRegister(usuario)
-            console.log("servicio1");
             const validarEmail = await this.model.buscarEmail(usuario.mail)
             console.log(validarEmail);
             if (validarEmail){
-              console.log("servicio2");
               throw new InvalidCredentialsError("El email " + usuario.mail + " ya se encuentra registrado!")
             } 
             return  await this.model.registro(usuario)
