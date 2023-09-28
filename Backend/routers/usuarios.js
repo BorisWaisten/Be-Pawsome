@@ -10,7 +10,7 @@ class RouterUsuario{
     start(){
         this.router.post("/register", this.controlador.register);
         //this.router.get('/register',this.controlador.getRegister);
-       // this.router.post("/login", this.controlador.login);
+        this.router.post("/login", this.controlador.login);
         //this.router.post("/logout", this.controlador.logout);
         return this.router
     }

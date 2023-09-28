@@ -17,4 +17,13 @@ const validacionRegister = usuario => {
     if (error) throw new ValidateError(error.details[0].message);
 }
 
-export default {validacionRegister}
+const validacionLogin = usuario => {
+    const usuarioSchema = Joi.object({
+        mail: Joi.string().email().required(),
+        password: Joi.string().required()
+    })
+    const { error } = usuarioSchema.validate(usuario);
+    if (error) throw new ValidateError(error.details[0].message);
+}
+
+export default {validacionRegister,validacionLogin}

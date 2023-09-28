@@ -39,6 +39,19 @@ class RepositorioUser{
         }
     }
 
+    async login(usuario){
+        try{
+            const user = await this.usuariosCollection.findOne({ mail: usuario.mail});
+            if(user.password === usuario.password){
+                return user;
+            }else{
+                throw new DatabaseError("Contraseña incorrecta");
+            }
+        }catch(error){
+            throw new DatabaseError("Error al loguear usuario: " + error);
+        }
+    }
+
     async buscarEmail(mail){
         return await this.usuariosCollection.findOne({ mail: mail });
     }
