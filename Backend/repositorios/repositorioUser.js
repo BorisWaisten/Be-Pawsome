@@ -2,9 +2,6 @@ import ConexionMongo from "./conexionMongoDb.js";
 import Usuario from "../modelos/modeloUsuarios.js";
 import {DatabaseError} from "../errores.js";
 
-
-
-
 class RepositorioUser{
 
     constructor(){

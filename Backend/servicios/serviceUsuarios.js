@@ -3,7 +3,6 @@ import UserRequest from "../validacionRequest/userRequest.js";
 import { InvalidCredentialsError } from "../errores.js";
 import bcrypt from 'bcrypt'
 
-
 class ServicioUsuario{
 
     constructor(){

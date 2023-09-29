@@ -1,16 +1,21 @@
 import express from "express";
-import ControladorPublicacion from "../controladores/controllerPublicacion.js";
+import ControllerPublicacion from "../controladores/controllerPublicacion.js";
+import ServicioPublicacion from "../servicios/servicePublicacion.js";
 
-class RouterPublicacion{
-    constructor(){
-        this.router = express.Router();
-        this.controlador = new ControladorPublicacion();
-    }
+class RouterPublicacion {
+  constructor() {
+    this.router = express.Router();
+    this.controlador = new ControllerPublicacion();
+    this.servicioPublicacion = new ServicioPublicacion();
+  }
 
-    start(){
-        this.router.post("/anotacion", this.controlador.anotacion);
-        //this.router.get('/register',this.controlador.getRegister);
-        return this.router
-    }
-
+  start() {
+    this.router.post("/crear", this.controlador.crearPublicacion);
+    this.router.get("/obtener/:id", this.controlador.obtenerPublicacion);
+    this.router.put("/actualizar/:id", this.controlador.actualizarPublicacion);
+    this.router.delete("/eliminar/:id", this.controlador.eliminarPublicacion);
+    return this.router;
+  }
 }
+
+export default RouterPublicacion;
