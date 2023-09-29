@@ -6,7 +6,7 @@ const ESTADOPUBLICACION = {
   
   class Publicacion {
     constructor(titulo, idUsuario, idAnimal, idPublicacion) {
-      this.fechaCreacion = new Date().getDate() + "/" + new Date().getMonth() + "/" + new Date().getFullYear();
+      this.fechaCreacion = new Date();
       this.fechaCaducidad = this.calcularFechaCaducidad();
       this.estadoPublicacion = ESTADOPUBLICACION.ACTIVA;
       this.titulo = titulo;
@@ -17,7 +17,7 @@ const ESTADOPUBLICACION = {
     
     calcularFechaCaducidad() {
       const fechaCreacion = new Date(this.fechaCreacion);
-      fechaCreacion.setDate(fechaCreacion.getDate() + 1);// Agrega 90 días a la fecha de creación
+      fechaCreacion.setDate(fechaCreacion.getDate() + 90);// Agrega 90 días a la fecha de creación
       return fechaCreacion;
     }
 

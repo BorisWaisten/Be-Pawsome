@@ -4,6 +4,7 @@ import {DatabaseError} from "../errores.js";
 
 
 
+
 class RepositorioUser{
 
     constructor(){
@@ -42,11 +43,7 @@ class RepositorioUser{
     async login(usuario){
         try{
             const user = await this.usuariosCollection.findOne({ mail: usuario.mail});
-            if(user.password === usuario.password){
-                return user;
-            }else{
-                throw new DatabaseError("Contraseña incorrecta");
-            }
+            return user;
         }catch(error){
             throw new DatabaseError("Error al loguear usuario: " + error);
         }
