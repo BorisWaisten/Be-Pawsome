@@ -18,7 +18,7 @@ app.use(cors());
 
 app.use('/usuarios', new RouterUsuario().start())
 app.use('/publicacion', new RouterPublicacion().start())
-//app.use('/casita', new RouterCasita().start())
+app.use('/casita', new RouterCasita().start())
 app.use('/adopcion', new RouterAdopcion().start())
 app.use('/animal', new RouterAnimal().start())
 
