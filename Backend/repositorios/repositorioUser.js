@@ -2,7 +2,10 @@ import ConexionMongo from "./conexionMongoDb.js";
 import Usuario from "../modelos/modeloUsuarios.js";
 import {DatabaseError} from "../errores.js";
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> boris
 class RepositorioUser{
 
     constructor(){
@@ -41,7 +44,19 @@ class RepositorioUser{
         }
     }
 
+<<<<<<< HEAD
     
+=======
+    async login(usuario){
+        try{
+            const user = await this.usuariosCollection.findOne({ mail: usuario.mail});
+            return user;
+        }catch(error){
+            throw new DatabaseError("Error al loguear usuario: " + error);
+        }
+    }
+
+>>>>>>> boris
     async buscarEmail(mail){
         return await this.usuariosCollection.findOne({ mail: mail });
     }
