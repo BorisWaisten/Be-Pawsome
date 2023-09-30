@@ -23,4 +23,4 @@
     PEZ: 'PEZ',
   };
   
-  export default { Animal, TIPOANIMAL}
+  export default Animal

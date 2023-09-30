@@ -22,4 +22,4 @@ const ESTADOPUBLICACION = {
 
   }
   
-  export default { Publicacion, ESTADOPUBLICACION };
+  export default Publicacion;
