@@ -5,7 +5,7 @@ const ESTADOPUBLICACION = {
   };
   
   class Publicacion {
-    constructor(titulo, idUsuario, idAnimal, idPublicacion) {
+    constructor(titulo, idUsuario, idAnimal) {
       this.fechaCreacion = new Date();
       this.fechaCaducidad = this.calcularFechaCaducidad();
       this.estadoPublicacion = ESTADOPUBLICACION.ACTIVA;

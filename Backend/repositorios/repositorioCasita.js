@@ -22,6 +22,14 @@ class RepositorioCasita {
     }
   }
 
+  async getAllPublicaciones() {
+    try {
+      return await this.casitaCollection.find({}).toArray();
+    } catch (error) {
+      throw new DatabaseError("Error al obtener publicaciones de Casita: " + error.message);
+    }
+  }
+
   async agregarPublicacion(idPublicacion) {
     try {
       await this.casitaCollection.insertOne({ publicacionId: idPublicacion });

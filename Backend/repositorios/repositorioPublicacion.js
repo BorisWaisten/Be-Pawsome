@@ -29,11 +29,8 @@ class RepositorioPublicacion {
         publicacion.titulo,
         publicacion.idUsuario,
         publicacion.idAnimal,
-        publicacion.idPublicacion
       );
-
-      await this.publicacionesCollection.insertOne(nuevaPublicacion);
-      return nuevaPublicacion;
+      return await this.publicacionesCollection.insertOne(nuevaPublicacion);
     } catch (error) {
       throw new DatabaseError("Error al crear publicación: " + error);
     }
@@ -54,8 +51,7 @@ class RepositorioPublicacion {
 
   async eliminarPublicacion(id) {
     try {
-      const publicacionEliminada = await this.obtenerPublicacionPorId(id);
-      await this.publicacionesCollection.deleteOne({ _id: id });
+      const publicacionEliminada = await this.publicacionesCollection.deleteOne({ _id: id });
       return publicacionEliminada;
     } catch (error) {
       throw new DatabaseError("Error al eliminar publicación: " + error);

@@ -6,6 +6,11 @@ class ControladorCasita {
     this.servicioCasita = new ServicioCasita();
   }
 
+
+  getAllPublicaciones = (req, res) => {
+    res.status(200).json(this.servicioCasita.getAllPublicaciones());
+  }
+
   agregarPublicacion = (req, res) => {
     try {
       const idPublicacion = req.params.idPublicacion;

@@ -5,6 +5,9 @@ class ServicioCasita {
     this.repositorio = new RepositorioCasita();
   }
 
+  async getAllPublicaciones() {
+    return await this.repositorio.getAllPublicaciones();
+  }
   async agregarPublicacion(idPublicacion) {
     try {
       await this.repositorio.agregarPublicacion(idPublicacion);

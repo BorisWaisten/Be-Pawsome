@@ -35,7 +35,6 @@ class RepositorioAnimal {
         animal.pesoEnKg,
         animal.ubicacion,
         animal.oferente,
-        animal.adoptante,
         animal.historiaClinica
       );
 

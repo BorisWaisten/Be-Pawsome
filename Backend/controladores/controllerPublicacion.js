@@ -11,7 +11,6 @@ class ControllerPublicacion {
       titulo: req.body.titulo,
       idUsuario: req.body.idUsuario,
       idAnimal: req.body.idAnimal,
-      idPublicacion: req.body.idPublicacion,
     };
 
     try {
