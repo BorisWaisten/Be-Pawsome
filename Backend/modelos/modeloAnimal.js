@@ -23,4 +23,4 @@
     PEZ: 'PEZ',
   };
   
-  module.exports = { Animal, TIPOANIMAL };
+  export default { Animal, TIPOANIMAL}

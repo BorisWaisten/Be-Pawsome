@@ -4,7 +4,7 @@ import { DatabaseError } from "../errores.js";
 
 class RepositorioAnimal {
   constructor() {
-    this.animalesCollection = null;
+    this.animalesCollectiones = null;
     this.init();
   }
 
@@ -12,11 +12,11 @@ class RepositorioAnimal {
     try {
       const conexionMongo = ConexionMongo.instance;
       if (conexionMongo) {
-        this.animalesCollection = await conexionMongo.animalesColeccion();
+        this.animalesCollection = await conexionMongo.AnimalesColeccion();
       } else {
         const nuevaConexionMongo = new ConexionMongo();
         await nuevaConexionMongo.conectar();
-        this.animalesCollection = nuevaConexionMongo.animalesColeccion();
+        this.animalesCollection = nuevaConexionMongo.AnimalesColeccion(); 
       }
     } catch (error) {
       throw new DatabaseError(error);

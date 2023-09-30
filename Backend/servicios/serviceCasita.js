@@ -1,4 +1,4 @@
-const RepositorioCasita = require("../repositorios/repositorioCasita.js");
+import RepositorioCasita from "../repositorios/repositorioCasita.js";
 
 class ServicioCasita {
   constructor() {
@@ -30,4 +30,4 @@ class ServicioCasita {
   }
 }
 
-module.exports = ServicioCasita;
+export default ServicioCasita

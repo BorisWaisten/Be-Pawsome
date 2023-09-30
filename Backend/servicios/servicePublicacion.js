@@ -1,5 +1,7 @@
 import PublicacionRepository from "../repositorios/repositorioPublicacion.js";
 import { PublicacionRequestError } from "../errores.js";
+import { ObjectId } from 'mongodb';
+
 
 class ServicioPublicacion {
   constructor() {
@@ -17,18 +19,22 @@ class ServicioPublicacion {
 
   async obtenerPublicacionPorId(idPublicacion) {
     try {
-      const publicacion = await this.repository.obtenerPublicacionPorId(idPublicacion);
+      const id = new ObjectId(idPublicacion);
+      const publicacion = await this.repository.obtenerPublicacionPorId(id);
       if (!publicacion) {
         throw new PublicacionRequestError(`Publicación con ID ${idPublicacion} no encontrada`);
       }
       return publicacion;
     } catch (error) {
-      throw new PublicacionRequestError("Error al obtener publicación: " + error.message);
+      return error
     }
   }
 
   async actualizarPublicacion(idPublicacion, nuevosDatos) {
     try {
+
+      Val
+
       const publicacionActualizada = await this.repository.actualizarPublicacion(idPublicacion, nuevosDatos);
       return publicacionActualizada;
     } catch (error) {

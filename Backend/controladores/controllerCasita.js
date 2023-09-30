@@ -1,5 +1,5 @@
-const ServicioCasita = require("../servicios/serviceCasita.js");
-const { CasitaRequestError } = require("../errores.js");
+import ServicioCasita from "../servicios/serviceCasita.js"
+import CasitaRequestError from "../errores.js"
 
 class ControladorCasita {
   constructor() {
@@ -37,4 +37,4 @@ class ControladorCasita {
   };
 }
 
-module.exports = ControladorCasita;
+export default ControladorCasita;

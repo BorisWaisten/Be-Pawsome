@@ -12,11 +12,11 @@ class RepositorioPublicacion {
     try {
       const conexionMongo = ConexionMongo.instance;
       if (conexionMongo) {
-        this.publicacionesCollection = await conexionMongo.publicacionesColeccion();
+        this.publicacionesCollection = await conexionMongo.PublicacionesColeccion();
       } else {
         const nuevaConexionMongo = new ConexionMongo();
         await nuevaConexionMongo.conectar();
-        this.publicacionesCollection = nuevaConexionMongo.publicacionesColeccion();
+        this.publicacionesCollection = nuevaConexionMongo.PublicacionesColeccion();
       }
     } catch (error) {
       throw new DatabaseError(error);
