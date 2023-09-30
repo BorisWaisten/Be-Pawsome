@@ -1,5 +1,4 @@
 import ServicioAnimal from "../servicios/serviceAnimal.js";
-import { AnimalRequestError, AnimalNotFoundError } from "../errores.js";
 
 class ControllerAnimal {
   constructor() {
@@ -17,7 +16,6 @@ class ControllerAnimal {
       pesoEnKg: req.body.pesoEnKg,
       ubicacion: req.body.ubicacion,
       oferente: req.body.oferente,
-      adoptante: req.body.adoptante,
       historiaClinica: req.body.historiaClinica,
     };
 
@@ -33,9 +31,6 @@ class ControllerAnimal {
     const idAnimal = req.params.id;
     try {
       const animal = await this.servicioAnimal.obtenerAnimalPorId(idAnimal);
-      if (!animal) {
-        throw new AnimalNotFoundError(`Animal con ID ${idAnimal} no encontrado`);
-      }
       res.status(200).json(animal);
     } catch (error) {
       res.status(404).json(error.message);
@@ -57,9 +52,6 @@ class ControllerAnimal {
     const idAnimal = req.params.id;
     try {
       const animalEliminado = await this.servicioAnimal.eliminarAnimal(idAnimal);
-      if (!animalEliminado) {
-        throw new AnimalNotFoundError(`Animal con ID ${idAnimal} no encontrado`);
-      }
       res.status(200).json(animalEliminado);
     } catch (error) {
       res.status(404).json(error.message);

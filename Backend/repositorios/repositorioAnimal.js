@@ -35,10 +35,8 @@ class RepositorioAnimal {
         animal.pesoEnKg,
         animal.ubicacion,
         animal.oferente,
-        animal.adoptante,
         animal.historiaClinica
       );
-
       await this.animalesCollection.insertOne(nuevoAnimal);
       return nuevoAnimal;
     } catch (error) {
@@ -47,7 +45,15 @@ class RepositorioAnimal {
   }
 
   async obtenerAnimalPorId(id) {
-    return await this.animalesCollection.findOne({ _id: id });
+    try{
+    const animal = await this.animalesCollection.findOne({ _id: id });
+    return animal;  
+    } catch (error){
+      throw new DatabaseError("Error no existe el ID: " + error);
+  }
+ 
+  
+  
   }
 
   async actualizarAnimal(id, nuevosDatos) {
