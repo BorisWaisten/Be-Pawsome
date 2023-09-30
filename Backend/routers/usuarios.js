@@ -21,7 +21,7 @@ class RouterUsuario {
     try {
       const decoded = jwt.verify(token, SECRET_KEY);
       req.user = decoded;
-      next();
+      next();// Continuar la ejecución del controlador
     } catch (error) {
       return res.status(401).json({ mensaje: 'Token no válido.' });
     }

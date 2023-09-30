@@ -54,6 +54,7 @@ export class AdopcionNotFoundError extends Error{
     }
 }
 
+
 export class AnimalRequestError extends Error{
     constructor(message) {
         super(message);
