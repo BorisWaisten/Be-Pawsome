@@ -17,5 +17,5 @@ class Casita {
     }
   }
   
-  module.exports = Casita;
+  export default Casita;
   

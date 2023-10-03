@@ -4,7 +4,7 @@ import { DatabaseError } from "../errores.js";
 
 class RepositorioAnimal {
   constructor() {
-    this.animalesCollection = null;
+    this.animalesCollectiones = null;
     this.init();
   }
 
@@ -12,11 +12,11 @@ class RepositorioAnimal {
     try {
       const conexionMongo = ConexionMongo.instance;
       if (conexionMongo) {
-        this.animalesCollection = await conexionMongo.animalesColeccion();
+        this.animalesCollection = await conexionMongo.AnimalesColeccion();
       } else {
         const nuevaConexionMongo = new ConexionMongo();
         await nuevaConexionMongo.conectar();
-        this.animalesCollection = nuevaConexionMongo.animalesColeccion();
+        this.animalesCollection = nuevaConexionMongo.AnimalesColeccion(); 
       }
     } catch (error) {
       throw new DatabaseError(error);
@@ -35,10 +35,8 @@ class RepositorioAnimal {
         animal.pesoEnKg,
         animal.ubicacion,
         animal.oferente,
-        animal.adoptante,
         animal.historiaClinica
       );
-
       await this.animalesCollection.insertOne(nuevoAnimal);
       return nuevoAnimal;
     } catch (error) {
@@ -47,7 +45,15 @@ class RepositorioAnimal {
   }
 
   async obtenerAnimalPorId(id) {
-    return await this.animalesCollection.findOne({ _id: id });
+    try{
+    const animal = await this.animalesCollection.findOne({ _id: id });
+    return animal;  
+    } catch (error){
+      throw new DatabaseError("Error no existe el ID: " + error);
+  }
+ 
+  
+  
   }
 
   async actualizarAnimal(id, nuevosDatos) {

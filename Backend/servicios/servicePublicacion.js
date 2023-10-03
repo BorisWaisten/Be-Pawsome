@@ -1,5 +1,8 @@
 import PublicacionRepository from "../repositorios/repositorioPublicacion.js";
-import { PublicacionRequestError } from "../errores.js";
+import { PublicacionRequestError} from "../errores.js";
+import PublicRequest from "../validacionRequest/publicRequest.js"
+import { ObjectId } from 'mongodb';
+
 
 class ServicioPublicacion {
   constructor() {
@@ -8,28 +11,31 @@ class ServicioPublicacion {
 
   async crearPublicacion(publicacion) {
     try {
-      const nuevaPublicacion = await this.repository.crearPublicacion(publicacion);
-      return nuevaPublicacion;
+      PublicRequest.validacionPublicacion(publicacion);      
+      return await this.repository.crearPublicacion(publicacion);
     } catch (error) {
       throw new PublicacionRequestError("Error al crear publicación: " + error.message);
     }
   }
 
   async obtenerPublicacionPorId(idPublicacion) {
+    const id = new ObjectId(idPublicacion);
     try {
-      const publicacion = await this.repository.obtenerPublicacionPorId(idPublicacion);
+      const publicacion = await this.repository.obtenerPublicacionPorId(id);
       if (!publicacion) {
         throw new PublicacionRequestError(`Publicación con ID ${idPublicacion} no encontrada`);
       }
       return publicacion;
     } catch (error) {
-      throw new PublicacionRequestError("Error al obtener publicación: " + error.message);
+      return error
     }
   }
 
   async actualizarPublicacion(idPublicacion, nuevosDatos) {
+    const id = new ObjectId(idPublicacion);
     try {
-      const publicacionActualizada = await this.repository.actualizarPublicacion(idPublicacion, nuevosDatos);
+      PublicRequest.validacionPublicacion(nuevosDatos);
+      const publicacionActualizada = await this.repository.actualizarPublicacion(id, nuevosDatos);
       return publicacionActualizada;
     } catch (error) {
       throw new PublicacionRequestError("Error al actualizar publicación: " + error.message);
@@ -37,8 +43,9 @@ class ServicioPublicacion {
   }
 
   async eliminarPublicacion(idPublicacion) {
+    const id = new ObjectId(idPublicacion);
     try {
-      const publicacionEliminada = await this.repository.eliminarPublicacion(idPublicacion);
+      const publicacionEliminada = await this.repository.eliminarPublicacion(id);
       if (!publicacionEliminada) {
         throw new PublicacionRequestError(`Publicación con ID ${idPublicacion} no encontrada`);
       }

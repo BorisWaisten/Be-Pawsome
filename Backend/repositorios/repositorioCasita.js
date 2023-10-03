@@ -11,14 +11,22 @@ class RepositorioCasita {
     try {
       const conexionMongo = ConexionMongo.instance;
       if (conexionMongo) {
-        this.casitaCollection = await conexionMongo.casitaColeccion();
+        this.casitaCollection = await conexionMongo.CasitaColeccion();
       } else {
         const nuevaConexionMongo = new ConexionMongo();
         await nuevaConexionMongo.conectar();
-        this.casitaCollection = nuevaConexionMongo.casitaColeccion();
+        this.casitaCollection = nuevaConexionMongo.CasitaColeccion();
       }
     } catch (error) {
       throw new DatabaseError(error);
+    }
+  }
+
+  async getAllPublicaciones() {
+    try {
+      return await this.casitaCollection.find({}).toArray();
+    } catch (error) {
+      throw new DatabaseError("Error al obtener publicaciones de Casita: " + error.message);
     }
   }
 

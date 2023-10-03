@@ -12,11 +12,11 @@ class RepositorioPublicacion {
     try {
       const conexionMongo = ConexionMongo.instance;
       if (conexionMongo) {
-        this.publicacionesCollection = await conexionMongo.publicacionesColeccion();
+        this.publicacionesCollection = await conexionMongo.PublicacionesColeccion();
       } else {
         const nuevaConexionMongo = new ConexionMongo();
         await nuevaConexionMongo.conectar();
-        this.publicacionesCollection = nuevaConexionMongo.publicacionesColeccion();
+        this.publicacionesCollection = nuevaConexionMongo.PublicacionesColeccion();
       }
     } catch (error) {
       throw new DatabaseError(error);
@@ -29,11 +29,9 @@ class RepositorioPublicacion {
         publicacion.titulo,
         publicacion.idUsuario,
         publicacion.idAnimal,
-        publicacion.idPublicacion
       );
-
-      await this.publicacionesCollection.insertOne(nuevaPublicacion);
-      return nuevaPublicacion;
+       await this.publicacionesCollection.insertOne(nuevaPublicacion);
+      return nuevaPublicacion; 
     } catch (error) {
       throw new DatabaseError("Error al crear publicación: " + error);
     }
@@ -54,8 +52,7 @@ class RepositorioPublicacion {
 
   async eliminarPublicacion(id) {
     try {
-      const publicacionEliminada = await this.obtenerPublicacionPorId(id);
-      await this.publicacionesCollection.deleteOne({ _id: id });
+      const publicacionEliminada = await this.publicacionesCollection.deleteOne({ _id: id });
       return publicacionEliminada;
     } catch (error) {
       throw new DatabaseError("Error al eliminar publicación: " + error);

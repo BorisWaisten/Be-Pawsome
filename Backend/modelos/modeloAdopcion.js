@@ -8,4 +8,4 @@ class Adopcion {
     }
   }
 
-module.exports = { Adopcion };
+export default  Adopcion 

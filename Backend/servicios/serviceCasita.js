@@ -1,10 +1,13 @@
-const RepositorioCasita = require("../repositorios/repositorioCasita.js");
+import RepositorioCasita from "../repositorios/repositorioCasita.js";
 
 class ServicioCasita {
   constructor() {
     this.repositorio = new RepositorioCasita();
   }
 
+  async getAllPublicaciones() {
+    return await this.repositorio.getAllPublicaciones();
+  }
   async agregarPublicacion(idPublicacion) {
     try {
       await this.repositorio.agregarPublicacion(idPublicacion);
@@ -30,4 +33,4 @@ class ServicioCasita {
   }
 }
 
-module.exports = ServicioCasita;
+export default ServicioCasita

@@ -5,14 +5,13 @@ const ESTADOPUBLICACION = {
   };
   
   class Publicacion {
-    constructor(titulo, idUsuario, idAnimal, idPublicacion) {
+    constructor(titulo, idUsuario, idAnimal) {
       this.fechaCreacion = new Date();
       this.fechaCaducidad = this.calcularFechaCaducidad();
       this.estadoPublicacion = ESTADOPUBLICACION.ACTIVA;
       this.titulo = titulo;
       this.idUsuario = idUsuario;
       this.idAnimal = idAnimal;
-      this.idPublicacion = idPublicacion;
     }
     
     calcularFechaCaducidad() {
@@ -21,14 +20,6 @@ const ESTADOPUBLICACION = {
       return fechaCreacion;
     }
 
-    getEstadoCaducidad(){
-      const fechaActual=new Date()
-      if(fechaActual>=this.fechaCaducidad){
-        estado=ESTADOPUBLICACION.CADUCADA
-      }
-      return estado
-    }
-
   }
   
-  module.exports = { Publicacion, ESTADOPUBLICACION };
+  export default Publicacion;

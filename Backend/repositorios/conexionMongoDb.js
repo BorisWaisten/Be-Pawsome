@@ -28,6 +28,28 @@ class ConexionMongo {
     this.usuariosDB = mongoose.connection.collection('Usuarios');
     return this.usuariosDB;
   }
+
+  AnimalesColeccion() {
+    this.animalesDB = mongoose.connection.collection('Animales');
+    return this.animalesDB;
+  }
+  
+  PublicacionesColeccion() {
+    this.publicacionesDB = mongoose.connection.collection('Publicaciones');
+    return this.publicacionesDB;
+  }
+
+  CasitaColeccion() {
+    this.casitaDB = mongoose.connection.collection('Casita');
+    return this.casitaDB;
+  }
+
+  AdopcionesColeccion() {
+    this.adopcionesDB = mongoose.connection.collection('Adopciones');
+    return this.adopcionesDB;
+  }
+
+
 }
 
 export default ConexionMongo;

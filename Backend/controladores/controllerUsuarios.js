@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 const SECRET_KEY = 'secretkey123';
 
+
 class ControllerUsuario{
 
     constructor(){
@@ -32,6 +33,7 @@ class ControllerUsuario{
             );
 
             const dataUser = {
+              id: user._id,
               name: user.nombre,
               apellido: user.apellido,
               mail: user.mail,

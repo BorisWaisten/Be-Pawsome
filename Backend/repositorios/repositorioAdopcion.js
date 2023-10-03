@@ -12,11 +12,11 @@ class RepositorioAdopcion {
     try {
       const conexionMongo = ConexionMongo.instance;
       if (conexionMongo) {
-        this.adopcionesCollection = await conexionMongo.adopcionesColeccion();
+        this.adopcionesCollection = await conexionMongo.AdopcionesColeccion();
       } else {
         const nuevaConexionMongo = new ConexionMongo();
         await nuevaConexionMongo.conectar();
-        this.adopcionesCollection = nuevaConexionMongo.adopcionesColeccion();
+        this.adopcionesCollection = nuevaConexionMongo.AdopcionesColeccion();
       }
     } catch (error) {
       throw new DatabaseError(error);

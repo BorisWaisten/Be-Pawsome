@@ -1,5 +1,5 @@
-const express = require("express");
-const ControladorCasita = require("../controladores/controladorCasita.js");
+import express from "express";
+import ControladorCasita from "../controladores/controllerCasita.js";
 
 class RouterCasita {
   constructor() {
@@ -15,4 +15,4 @@ class RouterCasita {
   }
 }
 
-module.exports = RouterCasita;
+export default RouterCasita;
