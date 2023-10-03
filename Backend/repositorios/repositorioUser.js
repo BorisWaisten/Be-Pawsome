@@ -26,9 +26,12 @@ class RepositorioUser{
 
     async registro(usuario){
         try{
-            const newUser = new Usuario(usuario.nombre, usuario.apellido, usuario.mail, 
-                usuario.password,usuario.celular, usuario.localidad, usuario.provincia, usuario.nacionalidad, 
-                usuario.codigoPostal);
+            const newUser = new Usuario(
+                usuario.nombre, usuario.apellido, usuario.mail, 
+                usuario.password,usuario.celular, 
+                usuario.localidad, usuario.provincia, 
+                usuario.nacionalidad,usuario.codigoPostal)
+                ;
                 await this.usuariosCollection.insertOne(newUser);
             return newUser;
         }catch(error){

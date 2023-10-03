@@ -30,7 +30,8 @@ class RepositorioPublicacion {
         publicacion.idUsuario,
         publicacion.idAnimal,
       );
-      return await this.publicacionesCollection.insertOne(nuevaPublicacion);
+       await this.publicacionesCollection.insertOne(nuevaPublicacion);
+      return nuevaPublicacion; 
     } catch (error) {
       throw new DatabaseError("Error al crear publicación: " + error);
     }
