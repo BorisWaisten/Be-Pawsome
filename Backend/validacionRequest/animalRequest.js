@@ -6,7 +6,7 @@ const validacionAnimal = animal => {
         nombre: Joi.string().required(),
         fotos: Joi.array().items(Joi.string()).required(),
         edad: Joi.number().integer().required(),
-        tipoAnimal: Joi.string().valid('PERRO', 'GATO', 'CONEJO', 'REPTIL', 'VACA', 'PEZ').required(),
+        tipoAnimal: Joi.string().valid('PERRO', 'GATO', 'CONEJO', 'REPTIL', 'VACA', 'PEZ').insensitive().required(),
         descripcion: Joi.string().required(),
         sexo: Joi.string().required(),
         pesoEnKg: Joi.number().required(),
@@ -15,7 +15,7 @@ const validacionAnimal = animal => {
         historiaClinica: Joi.string().required()
     });
 
-    const { error } = AnimalSchema.validate(animal);
+    const { error } = AnimalSchema.validate(animal, { allowUnknown: true });
     if (error) throw new ValidateError(error.details[0].message);
 }
 

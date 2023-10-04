@@ -33,7 +33,6 @@ class ControllerUsuario{
             );
 
             const dataUser = {
-              id: user._id,
               name: user.nombre,
               apellido: user.apellido,
               mail: user.mail,

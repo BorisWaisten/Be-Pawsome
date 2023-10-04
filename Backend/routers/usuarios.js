@@ -28,6 +28,8 @@ class RouterUsuario {
   }
 
   start() {
+    // rutas de usuario en base a las peticiones que se realicen en el frontend
+
     this.router.post("/register",this.controlador.register);
     this.router.post("/login", this.controlador.login);
     this.router.get("/:id", this.controlador.obtenerUsuario);
