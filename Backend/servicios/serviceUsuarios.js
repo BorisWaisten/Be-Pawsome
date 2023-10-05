@@ -58,10 +58,12 @@ class ServicioUsuario{
       }
     }
 
-    savePassword = async (user, newPassword) => {
+    savePassword = async (mail, newPassword) => {
       try {
+        console.log(newPassword + "1");
         //aca deberiamos llamar al modelo para guardar la password
-        const user = this.model.savePassword(mail, newPassword);
+        const passwordEncrypted = await bcrypt.hash(newPassword, 10);
+        const user = await this.model.savePassword(mail, passwordEncrypted);
         return user;
       } catch (error) {
         throw error;
