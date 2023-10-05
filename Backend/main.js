@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({extended: true}));//para datos de formularios
 //regula las solicitudes de un dominio diferente al servidor en el que se encuentra la app
 app.use(cors());
 
+// router de conexion a la base de datos
 app.use('/usuarios', new RouterUsuario().start())
 app.use('/publicacion', new RouterPublicacion().start())
 app.use('/casita', new RouterCasita().start())

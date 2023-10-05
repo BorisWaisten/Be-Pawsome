@@ -28,8 +28,14 @@ class RouterUsuario {
   }
 
   start() {
+    // rutas de usuario en base a las peticiones que se realicen en el frontend
+
     this.router.post("/register",this.controlador.register);
     this.router.post("/login", this.controlador.login);
+    this.router.get("/:id", this.controlador.obtenerUsuario);
+    this.router.put("/:id", this.controlador.editarUsuario);
+    this.router.delete("/:id", this.controlador.eliminarUsuario);
+    this.router.post("/recuperarContrasenia", this.controlador.recuperarContrasenia);
     this.router.post('/changePassword', this.controlador.changePassword)
     //posibles rutas que requieren autenticación
     // this.router.post("/perfil", this.verificarToken, this.controlador.obtenerPerfil);

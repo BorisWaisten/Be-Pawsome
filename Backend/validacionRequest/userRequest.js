@@ -27,4 +27,21 @@ const validacionLogin = usuario => {
     if (error) throw new ValidateError(error.details[0].message);
 }
 
-export default {validacionRegister,validacionLogin}
+const validacionEdit = usuario => {
+    const usuarioSchema = Joi.object({
+        nombre: Joi.string().allow(''),
+        apellido: Joi.string().allow(''),
+        mail: Joi.string().email().allow(''),
+        password: Joi.string().allow(''),
+        celular: Joi.number().allow(''),
+        localidad: Joi.string().allow(''),
+        provincia: Joi.string().allow(''),
+        nacionalidad: Joi.string().allow(''),
+        codigoPostal: Joi.string().allow('')
+    }).or('nombre', 'apellido', 'mail', 'password', 'celular', 'localidad', 'provincia', 'nacionalidad', 'codigoPostal');
+
+    const { error } = usuarioSchema.validate(usuario);
+    if (error) throw new ValidateError(error.details[0].message);
+}
+
+export default {validacionRegister,validacionLogin,validacionEdit}

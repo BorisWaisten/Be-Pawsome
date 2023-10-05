@@ -3,7 +3,7 @@
       this.nombre = nombre;
       this.fotos = fotos;
       this.edad = edad;
-      this.tipoAnimal = tipoAnimal;
+      this.tipoAnimal = TIPOANIMAL[tipoAnimal];
       this.descripcion = descripcion;
       this.sexo = sexo;
       this.pesoEnKg = pesoEnKg;

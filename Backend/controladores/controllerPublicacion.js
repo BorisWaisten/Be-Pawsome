@@ -9,12 +9,14 @@ class ControllerPublicacion {
   crearPublicacion = async (req, res) => {
     const nuevaPublicacion = {
       titulo: req.body.titulo,
-      idUsuario: req.body.idUsuario,
+      idUsuario: req.param.idUsuario,
       idAnimal: req.body.idAnimal,
     };
-
     try {
       const publicacionCreada = await this.servicioPublicacion.crearPublicacion(nuevaPublicacion);
+      this.servicioUser.registrarAnimal
+      this.servicioAnimal.crearAnimal
+
       res.status(201).json(publicacionCreada);
     } catch (error) {
       res.status(400).json(error.message);

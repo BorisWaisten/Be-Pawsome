@@ -34,7 +34,6 @@ class ControllerUsuario{
             );
 
             const dataUser = {
-              id: user._id,
               name: user.nombre,
               apellido: user.apellido,
               mail: user.mail,
@@ -74,6 +73,49 @@ class ControllerUsuario{
       }
     }
 
+    obtenerUsuario = async (req, res) => {
+      const idUsuario = req.params.id;
+      try {
+        const user = await this.servicioUsuario.obtenerUsuarioPorId(idUsuario);
+        res.status(200).json(user);
+      } catch (error) {
+        res.status(400).json(error.message);
+      }
+    }
+
+    editarUsuario = async (req, res) => {
+      const idUsuario = req.params.id;
+      try {
+        const user = await this.servicioUsuario.editarUsuario(idUsuario, req.body);
+        res.status(200).json(user);
+      }catch(error){
+        res.status(400).json(error.message);
+      }
+    }
+
+    eliminarUsuario = async (req, res) => {
+      const idUsuario = req.params.id;
+      try {
+        const user = await this.servicioUsuario.eliminarUsuario(idUsuario);
+        res.status(200).json(user);
+      }catch(error){
+        res.status(400).json(error.message);
+      }
+    }
+
+    recuperarContrasenia = async (req, res) => {
+      const nuevoDatos = {
+        mail: req.body.mail,
+        password: bcrypt.hashSync(req.body.password, 10)
+      }
+      try {
+        const user = await this.servicioUsuario.recuperarContrasenia(nuevoDatos);
+        res.status(200).json(user);
+      }catch(error){
+        res.status(400).json(error.message);
+      }
+    }
+
     changePassword = async (req, res) => {
       try {
         const { mail } = req.body;
@@ -85,7 +127,8 @@ class ControllerUsuario{
         const user = await this.servicioUsuario.changePassword(mail);
         if(!user) res.status(200).json({'message': 'No se encontro el mail proporcionado'})
 
-        const newPass = pushEmail(mail);
+        const newPass = await pushEmail(mail);
+        console.log(newPass + "controller");
         //guarda la nueva password generada
         await this.servicioUsuario.savePassword(mail, newPass);
         res.status(200).json({'message': `Se envio un mail a ${mail} con una nueva password generada. Te recomendamos cambiarla.`});

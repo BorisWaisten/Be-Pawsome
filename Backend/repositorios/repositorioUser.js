@@ -52,16 +52,41 @@ class RepositorioUser{
         return await this.usuariosCollection.findOne({ mail: mail });
     }
 
+    async buscarId(id){
+        try{
+            const user = await this.usuariosCollection.findOne({ _id: id });
+            return user
+        }catch(error){
+            throw new DatabaseError("Error al buscar usuario: " + error);
+        }
+    }
+
+    async editarUsuario(id, usuario){
+        try{
+            const userEditado = await this.usuariosCollection.updateOne({ _id: id }, { $set: usuario });
+            return userEditado 
+        }catch(error){
+            throw new DatabaseError("Error al editar usuario: " + error);
+        }
+    }
+
+    async eliminarUsuario(id){
+        try{
+            const userEliminado = await this.usuariosCollection.deleteOne({ _id: id });
+            return userEliminado 
+        }catch(error){
+            throw new DatabaseError("Error al eliminar usuario: " + error);
+        }
     //se le cambia la pass por la pasada por parametros
+    }
     async savePassword(mail, newPassword){
         try {
             const usuarioEditado = await this.usuariosCollection.updateOne({ mail }, { $set: { password: newPassword } });
             return usuarioEditado;
-          } catch (error) {
+        } catch (error) {
             throw new DatabaseError("Error al editar contraseña: " + error);
-          }
+        }
     }
-
 }
 
 export default RepositorioUser
