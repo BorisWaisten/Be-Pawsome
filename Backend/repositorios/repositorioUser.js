@@ -1,5 +1,5 @@
 import ConexionMongo from "./conexionMongoDb.js";
-import Usuario from "../modelos/modeloUsuarios.js";
+import Usuario from "../modelos/modeloUsuarios.js"; 
 import {DatabaseError} from "../errores.js";
 
 class RepositorioUser{
@@ -26,13 +26,12 @@ class RepositorioUser{
 
     async registro(usuario){
         try{
-
-           
-
-            const newUser = new Usuario(usuario.nombre, usuario.apellido, usuario.mail, 
-                usuario.password ,usuario.celular, usuario.localidad, usuario.provincia, usuario.nacionalidad, 
-                usuario.codigoPostal,"https://img2.freepng.es/20180331/khw/kisspng-computer-icons-user-clip-art-user-5abf13d4b67e20.4808850915224718927475.jpg",
-                false);
+            const newUser = new Usuario(
+                usuario.nombre, usuario.apellido, usuario.mail, 
+                usuario.password,usuario.celular, 
+                usuario.localidad, usuario.provincia, 
+                usuario.nacionalidad,usuario.codigoPostal)
+                ;
                 await this.usuariosCollection.insertOne(newUser);
             return newUser;
         }catch(error){
@@ -40,9 +39,27 @@ class RepositorioUser{
         }
     }
 
-    
+    async login(usuario){
+        try{
+            const user = await this.usuariosCollection.findOne({ mail: usuario.mail});
+            return user;
+        }catch(error){
+            throw new DatabaseError("Error al loguear usuario: " + error);
+        }
+    }
+
     async buscarEmail(mail){
         return await this.usuariosCollection.findOne({ mail: mail });
+    }
+
+    //se le cambia la pass por la pasada por parametros
+    async savePassword(mail, newPassword){
+        try {
+            const usuarioEditado = await this.usuariosCollection.updateOne({ mail }, { $set: { password: newPassword } });
+            return usuarioEditado;
+          } catch (error) {
+            throw new DatabaseError("Error al editar contraseña: " + error);
+          }
     }
 
 }

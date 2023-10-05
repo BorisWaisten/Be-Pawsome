@@ -43,6 +43,30 @@ class ServicioUsuario{
       }
     }
 
+    changePassword = async (mail) => {
+      try {
+        const validarUser = await this.model.buscarEmail(mail)
+        
+        //Validacion de la existencia del mail
+        if(!validarUser){
+          //esto no deberia generar errores, deberian ser return con messages
+          throw new InvalidCredentialsError("El email " + mail + " no se encuentra registrado!")
+        }
+        return validarUser;
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    savePassword = async (user, newPassword) => {
+      try {
+        //aca deberiamos llamar al modelo para guardar la password
+        const user = this.model.savePassword(mail, newPassword);
+        return user;
+      } catch (error) {
+        throw error;
+      }
+    }
 
 }
 

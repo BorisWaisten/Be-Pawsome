@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { ValidateError } from "../errores.js";
-import crypto from 'crypto';
+
 
 const validacionRegister = usuario => {
     const usuarioSchema = Joi.object({

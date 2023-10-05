@@ -30,6 +30,7 @@ class RouterUsuario {
   start() {
     this.router.post("/register",this.controlador.register);
     this.router.post("/login", this.controlador.login);
+    this.router.post('/changePassword', this.controlador.changePassword)
     //posibles rutas que requieren autenticación
     // this.router.post("/perfil", this.verificarToken, this.controlador.obtenerPerfil);
     // this.router.post("/actualizar-perfil", this.verificarToken, this.controlador.actualizarPerfil);
