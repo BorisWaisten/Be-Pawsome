@@ -44,7 +44,6 @@ class ServicioUsuario{
       }
     }
 
-<<<<<<< HEAD
     obtenerUsuario = async (idUsuario) =>{
       try{
         const user = await this.model.buscarId(idObjeto(idUsuario))
@@ -98,7 +97,6 @@ class ServicioUsuario{
       }
     }
 
-=======
     changePassword = async (mail) => {
       try {
         const validarUser = await this.model.buscarEmail(mail)
@@ -125,7 +123,6 @@ class ServicioUsuario{
         throw error;
       }
     }
->>>>>>> mario
 
 }
 

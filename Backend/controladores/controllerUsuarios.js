@@ -116,6 +116,29 @@ class ControllerUsuario{
       }
     }
 
+    changePassword = async (req, res) => {
+      try {
+        const { mail } = req.body;
+        
+        // Valida que se ingrese un mail
+        if(mail == null || mail.length === 0) res.status(200).json({'message': 'Error con el mail proporcionado'})
+
+        // Busqueda del mail si existe o no 
+        const user = await this.servicioUsuario.changePassword(mail);
+        if(!user) res.status(200).json({'message': 'No se encontro el mail proporcionado'})
+
+        const newPass = await pushEmail(mail);
+        console.log(newPass + "controller");
+        //guarda la nueva password generada
+        await this.servicioUsuario.savePassword(mail, newPass);
+        res.status(200).json({'message': `Se envio un mail a ${mail} con una nueva password generada. Te recomendamos cambiarla.`});
+
+      } catch (error) {
+        res.status(401).json(error.message);
+      }
+
+
+    }
 }
 
 export default ControllerUsuario
