@@ -19,10 +19,10 @@ export  class ValidateError extends Error {
     }
 }
 
-export class ServiceError extends Error{
+export class UsuarioNotFoundError extends Error{
     constructor(message) {
         super(message);
-        this.name = "ServiceError";
+        this.name = "UsuarioNotFoundError";
     }
 }
 
@@ -83,6 +83,6 @@ export class CasitaNotFoundError extends Error{
     }
 }
 
-export default {ValidateError,DatabaseError,ServiceError,PublicacionRequestError,
+export default {ValidateError,DatabaseError,UsuarioNotFoundError,PublicacionRequestError,
     PublicacionNotFoundError,AdopcionRequestError,AdopcionNotFoundError,AnimalRequestError,
     AnimalNotFoundError,CasitaRequestError,CasitaNotFoundError}

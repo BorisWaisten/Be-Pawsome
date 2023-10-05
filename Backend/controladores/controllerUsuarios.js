@@ -33,7 +33,6 @@ class ControllerUsuario{
             );
 
             const dataUser = {
-              id: user._id,
               name: user.nombre,
               apellido: user.apellido,
               mail: user.mail,
@@ -72,6 +71,50 @@ class ControllerUsuario{
         res.status(401).json(error.message);
       }
     }
+
+    obtenerUsuario = async (req, res) => {
+      const idUsuario = req.params.id;
+      try {
+        const user = await this.servicioUsuario.obtenerUsuarioPorId(idUsuario);
+        res.status(200).json(user);
+      } catch (error) {
+        res.status(400).json(error.message);
+      }
+    }
+
+    editarUsuario = async (req, res) => {
+      const idUsuario = req.params.id;
+      try {
+        const user = await this.servicioUsuario.editarUsuario(idUsuario, req.body);
+        res.status(200).json(user);
+      }catch(error){
+        res.status(400).json(error.message);
+      }
+    }
+
+    eliminarUsuario = async (req, res) => {
+      const idUsuario = req.params.id;
+      try {
+        const user = await this.servicioUsuario.eliminarUsuario(idUsuario);
+        res.status(200).json(user);
+      }catch(error){
+        res.status(400).json(error.message);
+      }
+    }
+
+    recuperarContrasenia = async (req, res) => {
+      const nuevoDatos = {
+        mail: req.body.mail,
+        password: bcrypt.hashSync(req.body.password, 10)
+      }
+      try {
+        const user = await this.servicioUsuario.recuperarContrasenia(nuevoDatos);
+        res.status(200).json(user);
+      }catch(error){
+        res.status(400).json(error.message);
+      }
+    }
+
 }
 
 export default ControllerUsuario
