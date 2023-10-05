@@ -44,6 +44,7 @@ class ServicioUsuario{
       }
     }
 
+<<<<<<< HEAD
     obtenerUsuario = async (idUsuario) =>{
       try{
         const user = await this.model.buscarId(idObjeto(idUsuario))
@@ -97,6 +98,34 @@ class ServicioUsuario{
       }
     }
 
+=======
+    changePassword = async (mail) => {
+      try {
+        const validarUser = await this.model.buscarEmail(mail)
+        
+        //Validacion de la existencia del mail
+        if(!validarUser){
+          //esto no deberia generar errores, deberian ser return con messages
+          throw new InvalidCredentialsError("El email " + mail + " no se encuentra registrado!")
+        }
+        return validarUser;
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    savePassword = async (mail, newPassword) => {
+      try {
+        console.log(newPassword + "1");
+        //aca deberiamos llamar al modelo para guardar la password
+        const passwordEncrypted = await bcrypt.hash(newPassword, 10);
+        const user = await this.model.savePassword(mail, passwordEncrypted);
+        return user;
+      } catch (error) {
+        throw error;
+      }
+    }
+>>>>>>> mario
 
 }
 
