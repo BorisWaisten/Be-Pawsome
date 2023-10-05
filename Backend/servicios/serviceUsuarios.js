@@ -58,7 +58,7 @@ class ServicioUsuario{
       }
     }
 
-    savePassword = async (user, newPassword) => {
+    savePassword = async (mail, newPassword) => {
       try {
         //aca deberiamos llamar al modelo para guardar la password
         const user = this.model.savePassword(mail, newPassword);
