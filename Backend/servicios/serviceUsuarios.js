@@ -47,7 +47,7 @@ class ServicioUsuario{
 
     obtenerUsuario = async (idUsuario) =>{
       try{
-        const user = await this.model.buscarId(idObjeto(idUsuario))
+        const user = await this.model.buscarId(this.idObjeto(idUsuario))
         if(!user){
           throw new UsuarioNotFoundError("El usuario no encontrado")
         }
@@ -60,7 +60,7 @@ class ServicioUsuario{
     editarUsuario = async (idUsuario, usuario) =>{
       try{
         UserRequest.validacionEdit(usuario)
-        const userEditado = await this.model.editarUsuario(idObjeto(idUsuario), usuario)
+        const userEditado = await this.model.editarUsuario(this.idObjeto(idUsuario), usuario)
         if(!userEditado){
           throw new UsuarioNotFoundError("El usuario no se pudo modificar")
         }
@@ -72,7 +72,7 @@ class ServicioUsuario{
 
     eliminarUsuario = async (idUsuario) =>{
       try{
-        const userEliminado = await this.model.eliminarUsuario(idObjeto(idUsuario))
+        const userEliminado = await this.model.eliminarUsuario(this.idObjeto(idUsuario))
         if(!userEliminado){
           throw new UsuarioNotFoundError("El usuario no eliminado")
         }

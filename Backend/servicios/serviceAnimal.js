@@ -1,7 +1,7 @@
 import AnimalRepository from "../repositorios/repositorioAnimal.js";
 import { AnimalRequestError } from "../errores.js";
 import ServicioUsuario from "./serviceUsuarios.js";
-import { ObjectId } from "mongoose";
+import { ObjectId } from "mongodb";
 
 class ServicioAnimal {
   constructor() {
@@ -64,7 +64,7 @@ class ServicioAnimal {
       }
       //guardo el usuario que va a adoptar en la base de datos del animal
       const animalAdoptado = await this.repository.guardarUsuarioAdoptante(this.idObject(idAnimal),user);
-      if(!animal){
+      if(!animalAdoptado){
         throw new AnimalRequestError(`No se pudo guardar el usuario`);
       }
       //devuelvo el animal adoptado

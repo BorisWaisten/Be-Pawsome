@@ -5,8 +5,6 @@ class ControllerAnimal {
   constructor() {
     this.servicioAnimal = new ServicioAnimal();
   }
-
-  }
   crearAnimal = async (req, res) => {
     const nuevoAnimal = {
       nombre: req.body.nombre,
@@ -70,5 +68,5 @@ class ControllerAnimal {
       res.status(404).json(error.message);
     }
   };
-
+}
 export default ControllerAnimal;

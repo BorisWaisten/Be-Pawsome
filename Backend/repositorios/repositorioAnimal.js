@@ -77,7 +77,6 @@ class RepositorioAnimal {
 
   async guardarUsuarioAdoptante(idAnimal,user) {
     try {
-      const animal = await this.obtenerAnimalPorId(idAnimal);
       const animalAdoptado = await this.animalesCollection.updateOne({ _id: idAnimal }, { $set: { adoptante: user } });
       return animalAdoptado;
     } catch (error) {
