@@ -1,6 +1,7 @@
 import ModelUsuario from "../repositorios/repositorioUser.js";
 import UserRequest from "../validacionRequest/userRequest.js";
 import { InvalidCredentialsError,UsuarioNotFoundError } from "../errores.js";
+import pushEmail from "../helpers/emailPush.js";
 import bcrypt from 'bcrypt'
 import { ObjectId } from "mongodb";
 
@@ -99,14 +100,15 @@ class ServicioUsuario{
 
     changePassword = async (mail) => {
       try {
+         // Valida que se ingrese un mail
+        if(mail == null || mail.length === 0) throw new InvalidCredentialsError({'message': 'Error con el mail proporcionado'})
         const validarUser = await this.model.buscarEmail(mail)
-        
-        //Validacion de la existencia del mail
-        if(!validarUser){
-          //esto no deberia generar errores, deberian ser return con messages
-          throw new InvalidCredentialsError("El email " + mail + " no se encuentra registrado!")
-        }
-        return validarUser;
+        //Validacion de registro del mail
+        if (!validarUser) throw new UsuarioNotFoundError("El email " + mail + " no se encuentra registrado!")
+        //genero la nueva password
+        const newPass = await pushEmail(mail);
+        //guarda la nueva password
+        await this.savePassword(mail, newPass);
       } catch (error) {
         throw error;
       }
@@ -114,13 +116,25 @@ class ServicioUsuario{
 
     savePassword = async (mail, newPassword) => {
       try {
-        console.log(newPassword + "1");
         //aca deberiamos llamar al modelo para guardar la password
         const passwordEncrypted = await bcrypt.hash(newPassword, 10);
         const user = await this.model.savePassword(mail, passwordEncrypted);
+        if(!user){
+          throw new InvalidCredentialsError("No se pudo cambiar la contraseña")
+        }
         return user;
       } catch (error) {
         throw error;
+      }
+    }
+
+    guardarDatos = async (publicacion)=>{
+      try {
+        //guardo los datos correspondientes al usuario que crea la publicacion
+        //guardando la publicacion y el animal en las listas del usuario
+        await this.model.guardarDatos(publicacion);
+      } catch (error) {
+        throw error
       }
     }
 

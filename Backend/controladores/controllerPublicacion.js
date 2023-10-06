@@ -7,16 +7,15 @@ class ControllerPublicacion {
   }
 
   crearPublicacion = async (req, res) => {
+    // crear publicacion recibiria del request un titulo y dos objetos a guardar, el usuario y el animal
     const nuevaPublicacion = {
       titulo: req.body.titulo,
-      idUsuario: req.param.idUsuario,
-      idAnimal: req.body.idAnimal,
+      usuario: req.body.usuario,
+      animal: req.body.animal,
     };
     try {
       const publicacionCreada = await this.servicioPublicacion.crearPublicacion(nuevaPublicacion);
-      this.servicioUser.registrarAnimal
-      this.servicioAnimal.crearAnimal
-
+      // devolvemos el objeto publicacionCreada como respuesta
       res.status(201).json(publicacionCreada);
     } catch (error) {
       res.status(400).json(error.message);

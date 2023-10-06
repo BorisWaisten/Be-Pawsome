@@ -1,6 +1,7 @@
 import ConexionMongo from "./conexionMongoDb.js";
 import Usuario from "../modelos/modeloUsuarios.js"; 
 import {DatabaseError} from "../errores.js";
+import { ObjectId } from "mongoose";
 
 class RepositorioUser{
 
@@ -85,6 +86,18 @@ class RepositorioUser{
             return usuarioEditado;
         } catch (error) {
             throw new DatabaseError("Error al editar contraseña: " + error);
+        }
+    }
+
+    async guardarDatos(publicacion){
+        const id=new ObjectId(publicacion.usuario._id );
+        try{
+            const user = await this.usuariosCollection.findOne({ _id: id },{
+                 $push: {misPublicaciones: publicacion},
+                 $push: {misAnimales: publicacion.animal} });
+            return user
+        }catch(error){
+            throw new DatabaseError("Error al buscar usuario: " + error);
         }
     }
 }
