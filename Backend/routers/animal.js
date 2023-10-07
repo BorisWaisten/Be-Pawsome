@@ -12,6 +12,7 @@ class RouterAnimal {
     this.router.get("/obtener/:id", this.controlador.obtenerAnimal);
     this.router.put("/actualizar/:id", this.controlador.actualizarAnimal);
     this.router.delete("/eliminar/:id", this.controlador.eliminarAnimal);
+    this.router.post("/guardadoAdoptante/:id", this.controlador.guardarUsuarioAdoptante);
     return this.router;
   }
 }

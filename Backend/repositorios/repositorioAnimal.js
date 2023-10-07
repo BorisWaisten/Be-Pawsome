@@ -74,6 +74,15 @@ class RepositorioAnimal {
       throw new DatabaseError("Error al eliminar animal: " + error);
     }
   }
+
+  async guardarUsuarioAdoptante(idAnimal,user) {
+    try {
+      const animalAdoptado = await this.animalesCollection.updateOne({ _id: idAnimal }, { $set: { adoptante: user } });
+      return animalAdoptado;
+    } catch (error) {
+      
+    }
+  }
 }
 
 export default RepositorioAnimal;
