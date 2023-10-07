@@ -1,6 +1,7 @@
 import ModelUsuario from "../repositorios/repositorioUser.js";
 import UserRequest from "../validacionRequest/userRequest.js";
 import { InvalidCredentialsError,UsuarioNotFoundError } from "../errores.js";
+import pushEmail from "../helpers/emailPush.js";
 import bcrypt from 'bcrypt'
 import { ObjectId } from "mongodb";
 
@@ -46,7 +47,7 @@ class ServicioUsuario{
 
     obtenerUsuario = async (idUsuario) =>{
       try{
-        const user = await this.model.buscarId(idObjeto(idUsuario))
+        const user = await this.model.buscarId(this.idObjeto(idUsuario))
         if(!user){
           throw new UsuarioNotFoundError("El usuario no encontrado")
         }
@@ -59,7 +60,7 @@ class ServicioUsuario{
     editarUsuario = async (idUsuario, usuario) =>{
       try{
         UserRequest.validacionEdit(usuario)
-        const userEditado = await this.model.editarUsuario(idObjeto(idUsuario), usuario)
+        const userEditado = await this.model.editarUsuario(this.idObjeto(idUsuario), usuario)
         if(!userEditado){
           throw new UsuarioNotFoundError("El usuario no se pudo modificar")
         }
@@ -71,7 +72,7 @@ class ServicioUsuario{
 
     eliminarUsuario = async (idUsuario) =>{
       try{
-        const userEliminado = await this.model.eliminarUsuario(idObjeto(idUsuario))
+        const userEliminado = await this.model.eliminarUsuario(this.idObjeto(idUsuario))
         if(!userEliminado){
           throw new UsuarioNotFoundError("El usuario no eliminado")
         }
@@ -97,6 +98,45 @@ class ServicioUsuario{
       }
     }
 
+    changePassword = async (mail) => {
+      try {
+         // Valida que se ingrese un mail
+        if(mail == null || mail.length === 0) throw new InvalidCredentialsError({'message': 'Error con el mail proporcionado'})
+        const validarUser = await this.model.buscarEmail(mail)
+        //Validacion de registro del mail
+        if (!validarUser) throw new UsuarioNotFoundError("El email " + mail + " no se encuentra registrado!")
+        //genero la nueva password
+        const newPass = await pushEmail(mail);
+        //guarda la nueva password
+        await this.savePassword(mail, newPass);
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    savePassword = async (mail, newPassword) => {
+      try {
+        //aca deberiamos llamar al modelo para guardar la password
+        const passwordEncrypted = await bcrypt.hash(newPassword, 10);
+        const user = await this.model.savePassword(mail, passwordEncrypted);
+        if(!user){
+          throw new InvalidCredentialsError("No se pudo cambiar la contraseña")
+        }
+        return user;
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    guardarDatos = async (publicacion)=>{
+      try {
+        //guardo los datos correspondientes al usuario que crea la publicacion
+        //guardando la publicacion y el animal en las listas del usuario
+        await this.model.guardarDatos(publicacion);
+      } catch (error) {
+        throw error
+      }
+    }
 
 }
 

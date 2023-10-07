@@ -35,7 +35,16 @@ class RouterUsuario {
     this.router.get("/:id", this.controlador.obtenerUsuario);
     this.router.put("/:id", this.controlador.editarUsuario);
     this.router.delete("/:id", this.controlador.eliminarUsuario);
+   
+    //rutas de recuperacion de contrasenia
+    
+    // recupera la contrasenia personalmente el mismo usuario pidiendole que ingrese una nueva contrasenia
     this.router.post("/recuperarContrasenia", this.controlador.recuperarContrasenia);
+    //se recupera la contrasenia via mail y se le genera una nueva contrasenia
+    this.router.post('/changePassword', this.controlador.changePassword)
+   
+   
+   
     //posibles rutas que requieren autenticación
     // this.router.post("/perfil", this.verificarToken, this.controlador.obtenerPerfil);
     // this.router.post("/actualizar-perfil", this.verificarToken, this.controlador.actualizarPerfil);

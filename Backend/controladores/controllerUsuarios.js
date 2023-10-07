@@ -1,6 +1,7 @@
 import ServicioUsuario from "../servicios/serviceUsuarios.js";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import pushEmail from '../helpers/emailPush.js'
 const SECRET_KEY = 'secretkey123';
 
 
@@ -103,6 +104,7 @@ class ControllerUsuario{
     }
 
     recuperarContrasenia = async (req, res) => {
+      // del request deberan pasarse los datos del usuario: mail y la nueva contrasenia 
       const nuevoDatos = {
         mail: req.body.mail,
         password: bcrypt.hashSync(req.body.password, 10)
@@ -115,6 +117,22 @@ class ControllerUsuario{
       }
     }
 
+    changePassword = async (req, res) => {
+      try {
+        const { mail } = req.body;
+        // Busqueda del mail si existe o no 
+        await this.servicioUsuario.changePassword(mail);
+
+        const newPass = await pushEmail(mail);
+        //guarda la nueva password generada
+        await this.servicioUsuario.savePassword(mail, newPass);
+        res.status(200).json({'message': `Se envio un mail a ${mail} con una nueva password generada. Te recomendamos cambiarla.`});
+      } catch (error) {
+        res.status(401).json(error.message);
+      }
+
+
+    }
 }
 
 export default ControllerUsuario

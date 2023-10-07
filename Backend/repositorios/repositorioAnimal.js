@@ -34,7 +34,7 @@ class RepositorioAnimal {
         animal.sexo,
         animal.pesoEnKg,
         animal.ubicacion,
-        animal.oferente,
+        animal.idOferente,
         animal.historiaClinica
       );
       await this.animalesCollection.insertOne(nuevoAnimal);
@@ -72,6 +72,15 @@ class RepositorioAnimal {
       return animalEliminado;
     } catch (error) {
       throw new DatabaseError("Error al eliminar animal: " + error);
+    }
+  }
+
+  async guardarUsuarioAdoptante(idAnimal,user) {
+    try {
+      const animalAdoptado = await this.animalesCollection.updateOne({ _id: idAnimal }, { $set: { adoptante: user } });
+      return animalAdoptado;
+    } catch (error) {
+      
     }
   }
 }

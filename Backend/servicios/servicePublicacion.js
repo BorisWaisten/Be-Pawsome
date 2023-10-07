@@ -2,17 +2,25 @@ import PublicacionRepository from "../repositorios/repositorioPublicacion.js";
 import { PublicacionRequestError} from "../errores.js";
 import PublicRequest from "../validacionRequest/publicRequest.js"
 import { ObjectId } from 'mongodb';
+import ServicioUsuario from "../servicios/serviceUsuarios.js";
 
 
 class ServicioPublicacion {
   constructor() {
     this.repository = new PublicacionRepository();
+    this.servicioUsuario = new ServicioUsuario();
   }
 
   async crearPublicacion(publicacion) {
     try {
       PublicRequest.validacionPublicacion(publicacion);      
-      return await this.repository.crearPublicacion(publicacion);
+      const publicacionCreada = await this.repository.crearPublicacion(publicacion);
+      //verifico que la publicacion fue creada
+      if (publicacionCreada) {
+        //de ser asi guardara los datos correspondientes al usuario que crea la publicacion
+        await this.servicioUsuario.guardarDatos(publicacionCreada);
+      }
+      return publicacion
     } catch (error) {
       throw new PublicacionRequestError("Error al crear publicación: " + error.message);
     }
