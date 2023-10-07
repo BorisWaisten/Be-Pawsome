@@ -34,7 +34,7 @@ class RepositorioAnimal {
         animal.sexo,
         animal.pesoEnKg,
         animal.ubicacion,
-        animal.oferente,
+        animal.idOferente,
         animal.historiaClinica
       );
       await this.animalesCollection.insertOne(nuevoAnimal);
