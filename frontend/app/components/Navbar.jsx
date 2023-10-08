@@ -8,6 +8,7 @@ export default function NavBar() {
             src={Logo} 
             alt='Galajo Logo'
             width={70}
+            height={70}
             quality={100}
             placeholder="blur"
         />
