@@ -1,17 +1,20 @@
 import Joi from "joi";
 import { ValidateError } from "../errores.js";
 
+const animalesValidos = ['PERRO', 'GATO', 'CONEJO', 'REPTIL', 'VACA', 'PEZ'];
+const sexoValidacion = ['MACHO', 'HEMBRA'];
+
 const validacionAnimal = animal => {
     const AnimalSchema = Joi.object({
         nombre: Joi.string().required(),
         fotos: Joi.array().items(Joi.string()).required(),
         edad: Joi.number().integer().required(),
-        tipoAnimal: Joi.string().valid('PERRO', 'GATO', 'CONEJO', 'REPTIL', 'VACA', 'PEZ').insensitive().required(),
+        tipoAnimal: Joi.string().valid(...animalesValidos).required(),
         descripcion: Joi.string().required(),
-        sexo: Joi.string().required(),
+        sexo: Joi.string().valid(...sexoValidacion).required(),
         pesoEnKg: Joi.number().required(),
         ubicacion: Joi.string().required(),
-        oferente: Joi.string().required(),
+        idOferente: Joi.string().required(),
         historiaClinica: Joi.string().required()
     });
 

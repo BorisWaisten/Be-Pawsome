@@ -1,6 +1,7 @@
 import AnimalRepository from "../repositorios/repositorioAnimal.js";
 import { AnimalRequestError } from "../errores.js";
 import ServicioUsuario from "./serviceUsuarios.js";
+import animalRequest from "../validacionRequest/animalRequest.js";
 import { ObjectId } from "mongodb";
 
 class ServicioAnimal {
@@ -15,6 +16,8 @@ class ServicioAnimal {
 
   async crearAnimal(animal) {
     try {
+      //valido los datos
+      animalRequest.validacionAnimal(animal);
       const nuevoAnimal = await this.repository.crearAnimal(animal);
       return nuevoAnimal;
     } catch (error) {
