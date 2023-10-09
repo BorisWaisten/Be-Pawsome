@@ -62,6 +62,39 @@ class ServicioPublicacion {
       throw new PublicacionRequestError("Error al eliminar publicación: " + error.message);
     }
   }
+
+
+  async publicaciones() {
+    try {
+      const array = await this.repository.publicaciones(); 
+      return array     
+    } catch (error) {
+      throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);
+    }
+  }
+
+  async publicacionesUsuario(idUser) {
+    try {
+      const array = await this.repository.publicacionesUsuario(idUser); 
+      return array.length > 0 ? array : {"message": "Sin publicaciones disponibles"};  
+    } catch (error) {
+      throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);
+    }
+  }
+
+  async publicacionesPorString(string) {
+    try {
+      if (!string) {
+        return res.status(400).json({ message: 'Falta el parámetro de consulta "search".' });
+      }
+      const result = await this.repository.publicacionesPorString(string);
+      console.log("service " +result);
+      return result.length > 0 ? result : {"message": "Sin publicaciones disponibles"};  
+    } catch (error) {
+      throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);
+    }
+  }
+
 }
 
 export default ServicioPublicacion;
