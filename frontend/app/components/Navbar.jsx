@@ -15,7 +15,9 @@ export default function NavBar() {
         <h1> BEPAWESOME</h1>
         <Link href="/"> Home </Link>
         <Link href="/aboutUs">About Us</Link>
-        <Link href="/usuario">Usuario</Link>
+        <Link href="/login">Login</Link>
+{/*     <Link href="/usuario/register">Register</Link>*/}
+        <Link href="/register">Registrarse</Link>
     </nav>
    )
 }
