@@ -55,6 +55,42 @@ class ControllerPublicacion {
       res.status(404).json(error.message);
     }
   };
+
+// va a devolver un array de todas las publicaciones de la base de datos
+  publicaciones = async (req, res) => {
+    try {
+      const arrayPublicaciones = await this.servicioPublicacion.publicaciones();
+      res.status(200).json(arrayPublicaciones);
+    } catch (error) {
+      res.status(404).json(error.message);
+    }
+  }
+
+  //devolvera un array de las publicaciones de un usuario en especifico
+  publicacionesUsuario = async (req, res) => {
+    try {
+      const idUser = req.params.id;
+      const array = await this.servicioPublicacion.publicacionesUsuario(idUser);
+      res.status(200).json(array)
+    } catch (error) {
+      res.status(404).json(error.message);
+    }
+  }
+
+  //Se buscaran publicaciones por palabras claves (String recibidos por parametros)
+  publicacionesPorString = async (req, res) => {
+    console.log(req.query.search);
+    try {
+      const string = req.query.search;
+      console.log(string);
+      const result = await this.servicioPublicacion.publicacionesPorString(string);
+      console.log("controller " +result);
+      res.status(200).json(result)
+    } catch (error) {
+      res.status(404).json(error.message);
+    }
+  }
+
 }
 
 export default ControllerPublicacion;

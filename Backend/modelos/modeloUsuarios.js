@@ -1,4 +1,4 @@
-import Casita from "./ModeloCasita.js";
+import Casita from "../modelos/modeloCasita.js";
 
 class Usuario {
     constructor(nombre, apellido, mail,password , celular, localidad, provincia, nacionalidad, codigoPostal) {
