@@ -16,12 +16,16 @@ const Login = () => {
           'Content-Type': 'application/json',
         },
       });
-      // Puedes manejar la respuesta del servidor aquí si es necesario, por ejemplo, mostrar un mensaje de éxito.
-      console.log('Inicio de sesión exitoso:', response.data);
-      window.location.href = 'http://localhost:3000/';
+      const { accessToken, user } = response.data;
+      
+      // Guardar el token y la información del usuario en localStorage
+      sessionStorage.setItem('token', accessToken);
+      sessionStorage.setItem('user', JSON.stringify(user));
+  
+      // Llamar a la función onLogin pasando tanto el token como el usuario completo
+      Login(response.data);
     } catch (error) {
       console.error(error);
-      // Maneja el error de inicio de sesión según tus necesidades.
     }
   };
 
