@@ -1,8 +1,8 @@
-"use client"
+"use client";
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Login = ({ onLogin }) => {
+const Login = () => {
   const [formData, setFormData] = useState({
     mail: '',
     password: '',
@@ -10,20 +10,21 @@ const Login = ({ onLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  try {
-    const response = await axios.post('http://localhost:5000/usuarios/login', formData, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log(response.data)
-    const { accessToken } = response.data;
-    sessionStorage.setItem('token', accessToken);
-    onLogin(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-};
+    try {
+      const response = await axios.post('http://localhost:5000/usuarios/login', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      // Puedes manejar la respuesta del servidor aquí si es necesario, por ejemplo, mostrar un mensaje de éxito.
+      console.log('Inicio de sesión exitoso:', response.data);
+      window.location.href = 'http://localhost:3000/';
+    } catch (error) {
+      console.error(error);
+      // Maneja el error de inicio de sesión según tus necesidades.
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({

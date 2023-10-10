@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Publicaciones from "./publicacion/page.jsx"
 
 
 

@@ -1,7 +1,7 @@
 import ServicioUsuario from "../servicios/serviceUsuarios.js";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import pushEmail from '../helpers/emailPush.js'
+import pushEmail from '../helpers/emailPassword.js'
 const SECRET_KEY = 'secretkey123';
 
 
@@ -73,10 +73,10 @@ class ControllerUsuario{
       }
     }
 
-    async obtenerUsuario(req, res) {
+    obtenerUsuario = async (req, res) => {
       const idUsuario = req.params.id;
       try {
-        const user = await this.servicioUsuario.obtenerUsuarioPorId(idUsuario);
+        const user = await this.servicioUsuario.obtenerUsuario(idUsuario);
         res.status(200).json(user);
       } catch (error) {
         res.status(400).json(error.message);

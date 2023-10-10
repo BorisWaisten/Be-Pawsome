@@ -1,10 +1,9 @@
 import React from 'react';
-import Logica from './logica';
+import Logica from './crearPublicacion';
 
-export default function RegistrarPage() {
+export default function Publicacion() {
   return (
     <main>
-      <h1>Crear Nueva Publicación</h1>
       <Logica />
     </main>
   );

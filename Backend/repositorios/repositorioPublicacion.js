@@ -1,5 +1,5 @@
 import ConexionMongo from "./conexionMongoDb.js";
-import Publicacion from "../modelos/modeloPublicacion.js";
+import Publicacion from "../modelos/ModeloPublicacion.js";
 import { DatabaseError } from "../errores.js";
 
 class RepositorioPublicacion {
@@ -58,6 +58,47 @@ class RepositorioPublicacion {
       throw new DatabaseError("Error al eliminar publicación: " + error);
     }
   }
+
+  //trae todas las publicaciones
+  async publicaciones() {
+    try {
+      const array = await this.publicacionesCollection.find({}).toArray();
+      return array;
+    } catch (error) {
+      throw new DatabaseError("Error al traer todas las publicaciones: " + error);
+    }
+  }
+
+  async publicacionesUsuario(id) {
+    try {
+      const array = await this.publicacionesCollection.find({idUsuario: id}).toArray();
+      return array;
+    } catch (error) {
+      throw new DatabaseError("Error al traer todas las publicaciones: " + error);
+    }
+  }
+
+  async publicacionesPorString(string) {
+    try {
+      const regex = new RegExp(string, 'i');
+      const array = await this.publicacionesCollection.find(
+        {$or: [
+          { titulo: regex },
+          { 'animal.nombre': regex },
+          { 'animal.tipoAnimal': regex },
+          { 'animal.descripcion': regex },
+          { 'animal.sexo': regex },
+          { 'animal.ubicacion': regex },
+          { 'animal.historiaClinica': regex },
+          { 'animal.edad': parseInt(string)},
+          { 'animal.pesoEnKg': parseInt(string) },
+        ]}).toArray();
+      return array;
+    } catch (error) {
+      throw new DatabaseError("Error al traer todas las publicaciones: " + error);
+    }
+  }
+
 }
 
 export default RepositorioPublicacion;
