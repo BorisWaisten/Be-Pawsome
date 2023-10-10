@@ -76,7 +76,7 @@ class ControllerUsuario{
     obtenerUsuario = async (req, res) => {
       const idUsuario = req.params.id;
       try {
-        const user = await this.servicioUsuario.obtenerUsuarioPorId(idUsuario);
+        const user = await this.servicioUsuario.obtenerUsuario(idUsuario);
         res.status(200).json(user);
       } catch (error) {
         res.status(400).json(error.message);
