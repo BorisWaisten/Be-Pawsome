@@ -2,12 +2,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Login = () => {
+const Login = ({onLogin}) => {
   const [formData, setFormData] = useState({
     mail: '',
     password: '',
   });
 
+
+  //conecta con la base de datos
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -18,7 +20,10 @@ const Login = () => {
       });
       // Puedes manejar la respuesta del servidor aquí si es necesario, por ejemplo, mostrar un mensaje de éxito.
       console.log('Inicio de sesión exitoso:', response.data);
-      window.location.href = 'http://localhost:3000/';
+      // window.location.href = 'http://localhost:3000/';
+      //sessionStorage.setItem('token',response.data.password)
+
+      onLogin(response.data)
     } catch (error) {
       console.error(error);
       // Maneja el error de inicio de sesión según tus necesidades.
