@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import Logo from "./galajoLogoMini.png"
+import Logo from "public/logoBePawsome.png"
 
 export default function NavBar() {
   return (
@@ -13,7 +13,6 @@ export default function NavBar() {
             quality={100}
             placeholder="blur"
         />
-        <h1> BEPAWESOME</h1>
         <Link href="/"> Home </Link>
         <Link href="/aboutUs">About Us</Link>
         <Link href="/login">Login</Link>
