@@ -73,7 +73,7 @@ class ControllerUsuario{
       }
     }
 
-    obtenerUsuario = async (req, res) => {
+    async obtenerUsuario(req, res) {
       const idUsuario = req.params.id;
       try {
         const user = await this.servicioUsuario.obtenerUsuarioPorId(idUsuario);
