@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import Logo from "./galajoLogoMini.png"
+
 export default function NavBar() {
   return (
     <nav>
