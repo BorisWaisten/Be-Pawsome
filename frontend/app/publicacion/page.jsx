@@ -1,10 +1,12 @@
 import React from 'react';
 import Logica from './crearPublicacion';
 
-export default function Publicacion() {
+const Publicacion = () => {
   return (
     <main>
       <Logica />
     </main>
   );
-}
+};
+
+export default Publicacion;
