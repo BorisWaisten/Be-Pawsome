@@ -93,7 +93,6 @@ class RepositorioPublicacion {
           { 'animal.edad': string },
           { 'animal.pesoEnKg': string },
         ]}).toArray();
-        console.log("repo " +array);
       return array;
     } catch (error) {
       throw new DatabaseError("Error al traer todas las publicaciones: " + error);

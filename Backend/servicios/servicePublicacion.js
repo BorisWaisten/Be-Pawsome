@@ -88,7 +88,6 @@ class ServicioPublicacion {
         return res.status(400).json({ message: 'Falta el parámetro de consulta "search".' });
       }
       const result = await this.repository.publicacionesPorString(string);
-      console.log("service " +result);
       return result.length > 0 ? result : {"message": "Sin publicaciones disponibles"};  
     } catch (error) {
       throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);

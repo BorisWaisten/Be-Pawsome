@@ -79,12 +79,9 @@ class ControllerPublicacion {
 
   //Se buscaran publicaciones por palabras claves (String recibidos por parametros)
   publicacionesPorString = async (req, res) => {
-    console.log(req.query.search);
     try {
-      const string = req.query.search;
-      console.log(string);
+      const string = req.body.string;
       const result = await this.servicioPublicacion.publicacionesPorString(string);
-      console.log("controller " +result);
       res.status(200).json(result)
     } catch (error) {
       res.status(404).json(error.message);

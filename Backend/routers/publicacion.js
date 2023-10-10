@@ -16,7 +16,7 @@ class RouterPublicacion {
     this.router.delete("/eliminar/:id", this.controlador.eliminarPublicacion);
     this.router.get("/publicaciones", this.controlador.publicaciones);
     this.router.get("/publicacionesUsuario/:id", this.controlador.publicacionesUsuario);
-    this.router.get("/buscar?search=string", this.controlador.publicacionesPorString); //Aun necesito corregirlo, me thunderclient me devuelve  <pre>Cannot GET /publicacion/buscar</pre>
+    this.router.get("/buscar", this.controlador.publicacionesPorString); 
     return this.router;
   }
 }
