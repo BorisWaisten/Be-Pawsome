@@ -1,7 +1,7 @@
 import ServicioUsuario from "../servicios/serviceUsuarios.js";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import pushEmail from '../helpers/emailPush.js'
+import pushEmail from '../helpers/emailPassword.js'
 const SECRET_KEY = 'secretkey123';
 
 

@@ -1,7 +1,7 @@
 import ModelUsuario from "../repositorios/repositorioUser.js";
 import UserRequest from "../validacionRequest/userRequest.js";
 import { InvalidCredentialsError,UsuarioNotFoundError } from "../errores.js";
-import pushEmail from "../helpers/emailPush.js";
+import pushEmail from "../helpers/emailPassword.js";
 import bcrypt from 'bcrypt'
 import { ObjectId } from "mongodb";
 

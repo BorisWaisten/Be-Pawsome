@@ -1,5 +1,6 @@
 import ServicioPublicacion from "../servicios/servicePublicacion.js";
 import { PublicacionRequestError, PublicacionNotFoundError } from "../errores.js";
+import emailAdoption from '../helpers/emailAdoption.js'
 
 class ControllerPublicacion {
   constructor() {
@@ -80,14 +81,30 @@ class ControllerPublicacion {
   //Se buscaran publicaciones por palabras claves (String recibidos por parametros)
   publicacionesPorString = async (req, res) => {
     try {
-      const string = req.body.string;
+      const string = req.query.search;
       const result = await this.servicioPublicacion.publicacionesPorString(string);
       res.status(200).json(result)
     } catch (error) {
       res.status(404).json(error.message);
     }
-  }
+  };
 
+  // endpoint que responde al boton de 'Solicita Adopcion' 
+  adoptar = async (req, res) => {
+    try {
+      const idAdoptante = req.body.idAdoptante;
+      const idOferente = req.body.idUsuario;
+      const fechaCreacion = req.body.fechaCreacion.$date;
+      //dataAnimal es el objeto completo del animal, se envia asi para sacar sus propiedades para enviarselas al oferente por mail
+      const dataAnimal = req.body.animal;
+      // se guardara un array con dos users, en la posicion 0 sera el de la persona interesada en adoptar y en la posicion 1 el del oferente
+      const users = await this.servicioPublicacion.adoptar(idAdoptante, idOferente);
+      await emailAdoption(users, dataAnimal, fechaCreacion);
+      res.status(200).json({"message:" : `Solicitud enviada a ${users[1].mail}`})
+    } catch (error) {
+      res.status(404).json(error.message);
+    }
+  };
 }
 
 export default ControllerPublicacion;

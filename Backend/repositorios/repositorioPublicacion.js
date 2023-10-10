@@ -90,8 +90,8 @@ class RepositorioPublicacion {
           { 'animal.sexo': regex },
           { 'animal.ubicacion': regex },
           { 'animal.historiaClinica': regex },
-          { 'animal.edad': string },
-          { 'animal.pesoEnKg': string },
+          { 'animal.edad': parseInt(string)},
+          { 'animal.pesoEnKg': parseInt(string) },
         ]}).toArray();
       return array;
     } catch (error) {
