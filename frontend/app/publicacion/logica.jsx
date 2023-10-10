@@ -27,7 +27,7 @@ export default function Logica() {
   };
 
   return (
-    <form onSubmit={(e) => handleSubmit(e, localStorage.getItem('jwtToken'))}>
+    <form onSubmit={(e) => handleSubmit(e, sessionStorage.getItem('jwtToken'))}>
       <label>
         Título:
         <input type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
