@@ -55,13 +55,12 @@ class ControllerUsuario{
         const accessToken = jwt.sign({ id: user._id }, SECRET_KEY, {
           expiresIn: expiresIn,
         });
-    
+        
         const dataUser = {
-          userLogueado:user,
-          accesToken: accesToken,
+          userLogueado: user,
+          accessToken: accessToken, // Corrige el nombre de la variable aquí
           expiresIn: expiresIn
         }
-        
         
         res.status(200).json(dataUser);
       }catch(error){
