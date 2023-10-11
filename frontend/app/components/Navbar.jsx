@@ -5,22 +5,24 @@ import { REACT_LOADABLE_MANIFEST } from "next/dist/shared/lib/constants"
 
 export default function NavBar() {
   return (
-    <nav>
+    <nav className="flex items-center justify-between py-4 px-6">
+      <div className="flex items-center space-x-4">
         <Image
-            src={Logo} 
-            alt='Galajo Logo'
-            width={70}
-            height={70}
-            quality={100}
-            placeholder="blur"
+          src={Logo} 
+          alt='Galajo Logo'
+          width={70}
+          height={70}
+          quality={100}
+          placeholder="blur"
         />
-        <Link href="/"> Home </Link>
-        <Link href="/login">Publicaciones</Link>
+        <Link href="/">Home </Link>
         <Link href="/aboutUs">About Us</Link>
-{/*     <Link href="/usuario/register">Register</Link>*/}
-        <Link className='' href="/register">Registrarse</Link>
-      
+        <Link href="/register">Registrarse</Link>
+        {/*<Link href="/usuario/register">Register</Link>*/}
+        {/*<Link className='' href="/register">Registrarse</Link>*/}
+      </div>
+      <Link href="/login">Login</Link>
     </nav>
-   )
+  )
 }
 
