@@ -1,4 +1,4 @@
-//esta es la el archivo Primitivo
+//esta es la el archivo Primitivo PAGE
 
 "use client";
 
