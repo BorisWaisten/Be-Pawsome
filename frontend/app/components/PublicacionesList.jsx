@@ -25,15 +25,14 @@ export default async function PublicacionesList() {
                <div>
                {/*<Image src= {publicacion.animal.fotos[0]} alt='Galajo Logo' width={200}height={200}quality={100}        />
                  {/* Imágenes del animal */}
-                 {/*publicacion.animal.fotos.map((foto, index) => (
-                   <Image key={index} src={foto} alt={`Foto ${index + 1}`}/> 
-                   
+                 {publicacion.animal.fotos.map((foto, index) => (
+                   <Image key={index} src={foto} alt={`Foto ${index + 1}`} width={150} height={150} quality={100}/> 
                  ))}
                </div>
                <div>
                  {/* Detalles del animal */}
                  <p>Nombre: {publicacion.animal.nombre}</p>
-                 <p>Edad: {publicacion.animal.edad} años</p>
+                 <p>Edad: {publicacion.animal.edad} años</p> 
                  {/* Agrega más detalles según la estructura de tus datos */}
                </div>
                <div>
