@@ -1,10 +1,11 @@
-import React from 'react';
-import Logica from './crearPublicacion';
+import React, { Children } from 'react';
+import NuevaPublicacion from '../components/CreatePost';
 
 const Publicacion = () => {
   return (
     <main>
-      <Logica />
+      {Children}
+      <NuevaPublicacion />
     </main>
   );
 };
