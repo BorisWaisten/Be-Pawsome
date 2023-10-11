@@ -1,3 +1,4 @@
+
 import React, { Children } from 'react';
 import NuevaPublicacion from '../components/CreatePost';
 

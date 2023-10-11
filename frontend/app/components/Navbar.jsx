@@ -18,6 +18,7 @@ export default function NavBar() {
         <Link href="/">Home </Link>
         <Link href="/aboutUs">About Us</Link>
         <Link href="/register">Registrarse</Link>
+        {/*<Link href="/publicacion">Publicacion</Link>*/}
         {/*<Link href="/usuario/register">Register</Link>*/}
         {/*<Link className='' href="/register">Registrarse</Link>*/}
       </div>
