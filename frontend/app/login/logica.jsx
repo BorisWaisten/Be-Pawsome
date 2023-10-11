@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     mail: '',
     password: '',
@@ -17,13 +17,13 @@ const Login = () => {
         },
       });
       const { accessToken, user } = response.data;
-      
+
       // Guardar el token y la información del usuario en localStorage
       sessionStorage.setItem('token', accessToken);
       sessionStorage.setItem('user', JSON.stringify(user));
-  
+
       // Llamar a la función onLogin pasando tanto el token como el usuario completo
-      Login(response.data);
+      onLogin(response.data); // Usa onLogin en lugar de Login
     } catch (error) {
       console.error(error);
     }
