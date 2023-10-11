@@ -1,6 +1,7 @@
-"use client"
+"use client";
 import React, { useState } from 'react';
-import Logica from './logica';
+import axios from 'axios';
+import Login from './logica'; // Importa el componente Login en lugar de Logica
 
 const LoginPage = () => {
   const handleLogin = (userData) => {
@@ -11,7 +12,7 @@ const LoginPage = () => {
 
   return (
     <main>
-      <Logica onLogin={handleLogin} />
+      <Login onLogin={handleLogin} /> {/* Pasa la función onLogin como prop al componente Login */}
     </main>
   );
 };
