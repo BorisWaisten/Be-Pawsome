@@ -14,6 +14,10 @@ class RouterPublicacion {
     this.router.get("/obtener/:id", this.controlador.obtenerPublicacion);
     this.router.put("/actualizar/:id", this.controlador.actualizarPublicacion);
     this.router.delete("/eliminar/:id", this.controlador.eliminarPublicacion);
+    this.router.get("/publicaciones", this.controlador.publicaciones);
+    this.router.get("/publicacionesUsuario/:id", this.controlador.publicacionesUsuario);
+    this.router.get("/buscar", this.controlador.publicacionesPorString); 
+    this.router.post("/adoptar", this.controlador.adoptar);
     return this.router;
   }
 }

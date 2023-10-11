@@ -90,7 +90,7 @@ class RepositorioUser{
     }
 
     async guardarDatos(publicacion){
-        const id=new ObjectId(publicacion.usuario._id );
+        const id=new ObjectId(publicacion.idUsuario );
         try{
             const user = await this.usuariosCollection.findOne({ _id: id },{
                  $push: {misPublicaciones: publicacion},
