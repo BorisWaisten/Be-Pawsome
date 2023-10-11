@@ -19,12 +19,12 @@ export default async function PublicacionesList() {
         <>
           <ul>
            {publicaciones.map(publicacion => (
-             <li key={publicacion._id.$oid}>
-               <h3>{publicacion.titulo}</h3>
-               <div>
+             <li key={publicacion._id.$oid} className="card my-5">
+               <h3>Titulo: {publicacion.titulo}</h3>
+               <div className="flex">
                  {/* Imágenes del animal */}
                  {publicacion.animal.fotos.map((foto, index) => (
-                   <Image key={index} src={foto} alt={`Foto ${index + 1}`} width={150} height={150} quality={100}/> 
+                   <Image key={index} className="mr-4" src={foto} alt={`Foto ${index + 1}`} width={150} height={150} quality={100}/> 
                  ))}
                </div>
                <div>
