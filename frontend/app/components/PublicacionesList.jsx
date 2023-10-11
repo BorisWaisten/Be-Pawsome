@@ -13,7 +13,7 @@ async function getPublicaciones() {
 
 export default async function PublicacionesList() {
   const publicaciones = await getPublicaciones();
-  console.log(publicaciones);
+  //console.log(publicaciones);
   return (
         <>
           <ul>
@@ -21,8 +21,15 @@ export default async function PublicacionesList() {
              <li key={publicacion._id.$oid}>
                <h3>{publicacion.titulo}</h3>
                <div>
+               <Image
+          src='https://images.dog.ceo/breeds/akita/Akita_hiking_in_Shpella_e_Pellumbasit.jpg' 
+          alt='Galajo Logo'
+          width={70}
+          height={70}
+          quality={100}
+        />
                  {/* Imágenes del animal */}
-                 {publicacion.animal.fotos.map((foto, index) => (
+                 {/*publicacion.animal.fotos.map((foto, index) => (
                    <Image key={index} src={foto} alt={`Foto ${index + 1}`}/> 
                    
                  ))}
