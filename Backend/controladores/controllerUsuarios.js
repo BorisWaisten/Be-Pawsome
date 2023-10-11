@@ -58,7 +58,7 @@ class ControllerUsuario{
     
         const dataUser = {
           userLogueado:user,
-          accesToken: accesToken,
+          accesToken: accessToken,
           expiresIn: expiresIn
         }
         
