@@ -1,4 +1,4 @@
-// logica.jsx
+// login/logica.jsx
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
@@ -23,26 +23,24 @@ const Login = ({ onLogin }) => {
         }
       );
 
-      const storedUser = JSON.parse(sessionStorage.getItem("user"));
+      const storedUser = response.data.userLogueado;
       const idUsuario = storedUser ? storedUser._id : null;
+      const accessToken = response.data.accesToken; // Corregir la propiedad del token
 
-      if (idUsuario) {
+      if (idUsuario && accessToken) {
         // Resto del código para obtener el usuario
+        // Agregar el ID del usuario y el token a sessionStorage
+        sessionStorage.setItem("idUsuario", idUsuario);
+        sessionStorage.setItem("token", accessToken);
       } else {
-        console.error("No se pudo obtener el ID del usuario.");
+        console.error("No se pudo obtener el ID del usuario o el token.");
       }
 
-      // Almacena el token en sessionStorage
-      sessionStorage.setItem("token", response.data.accessToken);
-
       // Almacena el usuario en sessionStorage
-      sessionStorage.setItem(
-        "user",
-        JSON.stringify(response.data.userLogueado)
-      );
+      sessionStorage.setItem("user", JSON.stringify(storedUser));
 
       // Llama a la función onLogin pasando el usuario
-      onLogin(response.data.userLogueado); // Solo pasa el objeto de usuario, no toda la respuesta
+      onLogin(storedUser); // Solo pasa el objeto de usuario, no toda la respuesta
       setError(null); // Limpia cualquier error existente
     } catch (error) {
       if (axios.isAxiosError(error)) {

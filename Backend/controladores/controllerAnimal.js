@@ -18,7 +18,7 @@ class ControllerAnimal {
       idOferente: req.body.idOferente,
       historiaClinica: req.body.historiaClinica,
     };
-
+    console.log(nuevoAnimal);
     try {
       const animalCreado = await this.servicioAnimal.crearAnimal(nuevoAnimal);
       res.status(201).json(animalCreado);

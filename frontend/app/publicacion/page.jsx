@@ -1,11 +1,11 @@
+"use client";
 
-import React, { Children } from 'react';
+import React from 'react';
 import NuevaPublicacion from '../components/CreatePost';
 
 const Publicacion = () => {
   return (
     <main>
-      {Children}
       <NuevaPublicacion />
     </main>
   );
