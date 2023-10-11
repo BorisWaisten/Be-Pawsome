@@ -34,9 +34,7 @@ class ControllerUsuario{
             );
 
             const dataUser = {
-              name: user.nombre,
-              apellido: user.apellido,
-              mail: user.mail,
+              userRegistrado:user,
               accesToken: accesToken,
               expiresIn: expiresIn
             }
@@ -59,11 +57,9 @@ class ControllerUsuario{
         });
     
         const dataUser = {
-          name:user.name,
-          apellido:user.apellido,
-          mail:user.mail,
-          accessToken:accessToken,
-          expiresIn:expiresIn
+          userLogueado:user,
+          accesToken: accesToken,
+          expiresIn: expiresIn
         }
         
         
