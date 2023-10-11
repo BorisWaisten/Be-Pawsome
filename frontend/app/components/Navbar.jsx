@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import Logo from "public/logoBePawsome.png"
+import { REACT_LOADABLE_MANIFEST } from "next/dist/shared/lib/constants"
 
 export default function NavBar() {
   return (
@@ -14,10 +15,12 @@ export default function NavBar() {
             placeholder="blur"
         />
         <Link href="/"> Home </Link>
+        <Link href="/login">Publicaciones</Link>
         <Link href="/aboutUs">About Us</Link>
-        <Link href="/login">Login</Link>
 {/*     <Link href="/usuario/register">Register</Link>*/}
-        <Link href="/register">Registrarse</Link>
+        <Link className='' href="/register">Registrarse</Link>
+      
     </nav>
    )
 }
+

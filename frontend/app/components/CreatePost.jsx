@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export default function Logica() {
+export default function crearPublicacion() {
   const [titulo, setTitulo] = useState('');
   const [animal, setAnimal] = useState('');
 
@@ -32,7 +32,7 @@ export default function Logica() {
         Título:
         <input type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
       </label>
-      <br />
+      <br/>
       <label>
         Animal:
         <input type="text" value={animal} onChange={(e) => setAnimal(e.target.value)} />
