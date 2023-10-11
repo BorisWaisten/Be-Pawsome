@@ -1,15 +1,14 @@
+// logica.jsx
 "use client";
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Login = ({onLogin}) => {
+const Login = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     mail: '',
     password: '',
   });
 
-
-  //conecta con la base de datos
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -19,13 +18,12 @@ const Login = ({onLogin}) => {
         },
       });
       const { accessToken, user } = response.data;
-      
-      // Guardar el token y la información del usuario en localStorage
+
       sessionStorage.setItem('token', accessToken);
       sessionStorage.setItem('user', JSON.stringify(user));
-  
-      // Llamar a la función onLogin pasando tanto el token como el usuario completo
-      Login(response.data);
+
+      // Llama a la función onLogin con los datos del usuario
+      onLogin(response.data); // Cambio aquí
     } catch (error) {
       console.error(error);
     }
