@@ -17,6 +17,7 @@ class ServicioAnimal {
   async crearAnimal(animal) {
     try {
       //valido los datos
+      console.log(animal);
       animalRequest.validacionAnimal(animal);
       const nuevoAnimal = await this.repository.crearAnimal(animal);
       return nuevoAnimal;

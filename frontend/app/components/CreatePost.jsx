@@ -1,8 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 
-const Logica = ({ usuario, handleSubmit }) => {
-  const [formData, setFormData] = useState({
+const Logica = ({ usuario, handleSubmit, formData, updateFormData }) => {
+  const [localFormData, setFormData] = useState({
     titulo: '',
     nombre: '',
     fotos: [],
@@ -31,22 +31,43 @@ const Logica = ({ usuario, handleSubmit }) => {
 
   const handleFileChange = (e) => {
     const files = e.target.files;
-    // Lógica para manejar los archivos, por ejemplo, almacenarlos en formData.fotos
+    
+    // Crear un array de objetos para cada archivo seleccionado
+    const newFiles = Array.from(files).map(file => ({
+      name: file.name,
+      // Aquí puedes agregar más propiedades según tu necesidad
+    }));
+
+    updateFormData({
+      fotos: newFiles,
+    });
+
+    setFormData({
+      ...localFormData,
+      fotos: newFiles,
+    });
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+  
     if (name === 'tipoAnimal' && !['PERRO', 'GATO', 'CONEJO', 'REPTIL', 'VACA', 'PEZ'].includes(value)) {
       console.error('Tipo de animal no válido');
       return;
     }
-
+  
     setFormData({
       ...formData,
       [name]: value,
     });
+  
+    // Llama al método para actualizar formData después de actualizar el estado local
+    updateFormData({
+      [name]: value,
+    });
   };
+
+
 
   return (
     <form onSubmit={(e) => handleSubmit(e, localStorage.getItem('jwtToken'))}>
@@ -113,7 +134,7 @@ const Logica = ({ usuario, handleSubmit }) => {
 
       <label>
         Fotos:
-        <input type="file" name="fotos" value={formData.fotos} onChange={handleChange} multiple />
+        <input type="file" name="fotos" onChange={handleFileChange} multiple />
       </label>
 
       <button type="submit">Crear Publicación</button>

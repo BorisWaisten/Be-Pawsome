@@ -5,9 +5,25 @@ import NuevaPublicacion from '../components/CreatePost.jsx';
 import Usuario from '../usuario/page.jsx';
 
 const Publicacion = () => {
+  
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+
+   // Nuevo estado local para formData
+   const [formData, setFormData] = useState({
+    titulo: '',
+    nombre: '',
+    fotos: [],
+    edad: '',
+    tipoAnimal: '',
+    descripcion: '',
+    sexo: '',
+    pesoEnKg: '',
+    ubicacion: '',
+    historiaClinica: '',
+  });
 
   useEffect(() => {
     const obtenerUsuarioLogeado = async () => {
@@ -83,6 +99,16 @@ const Publicacion = () => {
     }
   };
   
+
+    // Método para actualizar formData
+    const updateFormData = (newData) => {
+      setFormData({
+        ...formData,
+        ...newData,
+      });
+    };
+
+
   // Si se está cargando, muestra un mensaje de carga
   if (loading) {
     return <div>Cargando usuario...</div>;
@@ -102,7 +128,8 @@ const Publicacion = () => {
   return (
     <main>
       <Usuario usuario={usuario} />
-      <NuevaPublicacion usuario={usuario} handleSubmit={handlePublicacionSubmit} />
+      {/* Pasar el estado local y el método de actualización como propiedades */}
+      <NuevaPublicacion formData={formData} updateFormData={updateFormData} handleSubmit={handlePublicacionSubmit} />
     </main>
   );
 };
