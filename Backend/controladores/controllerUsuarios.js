@@ -16,7 +16,7 @@ class ControllerUsuario{
             nombre: req.body.nombre,
             apellido: req.body.apellido,
             mail: req.body.mail,
-            password: bcrypt.hashSync(req.body.password, 10),
+            password: req.body.password,
             celular: req.body.celular,
             localidad: req.body.localidad,
             provincia: req.body.provincia,

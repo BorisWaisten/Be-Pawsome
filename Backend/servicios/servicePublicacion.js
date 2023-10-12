@@ -18,7 +18,8 @@ class ServicioPublicacion {
       //verifico que la publicacion fue creada
       if (publicacionCreada) {
         //de ser asi guardara los datos correspondientes al usuario que crea la publicacion
-        await this.servicioUsuario.guardarDatos(publicacionCreada);
+        await this.servicioUsuario.guardarDatos(publicacionCreada)
+        ;
       }
       return publicacion
     } catch (error) {

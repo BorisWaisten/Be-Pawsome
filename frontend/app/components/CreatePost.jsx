@@ -1,9 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Usuario from '../usuario/page';
 
-const Logica = () => {
+const Logica = ({ usuario, handleSubmit }) => {
   const [formData, setFormData] = useState({
     titulo: '',
     nombre: '',
@@ -20,7 +18,8 @@ const Logica = () => {
   const SEXO = {
     MACHO: 'MACHO',
     HEMBRA: 'HEMBRA',
-  }
+  };
+
   const TIPOANIMAL = {
     PERRO: 'PERRO',
     GATO: 'GATO',
@@ -31,80 +30,14 @@ const Logica = () => {
   };
 
   const handleFileChange = (e) => {
-    // Manejar la carga de archivos (fotos) si es necesario
     const files = e.target.files;
     // Lógica para manejar los archivos, por ejemplo, almacenarlos en formData.fotos
-  };
-
-  const [usuario, setUsuario] = useState(null);
-
-  useEffect(() => {
-    const obtenerUsuarioLogeado = async () => {
-      try {
-        const usuarioEnSesion = JSON.parse(sessionStorage.getItem('user'));
-        if (usuarioEnSesion && usuarioEnSesion._id) {
-          const idUsuario = usuarioEnSesion._id;
-          const response = await axios.get(`http://localhost:5000/usuarios/${idUsuario}`, {
-            headers: {
-              Authorization: `Bearer ${sessionStorage.getItem('token')}`
-            }
-          });
-          
-          console.log(response.data);
-          setUsuario(response.data);
-          setError(null);
-        } else {
-          setError('No se pudo obtener el ID del usuario de la sesión.');
-        }
-      } catch (error) {
-        console.error(error);
-        setError('Error al cargar los datos del usuario.');
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    obtenerUsuarioLogeado();
-  }, []);
-
-  const handleSubmit = async (e, token) => {
-    e.preventDefault();
-
-    try {
-      // Crear el animal primero
-      const animalResponse = await axios.post(
-        'http://localhost:5000/animal/crear',
-        formData // Puedes ajustar esto según tu API de creación de animales
-      );
-
-      // Luego, utilizar la respuesta del animal para crear la publicación
-      const response = await axios.post(
-        'http://localhost:5000/publicacion/crear',
-        {
-          titulo: formData.titulo,
-          idUsuario: usuario,
-          animal: animalResponse.data, // Usar la respuesta del animal
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      console.log('Publicación creada:', response.data);
-      // Puedes manejar la respuesta del servidor según tus necesidades.
-    } catch (error) {
-      console.error('Error al crear la publicación:', error);
-      // Puedes manejar los errores de la solicitud aquí.
-    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     if (name === 'tipoAnimal' && !['PERRO', 'GATO', 'CONEJO', 'REPTIL', 'VACA', 'PEZ'].includes(value)) {
-      // Manejar el error o mostrar un mensaje al usuario
       console.error('Tipo de animal no válido');
       return;
     }
@@ -180,7 +113,7 @@ const Logica = () => {
 
       <label>
         Fotos:
-        <input type="file" name="fotos" onChange={handleFileChange} multiple />
+        <input type="file" name="fotos" value={formData.fotos} onChange={handleChange} multiple />
       </label>
 
       <button type="submit">Crear Publicación</button>
