@@ -31,12 +31,10 @@ const Logica = ({ usuario, handleSubmit, formData, updateFormData }) => {
 
   const handleFileChange = (e) => {
     const files = e.target.files;
-    
-    // Crear un array de objetos para cada archivo seleccionado
-    const newFiles = Array.from(files).map(file => ({
-      name: file.name,
-      // Aquí puedes agregar más propiedades según tu necesidad
-    }));
+  
+    // Crear un array de rutas de archivos
+    console.log(files);
+    const newFiles = Array.from(files).map(file => file.name);
 
     updateFormData({
       fotos: newFiles,

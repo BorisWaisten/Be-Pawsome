@@ -3,6 +3,8 @@ import { AnimalRequestError } from "../errores.js";
 import ServicioUsuario from "./serviceUsuarios.js";
 import animalRequest from "../validacionRequest/animalRequest.js";
 import { ObjectId } from "mongodb";
+import uploadImages from "../cloudinary.js"
+
 
 class ServicioAnimal {
   constructor() {
@@ -17,7 +19,9 @@ class ServicioAnimal {
   async crearAnimal(animal) {
     try {
       //valido los datos
-      console.log(animal);
+      console.log(animal.fotos + " animal 1");
+      fotosGuardadas = await uploadImages(animal.fotos);
+      animal.fotos = fotosGuardadas;
       animalRequest.validacionAnimal(animal);
       const nuevoAnimal = await this.repository.crearAnimal(animal);
       return nuevoAnimal;
