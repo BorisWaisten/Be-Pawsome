@@ -1,10 +1,6 @@
 import Joi from "joi";
 import { ValidateError } from "../errores.js";
 
-
-import bcrypt from 'bcrypt'
-const saltRounds = 10; // Número de rondas de sal (mayor es más seguro pero más lento)
-
 const validacionRegister = async usuario => {
     try {
         const usuarioSchema = Joi.object({

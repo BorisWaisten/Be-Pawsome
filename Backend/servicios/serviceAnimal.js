@@ -3,7 +3,7 @@ import { AnimalRequestError } from "../errores.js";
 import ServicioUsuario from "./serviceUsuarios.js";
 import animalRequest from "../validacionRequest/animalRequest.js";
 import { ObjectId } from "mongodb";
-import uploadImages from "../cloudinary.js"
+//import uploadImages from "../cloudinary.js"
 
 
 class ServicioAnimal {
@@ -20,8 +20,8 @@ class ServicioAnimal {
     try {
       //valido los datos
       console.log(animal.fotos + " animal 1");
-      fotosGuardadas = await uploadImages(animal.fotos);
-      animal.fotos = fotosGuardadas;
+      //fotosGuardadas = await uploadImages(animal.fotos);
+      //animal.fotos = fotosGuardadas;
       animalRequest.validacionAnimal(animal);
       const nuevoAnimal = await this.repository.crearAnimal(animal);
       return nuevoAnimal;

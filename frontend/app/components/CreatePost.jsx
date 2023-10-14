@@ -1,11 +1,11 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 
-const Logica = ({ usuario, handleSubmit, formData, updateFormData }) => {
+const Logica = ({ handleSubmit, formData, updateFormData }) => {
   const [localFormData, setFormData] = useState({
     titulo: '',
     nombre: '',
-    fotos: [],
+    //fotos: [],
     edad: '',
     tipoAnimal: '',
     descripcion: '',
@@ -29,31 +29,26 @@ const Logica = ({ usuario, handleSubmit, formData, updateFormData }) => {
     PEZ: 'PEZ',
   };
 
-  const handleFileChange = (e) => {
-    const files = e.target.files;
+  // const handleFileChange = (e) => {
+  //   const files = e.target.files;
   
-    // Crear un array de rutas de archivos
-    console.log(files);
-    const newFiles = Array.from(files).map(file => file.name);
+  //   // Crear un array de rutas de archivos
+  //   console.log(files);
+  //   const newFiles = Array.from(files).map(file => file.name);
 
-    updateFormData({
-      fotos: newFiles,
-    });
+  //   updateFormData({
+  //     fotos: newFiles,
+  //   });
 
-    setFormData({
-      ...localFormData,
-      fotos: newFiles,
-    });
-  };
+  //   setFormData({
+  //     ...localFormData,
+  //     fotos: newFiles,
+  //   });
+  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
-    if (name === 'tipoAnimal' && !['PERRO', 'GATO', 'CONEJO', 'REPTIL', 'VACA', 'PEZ'].includes(value)) {
-      console.error('Tipo de animal no válido');
-      return;
-    }
-  
+
     setFormData({
       ...formData,
       [name]: value,
@@ -107,12 +102,11 @@ const Logica = ({ usuario, handleSubmit, formData, updateFormData }) => {
           <label>
             Sexo:
             <select name="sexo" value={formData.sexo} onChange={handleChange}>
-              {Object.values(SEXO).map((tipo) => (
-                <option key={tipo} value={tipo}>
-                  {tipo}
-                </option>
-              ))}
-            </select>          </label>
+              <option value="MACHO">MACHO</option>
+              <option value="HEMBRA">HEMBRA</option>
+            </select>
+                      
+            </label>
           <label>
             Peso en Kg:
             <input type="text" name="pesoEnKg" value={formData.pesoEnKg} onChange={handleChange} />
@@ -130,10 +124,10 @@ const Logica = ({ usuario, handleSubmit, formData, updateFormData }) => {
         <input type="text" name="historiaClinica" value={formData.historiaClinica} onChange={handleChange} />
       </label>
 
-      <label>
+      {/* <label>
         Fotos:
         <input type="file" name="fotos" onChange={handleFileChange} multiple />
-      </label>
+      </label> */}
 
       <button type="submit">Crear Publicación</button>
     </form>

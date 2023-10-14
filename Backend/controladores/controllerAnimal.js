@@ -6,9 +6,11 @@ class ControllerAnimal {
     this.servicioAnimal = new ServicioAnimal();
   }
   crearAnimal = async (req, res) => {
+    console.log(req.body.descripcion);
+    
     const nuevoAnimal = {
       nombre: req.body.nombre,
-      fotos: req.body.fotos,
+      fotos: ["hola","chau"],
       edad: req.body.edad,
       tipoAnimal: req.body.tipoAnimal,
       descripcion: req.body.descripcion,

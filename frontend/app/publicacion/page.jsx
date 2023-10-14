@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NuevaPublicacion from '../components/CreatePost.jsx';
-import Usuario from '../usuario/page.jsx';
 
 const Publicacion = () => {
   
@@ -57,15 +56,17 @@ const Publicacion = () => {
     e.preventDefault();
   
     try {
+
+      console.log(formData.tipoAnimal);
       // Crear el animal primero
       const animalResponse = await axios.post(
         'http://localhost:5000/animal/crear',
         {
           nombre: formData.nombre,  // Ajusta según la estructura de tu formulario
-          fotos: formData.fotos,
+          //fotos: formData.fotos,
           edad: formData.edad,
           tipoAnimal: formData.tipoAnimal,
-          descipcion: formData.descripcion,
+          descripcion: formData.descripcion,
           sexo: formData.sexo,
           pesoEnKg: formData.pesoEnKg,
           ubicacion: formData.ubicacion,
@@ -127,7 +128,6 @@ const Publicacion = () => {
   // Muestra los detalles del usuario y el formulario de nueva publicación
   return (
     <main>
-      <Usuario usuario={usuario} />
       {/* Pasar el estado local y el método de actualización como propiedades */}
       <NuevaPublicacion formData={formData} updateFormData={updateFormData} handleSubmit={handlePublicacionSubmit} />
     </main>
