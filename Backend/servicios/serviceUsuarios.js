@@ -2,8 +2,10 @@ import ModelUsuario from "../repositorios/repositorioUser.js";
 import UserRequest from "../validacionRequest/userRequest.js";
 import { InvalidCredentialsError,UsuarioNotFoundError } from "../errores.js";
 import pushEmail from "../helpers/emailPassword.js";
-import bcrypt from 'bcrypt'
 import { ObjectId } from "mongodb";
+
+const saltRounds = 10; // Número de rondas de sal (mayor es más seguro pero más lento)
+import bcrypt from 'bcrypt'
 
 class ServicioUsuario{
 
@@ -17,11 +19,18 @@ class ServicioUsuario{
 
     register = async (usuario) =>{
       try{
-        UserRequest.validacionRegister(usuario)
+
+        await UserRequest.validacionRegister(usuario)
+
         const validarEmail = await this.model.buscarEmail(usuario.mail)
         if (validarEmail){
           throw new InvalidCredentialsError("El email " + usuario.mail + " ya se encuentra registrado!")
-        } 
+        }
+        
+        //Encripto la contrasenia 
+        const contraseniaEncryptada = await bcrypt.hash(usuario.password, saltRounds)
+        usuario.password = contraseniaEncryptada
+        
         return  await this.model.registro(usuario)
       }catch (error) {
         throw error;
