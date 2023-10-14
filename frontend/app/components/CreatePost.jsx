@@ -83,12 +83,12 @@ const Logica = ({ handleSubmit, formData, updateFormData }) => {
           <label>
             Tipo Animal:
             <select name="tipoAnimal" value={formData.tipoAnimal} onChange={handleChange}>
-              <option value="PERRO">Perro</option>
-              <option value="GATO">Gato</option>
-              <option value="CONEJO">Conejo</option>
-              <option value="REPTIL">Reptil</option>
-              <option value="VACA">Vaca</option>
-              <option value="PEZ">Pez</option>
+              <option value="TIPOANIMAL.PERRO">Perro</option>
+              <option value="TIPOANIMAL.GATO">Gato</option>
+              <option value="TIPOANIMAL.CONEJO">Conejo</option>
+              <option value="TIPOANIMAL.REPTIL">Reptil</option>
+              <option value="TIPOANIMAL.VACA">Vaca</option>
+              <option value="TIPOANIMAL.PEZ">Pez</option>
             </select>
           </label>
           {/* Otros campos para la primera columna */}
@@ -102,8 +102,8 @@ const Logica = ({ handleSubmit, formData, updateFormData }) => {
           <label>
             Sexo:
             <select name="sexo" value={formData.sexo} onChange={handleChange}>
-              <option value="MACHO">MACHO</option>
-              <option value="HEMBRA">HEMBRA</option>
+              <option value="SEXO.MACHO">MACHO</option>
+              <option value="SEXO.HEMBRA">HEMBRA</option>
             </select>
                       
             </label>

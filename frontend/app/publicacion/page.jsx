@@ -16,9 +16,9 @@ const Publicacion = () => {
     nombre: '',
     fotos: [],
     edad: '',
-    tipoAnimal: '',
+    tipoAnimal: 'PERRO',
     descripcion: '',
-    sexo: '',
+    sexo: 'MACHO',
     pesoEnKg: '',
     ubicacion: '',
     historiaClinica: '',
@@ -58,6 +58,7 @@ const Publicacion = () => {
     try {
 
       console.log(formData.tipoAnimal);
+      console.log(formData) // quiero probar que sale
       // Crear el animal primero
       const animalResponse = await axios.post(
         'http://localhost:5000/animal/crear',

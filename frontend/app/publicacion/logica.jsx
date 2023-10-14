@@ -91,7 +91,7 @@ const Logica = () => {
 
       {/* Otros campos similares para tipoAnimal, descripcion, sexo, pesoEnKg, ubicacion, historiaClinica */}
 
-      <button type="submit">Crear Publicación</button>
+      <button type="submit">Crear estoooo Publicación Srasa</button>
     </form>
   );
 };
