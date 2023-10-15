@@ -30,7 +30,13 @@ export default async function PublicacionesList() {
                <div>
                  {/* Detalles del animal */}
                  <p>Nombre: {publicacion.animal.nombre}</p>
-                 <p>Edad: {publicacion.animal.edad} años</p> 
+                 <p>Edad: {publicacion.animal.edad} años</p>
+                 <p>Peso: {publicacion.animal.pesoEnKg} kg</p>
+                 <p>Sexo: {publicacion.animal.sexo}</p>
+                 <p>Descripcion: {publicacion.animal.descripcion} </p>
+                 <p>Ubicacion: {publicacion.animal.ubicacion}</p>
+                 <p>Historia Clinica: {publicacion.animal.historiaClinica}</p>
+                 
                  {/* Agrega más detalles según la estructura de tus datos */}
                </div>
                <div>
