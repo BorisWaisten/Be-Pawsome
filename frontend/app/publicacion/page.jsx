@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import NuevaPublicacion from '../components/CreatePost.jsx';
+import CreatePublicacion from './CreatePublicacion.jsx';
 
 const Publicacion = () => {
   
@@ -16,9 +16,9 @@ const Publicacion = () => {
     nombre: '',
     fotos: [],
     edad: '',
-    tipoAnimal: 'PERRO', //PERRO
+    tipoAnimal: '', //PERRO
     descripcion: '',
-    sexo: 'MACHO', //MACHO
+    sexo: '', //MACHO
     pesoEnKg: '',
     ubicacion: '',
     historiaClinica: '',
@@ -130,7 +130,7 @@ const Publicacion = () => {
   return (
     <main>
       {/* Pasar el estado local y el método de actualización como propiedades */}
-      <NuevaPublicacion formData={formData} updateFormData={updateFormData} handleSubmit={handlePublicacionSubmit} />
+      <CreatePublicacion formData={formData} updateFormData={updateFormData} handleSubmit={handlePublicacionSubmit} />
     </main>
   );
 };

@@ -41,6 +41,7 @@ export default async function PublicacionesList() {
                </div>
                <div>
                  {/* Nombre del usuario */}
+                 <p>Usuario Oferente: {publicacion.idUsuario}</p>
                  {/*<h4>Publicado por: {publicacion.animal.oferente.nombre} {publicacion.animal.oferente.apellido}</h4>*/}
                </div>
              </li>
