@@ -16,9 +16,9 @@ const Publicacion = () => {
     nombre: '',
     fotos: [],
     edad: '',
-    tipoAnimal: 'PERRO',
+    tipoAnimal: 'PERRO', //PERRO
     descripcion: '',
-    sexo: 'MACHO',
+    sexo: 'MACHO', //MACHO
     pesoEnKg: '',
     ubicacion: '',
     historiaClinica: '',
