@@ -18,10 +18,6 @@ class ServicioAnimal {
 
   async crearAnimal(animal) {
     try {
-      //valido los datos
-      console.log(animal.fotos + " animal 1");
-      //fotosGuardadas = await uploadImages(animal.fotos);
-      //animal.fotos = fotosGuardadas;
       animalRequest.validacionAnimal(animal);
       const nuevoAnimal = await this.repository.crearAnimal(animal);
       return nuevoAnimal;
