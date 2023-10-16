@@ -50,10 +50,12 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
     const { name, value } = e.target;
 
     if (name === 'sexo') {
+      console.log(value);
       localFormData.sexo = value;
     }
 
     if (name === 'tipoAnimal') {
+      console.log(value);
       localFormData.tipoAnimal = value;
     }
     
@@ -92,6 +94,7 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
           <label>
             Tipo Animal:
             <select name="tipoAnimal" value={formData.tipoAnimal} onChange={handleChange}>
+              <option value="">Selecciona el tipo</option>
               <option value="PERRO">Perro</option>
               <option value="GATO">Gato</option>
               <option value="CONEJO">Conejo</option>
@@ -111,6 +114,7 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
           <label>
             Sexo:
             <select name="sexo" value={formData.sexo} onChange={handleChange}>
+               <option value="" placeholder='Seleciona el sexo del animal'>Selecciona el sexo</option>
               <option value="MACHO">MACHO</option>
               <option value="HEMBRA">HEMBRA</option>
             </select>
