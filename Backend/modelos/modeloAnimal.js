@@ -1,5 +1,5 @@
  class Animal {
-    constructor(nombre, fotos, edad, tipoAnimal, descripcion, sexo, pesoEnKg, ubicacion, idOferente ,historiaClinica) {
+    constructor(nombre, fotos, edad, tipoAnimal, descripcion, sexo, pesoEnKg, ubicacion, oferente ,historiaClinica) {
       this.nombre = nombre;
       this.fotos = fotos;
       this.edad = edad;
@@ -8,7 +8,7 @@
       this.sexo = sexo;
       this.pesoEnKg = pesoEnKg;
       this.ubicacion = ubicacion;
-      this.idOferente = idOferente;
+      this.oferente = oferente;
       this.adoptante = null;
       this.historiaClinica = historiaClinica;
     }
