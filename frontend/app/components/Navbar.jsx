@@ -53,13 +53,18 @@ export default function NavBar() {
         />
         <Link href="/">Home </Link>
         <Link href="/aboutUs">About Us</Link>
-        <Link href="/register">Registrarse</Link>
-        <Link href="/publicacion">Crear Publicacion</Link>
-        {/*<Link href="/publicacion">Publicacion</Link>*/}
-        {/*<Link href="/usuario/register">Register</Link>*/}
-        {/*<Link className='' href="/register">Registrarse</Link>*/}      
-        <Link href="/usuario">Ajustes de Usuario</Link>
-        
+        <Link href="/registrar">Registrarse</Link>
+
+        {usuario && (
+          <>
+            {/* Renderizar estos enlaces solo si el usuario está presente */}
+            <Link href="/publicacion">Crear Publicacion</Link>
+            <Link href="/usuario">Ajustes de Usuario</Link>
+          </>
+        )}
+      {!usuario && (
+        <Link href="/login">Login</Link>
+      )}
       </div>
     </nav>
   );
