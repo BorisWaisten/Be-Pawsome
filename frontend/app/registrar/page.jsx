@@ -1,5 +1,5 @@
 import React from 'react';
-import Logica from '../components/FormRegister';
+import Logica from './FormRegister';
 
 export default function RegistrarPage() {
   return (
