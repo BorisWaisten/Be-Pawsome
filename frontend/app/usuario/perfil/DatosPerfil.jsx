@@ -1,38 +1,31 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { obtenerUsuarioLogeado } from '@/app/persistencia/usuarioLogueado';
 
-export default function DatosPerfil() {
+export default function Usuario() {
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const obtenerUsuarioLogeado = async () => {
+    const cargarUsuario = async () => {
       try {
-        const usuarioEnSesion = JSON.parse(sessionStorage.getItem('user'));
-        if (usuarioEnSesion && usuarioEnSesion._id) {
-          const idUsuario = usuarioEnSesion._id;
-          const response = await axios.get(`http://localhost:5000/usuarios/${idUsuario}`, {
-            headers: {
-              Authorization: `Bearer ${sessionStorage.getItem('token')}`
-            }
-          });
-          
-          setUsuario(response.data);
+        const { usuario, error } = await obtenerUsuarioLogeado();
+        if (usuario) {
+          setUsuario(usuario);
           setError(null);
         } else {
-          setError('No se pudo obtener el ID del usuario de la sesión.');
+          setError(error);
         }
       } catch (error) {
         console.error(error);
-        setError('Error al cargar los datos del usuario.');
       } finally {
         setLoading(false);
       }
     };
   
-    obtenerUsuarioLogeado();
+    cargarUsuario();
   }, []);
 
   // Si se está cargando, muestra un mensaje de carga

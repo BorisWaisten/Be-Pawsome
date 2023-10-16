@@ -30,6 +30,12 @@ export default function NavBar() {
     cargarUsuario();
   }, []);
 
+  useEffect(() => {
+    // Este efecto se ejecutará cada vez que cambie el estado de usuario
+    // Aquí puedes agregar lógica adicional si es necesario
+  }, [usuario]);
+
+
   if (loading) {
     return <div>Cargando...</div>;
   }
@@ -48,16 +54,18 @@ export default function NavBar() {
         <Link href="/">Home </Link>
         <Link href="/aboutUs">About Us</Link>
         <Link href="/register">Registrarse</Link>
-        <Link href="/publicacion">Crear Publicacion</Link>
 
         {usuario && (
           <>
             {/* Renderizar estos enlaces solo si el usuario está presente */}
+            <Link href="/publicacion">Crear Publicacion</Link>
             <Link href="/usuario">Ajustes de Usuario</Link>
           </>
         )}
+      {!usuario && (
+        <Link href="/login">Login</Link>
+      )}
       </div>
-      <Link href="/login">Login</Link>
     </nav>
   );
 }
