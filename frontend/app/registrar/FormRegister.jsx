@@ -1,18 +1,18 @@
-"use client"
-import axios from 'axios';
-import React, { useState } from 'react';
+"use client";
+import axios from "axios";
+import React, { useState } from "react";
 
 function Registrar() {
   const [formData, setFormData] = useState({
-    nombre: '',
-    apellido: '',
-    mail: '',
-    password: '',
-    celular: '',
-    localidad: '',
-    provincia: '',
-    nacionalidad: '',
-    codigoPostal: ''
+    nombre: "",
+    apellido: "",
+    mail: "",
+    password: "",
+    celular: "",
+    localidad: "",
+    provincia: "",
+    nacionalidad: "",
+    codigoPostal: "",
   });
 
   const [apiError, setApiError] = useState(null);
@@ -35,11 +35,15 @@ function Registrar() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/usuarios/register', formData, {
-        headers: {
-          'Content-Type': 'application/json'
+      const response = await axios.post(
+        "http://localhost:5000/usuarios/register",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
       console.log(response.data); // Maneja la respuesta del servidor según tus necesidades, por ejemplo, muestra un mensaje de éxito al usuario.
     } catch (error) {
       setApiError(error.response.data);
@@ -52,36 +56,105 @@ function Registrar() {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   return (
-    <div>
-      <h2>Registrarse</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Nombre" onChange={handleChange} required />
-        <label htmlFor="apellido">Apellido:</label>
-        <input type="text" id="apellido" name="apellido" placeholder="Apellido" onChange={handleChange} required />
-        <label htmlFor="mail">Email:</label>
-        <input type="email" id="mail" name="mail" placeholder="Email" onChange={handleChange} required />
-        <label htmlFor="password">Contraseña:</label>
-        <input type="password" id="password" name="password" placeholder="Contraseña" onChange={handleChange} required />
-        <label htmlFor="celular">Celular:</label>
-        <input type="text" id="celular" name="celular" placeholder="Celular" onChange={handleChange} required />
-        <label htmlFor="localidad">Localidad:</label>
-        <input type="text" id="localidad" name="localidad" placeholder="Localidad" onChange={handleChange} required />
-        <label htmlFor="provincia">Provincia:</label>
-        <input type="text" id="provincia" name="provincia" placeholder="Provincia" onChange={handleChange} required />
-        <label htmlFor="nacionalidad">Nacionalidad:</label>
-        <input type="text" id="nacionalidad" name="nacionalidad" placeholder="Nacionalidad" onChange={handleChange} required />
-        <label htmlFor="codigoPostal">Código Postal:</label>
-        <input type="text" id="codigoPostal" name="codigoPostal" placeholder="Código Postal" onChange={handleChange} required />
-        <button type="submit" >Registrarse</button>
-      </form>
-      {apiError && <p>{apiError}</p>}
-    </div>
+    <>
+      <div>
+        <h2>Registrarse</h2>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="nombre">Nombre:</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            placeholder="Nombre"
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="apellido">Apellido:</label>
+          <input
+            type="text"
+            id="apellido"
+            name="apellido"
+            placeholder="Apellido"
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="mail">Email:</label>
+          <input
+            type="email"
+            id="mail"
+            name="mail"
+            placeholder="Email"
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="password">Contraseña:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Contraseña"
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="celular">Celular:</label>
+          <input
+            type="text"
+            id="celular"
+            name="celular"
+            placeholder="Celular"
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="localidad">Localidad:</label>
+          <input
+            type="text"
+            id="localidad"
+            name="localidad"
+            placeholder="Localidad"
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="provincia">Provincia:</label>
+          <input
+            type="text"
+            id="provincia"
+            name="provincia"
+            placeholder="Provincia"
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="nacionalidad">Nacionalidad:</label>
+          <input
+            type="text"
+            id="nacionalidad"
+            name="nacionalidad"
+            placeholder="Nacionalidad"
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="codigoPostal">Código Postal:</label>
+          <input
+            type="text"
+            id="codigoPostal"
+            name="codigoPostal"
+            placeholder="Código Postal"
+            onChange={handleChange}
+            required
+          />
+          <button type="submit">Registrarse</button>
+        </form>
+      </div>
+      {apiError && (
+        <div className="error card my-5">
+          <p>{apiError}</p>
+        </div>
+      )}
+    </>
   );
 }
 
