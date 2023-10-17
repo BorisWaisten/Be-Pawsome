@@ -4,7 +4,7 @@ import { ValidateError } from "../errores.js";
 const validacionPublicacion = publicacion => {
     const publicacionSchema = Joi.object({
         titulo: Joi.string().required(),
-        idUsuario: Joi.string().required(),
+        usuario: Joi.object().required(),
         animal: Joi.object().required()
     });
     

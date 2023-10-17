@@ -14,7 +14,7 @@ const validacionAnimal = animal => {
         sexo: Joi.string().valid(...sexoValidacion).required(),
         pesoEnKg: Joi.number().required(),
         ubicacion: Joi.string().required(),
-        idOferente: Joi.string().required(),
+        oferente: Joi.object().required(),
         historiaClinica: Joi.string().required()
     });
 

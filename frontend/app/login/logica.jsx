@@ -1,9 +1,11 @@
 // login/logica.jsx
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation"
 import axios from "axios";
 
 const Login = ({ onLogin }) => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     mail: "",
     password: "",
@@ -42,6 +44,13 @@ const Login = ({ onLogin }) => {
       // Llama a la función onLogin pasando el usuario
       onLogin(storedUser); // Solo pasa el objeto de usuario, no toda la respuesta
       setError(null); // Limpia cualquier error existente
+    
+      // Si esta todo bien redirige al usuario a la página principal
+     
+      router.refresh()
+      router.push('/')
+      
+
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response.status === 401) {
