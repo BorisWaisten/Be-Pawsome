@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "public/logoBePawsome.png";
-import { obtenerUsuarioLogeado } from "../persistencia/usuarioLogueado";
+import { obtenerUsuarioLogeado } from "../persistencia/peticiones";
 
 export default function NavBar() {
   const [usuario, setUsuario] = useState(null);

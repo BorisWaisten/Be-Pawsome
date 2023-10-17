@@ -1,18 +1,15 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { obtenerUsuarioLogeado } from '@/app/persistencia/usuarioLogueado';
-
+import { obtenerUsuarioLogeado,editarUsuario } from '@/app/persistencia/peticiones';
 export default function Usuario() {
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false); // Estado para mostrar/ocultar el modal
   const [nuevosDatos, setNuevosDatos] = useState({
-    imagenPerfil: null,
+   // imagenPerfil: "https://img2.freepng.es/20180331/khw/kisspng-computer-icons-user-clip-art-user-5abf13d4b67e20.4808850915224718927475.jpg",
     nombre: '',
     apellido: '',
-    mail: '',
     celular: '',
     localidad: '',
     provincia: '',
@@ -30,10 +27,9 @@ export default function Usuario() {
           setError(null);
           // Puedes establecer los valores iniciales del formulario con los datos del usuario aquí
           setNuevosDatos({
-            imagenPerfil: usuario.imagenPerfil,
+            //imagenPerfil: usuario.imagenPerfil,
             nombre: usuario.nombre,
             apellido: usuario.apellido,
-            mail: usuario.mail,
             celular: usuario.celular,
             localidad: usuario.localidad,
             provincia: usuario.provincia,
@@ -58,22 +54,22 @@ export default function Usuario() {
     setModalVisible(true); // Mostrar el modal al hacer clic en "Editar"
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    // Verifica que se haya seleccionado un archivo
-    if (file) {
-      setNuevosDatos(prevState => ({
-        ...prevState,
-        imagenPerfil: file
-      }));
-    }
-  };
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   // Verifica que se haya seleccionado un archivo
+  //   if (file) {
+  //     setNuevosDatos(prevState => ({
+  //       ...prevState,
+  //       imagenPerfil: file
+  //     }));
+  //   }
+  // };
 
   const handleGuardarCambios = async (e) => {
     e.preventDefault();
     try {
       // Hacer una solicitud PUT para actualizar los datos del usuario en el backend
-      await axios.put(`http://localhost:5000/usuarios/${usuario._id}`, nuevosDatos);
+      setUsuario(await editarUsuario(usuario._id, nuevosDatos));
 
       setModalVisible(false); // Cerrar el modal después de guardar los cambios
 
@@ -111,7 +107,6 @@ export default function Usuario() {
       <img src={usuario.imagenPerfil} alt="Foto de perfil" style={{ width: '150px', height: '150px' }} />
       <p>Nombre: {usuario.nombre}</p>
       <p>Apellido: {usuario.apellido}</p>
-      <p>Email: {usuario.mail}</p>
       <p>Celular: {usuario.celular}</p>
       <p>Localidad: {usuario.localidad}</p>
       <p>Provincia: {usuario.provincia}</p>
@@ -123,10 +118,10 @@ export default function Usuario() {
       {modalVisible && (
         <div className="modal">
           <form onSubmit={handleGuardarCambios}>
-            <label>
+            {/* <label>
               Imagen de Perfil:
               <input type="file" accept="image/*" onChange={handleFileChange} />
-            </label>
+            </label> */}
             <label>
               Nombre:
               <input type="text" name="nombre" value={nuevosDatos.nombre} onChange={handleInputChange} />
@@ -134,10 +129,6 @@ export default function Usuario() {
             <label>
               Apellido:
               <input type="text" name="apellido" value={nuevosDatos.apellido} onChange={handleInputChange} />
-            </label>
-            <label>
-              Email:
-              <input type="email" name="mail" value={nuevosDatos.mail} onChange={handleInputChange} />
             </label>
             <label>
               Celular:
