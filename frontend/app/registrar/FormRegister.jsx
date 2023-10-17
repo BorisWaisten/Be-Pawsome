@@ -1,4 +1,5 @@
 "use client"
+import axios from 'axios';
 import React, { useState } from 'react';
 
 function Registrar() {
@@ -14,30 +15,36 @@ function Registrar() {
     codigoPostal: ''
   });
 
-  const [error,setError] = useState(null);
-
+  const [apiError, setApiError] = useState(null);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await fetch('http://localhost:5000/usuarios/register', {
+  //       method: 'POST',
+  //       body: JSON.stringify(formData),
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
+  //     const data = await response.json();
+  //     console.log(data); // Manejar la respuesta del servidor según tus necesidades, por ejemplo, mostrar un mensaje de éxito al usuario.
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const errors = null;
     try {
-      const response = await fetch('http://localhost:5000/usuarios/register', {
-        method: 'POST',
-        body: JSON.stringify(formData),
+      const response = await axios.post('http://localhost:5000/usuarios/register', formData, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
-
-      if (!response.ok) {
-        const data = await response.json();
-        setError(data.error); // Manejar el mensaje de error del servidor
-        return;
-      }
-
-      const data = await response.json();
-      console.log(data); // Manejar la respuesta del servidor según tus necesidades, por ejemplo, mostrar un mensaje de éxito al usuario.
+      console.log(response.data); // Maneja la respuesta del servidor según tus necesidades, por ejemplo, muestra un mensaje de éxito al usuario.
     } catch (error) {
-      console.error(error);
+      setApiError(error.response.data);
+      //console.log(apiError);
+      console.error(error.response.data);
     }
   };
 
@@ -71,12 +78,11 @@ function Registrar() {
         <input type="text" id="nacionalidad" name="nacionalidad" placeholder="Nacionalidad" onChange={handleChange} required />
         <label htmlFor="codigoPostal">Código Postal:</label>
         <input type="text" id="codigoPostal" name="codigoPostal" placeholder="Código Postal" onChange={handleChange} required />
-        <button type="submit">Registrarse</button>
+        <button type="submit" >Registrarse</button>
       </form>
-      {error && <h5 className="text-danger">{error}</h5>}    
+      {apiError && <p>{apiError}</p>}
     </div>
   );
 }
 
 export default Registrar;
-
