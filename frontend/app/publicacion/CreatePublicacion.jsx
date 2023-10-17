@@ -5,7 +5,7 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
   const [localFormData, setFormData] = useState({
     titulo: '',
     nombre: '',
-    //fotos: [],
+    fotos: [],
     edad: '',
     tipoAnimal: '',
     descripcion: '',

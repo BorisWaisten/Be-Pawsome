@@ -56,7 +56,7 @@ const Publicacion = () => {
         'http://localhost:5000/animal/crear',
         {
           nombre: formData.nombre,  // Ajusta según la estructura de tu formulario
-          //fotos: formData.fotos,
+          fotos: ["https://images.dog.ceo/breeds/affenpinscher/n02110627_735.jpg"],
           edad: formData.edad,
           tipoAnimal: formData.tipoAnimal,
           descripcion: formData.descripcion,

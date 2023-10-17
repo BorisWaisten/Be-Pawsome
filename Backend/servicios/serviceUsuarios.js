@@ -153,16 +153,6 @@ class ServicioUsuario{
       }
     }
 
-    guardarDatos = async (publicacion)=>{
-      try {
-        //guardo los datos correspondientes al usuario que crea la publicacion
-        //guardando la publicacion y el animal en las listas del usuario
-        await this.model.guardarDatos(publicacion);
-      } catch (error) {
-        throw error
-      }
-    }
-
 }
 
 export default ServicioUsuario
