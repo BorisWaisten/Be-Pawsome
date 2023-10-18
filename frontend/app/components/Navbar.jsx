@@ -6,6 +6,13 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "public/logoBePawsome.png";
 import { obtenerUsuarioLogeado } from "../persistencia/peticiones";
+'use client'
+import Link from "next/link"
+import Image from "next/image"
+import Logo from "public/logoBePawsome.png"
+import { REACT_LOADABLE_MANIFEST } from "next/dist/shared/lib/constants"
+import {Login} from "../login/logica"
+import { useEffect, useState } from "react";
 
 export default function NavBar() {
   const [usuario, setUsuario] = useState(null);
@@ -53,18 +60,14 @@ export default function NavBar() {
         />
         <Link href="/">Home </Link>
         <Link href="/aboutUs">About Us</Link>
-        <Link href="/registrar">Registrarse</Link>
-
-        {usuario && (
-          <>
-            {/* Renderizar estos enlaces solo si el usuario está presente */}
-            <Link href="/publicacion">Crear Publicacion</Link>
-            <Link href="/usuario">Ajustes de Usuario</Link>
-          </>
-        )}
-      {!usuario && (
-        <Link href="/login">Login</Link>
-      )}
+        <Link href="/register">Registrarse</Link>
+        <Link href="/publicacion">Crear Publicacion</Link>
+        {/*<Link href="/publicacion">Publicacion</Link>*/}
+        {/*<Link href="/usuario/register">Register</Link>*/}
+        {/*<Link className='' href="/register">Registrarse</Link>*/}
+        if (Login.isLoggedIn()) {
+          <Link href="/publicacion">Ir a Ajustes</Link>
+        }
       </div>
     </nav>
   );

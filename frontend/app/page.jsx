@@ -1,19 +1,15 @@
 import { Suspense } from "react"
 import Cargando from "./components/cargando"
-import PublicacionesList from "./components/publicaciones/PublicacionesList"
+import PublicacionPage from "./components/Publicaciones/PublicacionPage"
 
 export default function page() {
   return (
-    <main>
-        <nav>
-          <div>
-            <h2>Publicaciones</h2>
-            <p><small>Estas son las publicaciones.</small></p>
-          </div>
-        </nav>
-        <Suspense fallback={<Cargando />}>
-           <PublicacionesList />
-        </Suspense>
-      </main>
+      <>
+        <div>
+          <Suspense fallback={<Cargando/>}>
+            <PublicacionPage/>
+          </Suspense> 
+        </div>
+      </>
     )
   }
