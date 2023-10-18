@@ -64,7 +64,14 @@ export default function NavBar() {
             <ImgProfile usuario={usuario}/>
           </>
         )}
-        {!usuario && <Link href="/login">Login</Link>}
+        {!usuario && 
+        (
+          <>
+            {/* Renderizar estos enlaces solo si el usuario está presente */}
+            <Link href="/login">Login</Link>
+            <Link href="/registrar">Registrarse</Link>
+          </>
+        )}
       </div>
     </nav>
   );
