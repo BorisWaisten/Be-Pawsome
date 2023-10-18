@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { obtenerUsuarioLogeado,editarUsuario } from '@/app/persistencia/peticiones';
+import { useRouter } from "next/navigation"
 export default function Usuario() {
+  //const router = useRouter();
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +16,8 @@ export default function Usuario() {
     localidad: '',
     provincia: '',
     nacionalidad: '',
-    codigoPostal: ''
+    codigoPostal: '',
+    
   });
 
   useEffect(() => {
@@ -70,8 +73,8 @@ export default function Usuario() {
     try {
       // Hacer una solicitud PUT para actualizar los datos del usuario en el backend
       setUsuario(await editarUsuario(usuario._id, nuevosDatos));
-
       setModalVisible(false); // Cerrar el modal después de guardar los cambios
+      //router.push('/usuario');
 
     } catch (error) {
       console.error(error);
