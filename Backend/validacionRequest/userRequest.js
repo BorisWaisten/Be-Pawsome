@@ -2,12 +2,12 @@ import Joi from "joi";
 import { ValidateError } from "../errores.js";
 
 const validatePassword = (password) => {
-  return Joi.string()
-    .min(8)
-    .regex(/^(?=.*[A-Z])(?=.*\d)/)
-    .message('La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número')
-    .validate(password);
+  if (password.length < 8 || !/[A-Z]/.test(password) || !/\d/.test(password)) {
+    throw new ValidateError('La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número');
+  }
 };
+
+
 
 const validacionRegister = async (usuario) => {
   try {
@@ -46,7 +46,6 @@ const validacionEdit = (usuario) => {
   const usuarioSchema = Joi.object({
     nombre: Joi.string().allow(''),
     apellido: Joi.string().allow(''),
-    password: Joi.string().allow('').custom(validatePassword),
     celular: Joi.number().allow(''),
     localidad: Joi.string().allow(''),
     provincia: Joi.string().allow(''),

@@ -1,6 +1,19 @@
-// persistencia/usuarioLogueado.jsx
 
 import axios from 'axios';
+
+
+export const getPublicaciones = async () => {
+  try {
+    const res = await fetch ("http://localhost:5000/publicacion/publicaciones", {
+       cache: 'no-store',         next: {            
+        validate: 0 // uso 0 para no tener nada en el cache y hacer siempre un fetch       
+       }      });     
+    return res.json()
+  } catch (error) {
+    return new Error('Error al obtener las publicaciones.' + error); 
+  }
+}
+
 
 export const obtenerUsuarioLogeado = async () => {
   try {

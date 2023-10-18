@@ -32,6 +32,7 @@ export default function Usuario() {
         const { publicaciones } = await obtenerPublicacionesDelUsuario(usuario._id);
         setPublicaciones(publicaciones);
         // Inicializa los nuevos datos con los valores del usuario
+        
         setNuevosDatos(usuario);
       } else {
         setError(error);
@@ -69,7 +70,13 @@ export default function Usuario() {
     e.preventDefault();
     try {
       // Hacer una solicitud PUT para actualizar los datos del usuario en el backend
-      setUsuario(await editarUsuario(usuario._id, nuevosDatos));
+      
+      const { _id,mail,password,imagenPerfil,esAdmin,casita, ...datosNecesarios } = nuevosDatos;
+      console.log(datosNecesarios);
+      const usuarioEditado = await editarUsuario(usuario._id, datosNecesarios);
+      
+      setUsuario(usuarioEditado);
+
       setModalVisible(false); // Cerrar el modal después de guardar los cambios
       //router.push('/usuario');
 
