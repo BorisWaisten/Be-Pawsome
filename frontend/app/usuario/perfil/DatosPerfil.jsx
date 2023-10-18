@@ -37,7 +37,7 @@ export default function Usuario() {
             localidad: usuario.localidad,
             provincia: usuario.provincia,
             nacionalidad: usuario.nacionalidad,
-            codigoPostal: usuario.codigoPostal
+            codigoPostal: usuario.codigoPostal,
           });
         } else {
           setError(error);
