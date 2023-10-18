@@ -1,5 +1,9 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import {Cloudinary} from "@cloudinary/url-gen";
+
+const cld = new Cloudinary({cloud: {cloudName: 'bepawsome'}});
+
 
 const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
   const [localFormData, setFormData] = useState({
