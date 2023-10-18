@@ -61,7 +61,7 @@ export default function NavBar() {
           <>
             {/* Renderizar estos enlaces solo si el usuario está presente */}
             <Link href="/publicacion">Crear Publicacion</Link>
-            <ImgProfile imagenPerfil={usuario.imagenPerfil}/>
+            <ImgProfile usuario={usuario}/>
           </>
         )}
         {!usuario && <Link href="/login">Login</Link>}
