@@ -43,15 +43,16 @@ export default function NavBar() {
   return (
     <nav className="flex items-center justify-between py-4 px-6">
       <div className="flex items-center space-x-4">
+        <Link href="/">
         <Image
           src={Logo}
-          alt="Galajo Logo"
+          alt="Logo BePawsome"
           width={70}
           height={70}
           quality={100}
           placeholder="blur"
         />
-        <Link href="/">Home </Link>
+        </Link>
         <Link href="/aboutUs">About Us</Link>
         <Link href="/registrar">Registrarse</Link>
 
