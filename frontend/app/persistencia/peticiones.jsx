@@ -4,9 +4,11 @@ import axios from 'axios';
 
 export const getPublicaciones = async () => {
   try {
-    const response = await fetch(`http://localhost:5000/publicacion/publicaciones`);
-    const data = await response.json(); // Utiliza response.json() para obtener el contenido JSON
-    return data;
+    const res = await fetch ("http://localhost:5000/publicacion/publicaciones", {
+       cache: 'no-store',         next: {            
+        validate: 0 // uso 0 para no tener nada en el cache y hacer siempre un fetch       
+       }      });     
+    return res.json()
   } catch (error) {
     return new Error('Error al obtener las publicaciones.' + error); 
   }
@@ -73,7 +75,7 @@ export const editarUsuario = async (usuarioId, nuevosDatos) => {
         sessionStorage.setItem('user', JSON.stringify({ ...usuarioEnSesion, ...nuevosDatos }));
       }
     }
-    return usuarioEditado;
+    return usuarioEditado.data;
   } catch (error) {
     console.error(error);
     throw error; // Captura y lanza el error para que sea manejado por el componente
