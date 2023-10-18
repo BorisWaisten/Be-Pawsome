@@ -63,6 +63,7 @@ class RepositorioUser{
     }
 
     async editarUsuario(id, usuario){
+        console.log(id+" databse");
         try{
             const userEditado = await this.usuariosCollection.updateOne({ _id: id }, { $set: usuario });
             return userEditado 

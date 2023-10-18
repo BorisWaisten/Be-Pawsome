@@ -80,6 +80,8 @@ class ControllerUsuario{
 
     editarUsuario = async (req, res) => {
       const idUsuario = req.params.id;
+      console.log(idUsuario);
+      console.log(req.body);
       try {
         const user = await this.servicioUsuario.editarUsuario(idUsuario, req.body);
         res.status(200).json(user);

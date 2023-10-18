@@ -73,7 +73,7 @@ export const editarUsuario = async (usuarioId, nuevosDatos) => {
         sessionStorage.setItem('user', JSON.stringify({ ...usuarioEnSesion, ...nuevosDatos }));
       }
     }
-    return usuarioEditado.data;
+    return usuarioEditado;
   } catch (error) {
     console.error(error);
     throw error; // Captura y lanza el error para que sea manejado por el componente

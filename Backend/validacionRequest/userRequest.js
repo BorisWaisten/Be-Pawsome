@@ -46,7 +46,6 @@ const validacionEdit = (usuario) => {
   const usuarioSchema = Joi.object({
     nombre: Joi.string().allow(''),
     apellido: Joi.string().allow(''),
-    password: Joi.string().allow('').custom(validatePassword),
     celular: Joi.number().allow(''),
     localidad: Joi.string().allow(''),
     provincia: Joi.string().allow(''),
