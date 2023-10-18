@@ -1,11 +1,12 @@
-// components/NavBar.jsx
+
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "public/logoBePawsome.png";
-import { obtenerUsuarioLogeado } from "../persistencia/peticiones";
+import { obtenerUsuarioLogeado } from "../../persistencia/peticiones";
+import ImgProfile from "./ImgProfile";
 
 export default function NavBar() {
   const [usuario, setUsuario] = useState(null);
@@ -17,6 +18,7 @@ export default function NavBar() {
         const { usuario, error } = await obtenerUsuarioLogeado();
         if (usuario) {
           setUsuario(usuario);
+          console.log(usuario);
         } else {
           console.error(error);
         }
@@ -35,7 +37,6 @@ export default function NavBar() {
     // Aquí puedes agregar lógica adicional si es necesario
   }, [usuario]);
 
-
   if (loading) {
     return <div>Cargando...</div>;
   }
@@ -43,15 +44,16 @@ export default function NavBar() {
   return (
     <nav className="flex items-center justify-between py-4 px-6">
       <div className="flex items-center space-x-4">
-        <Image
-          src={Logo}
-          alt="Galajo Logo"
-          width={70}
-          height={70}
-          quality={100}
-          placeholder="blur"
-        />
-        <Link href="/">Home </Link>
+        <Link href="/">
+          <Image
+            src={Logo}
+            alt="Logo BePawsome"
+            width={70}
+            height={70}
+            quality={100}
+            placeholder="blur"
+          />
+        </Link>
         <Link href="/aboutUs">About Us</Link>
         <Link href="/registrar">Registrarse</Link>
 
@@ -59,12 +61,10 @@ export default function NavBar() {
           <>
             {/* Renderizar estos enlaces solo si el usuario está presente */}
             <Link href="/publicacion">Crear Publicacion</Link>
-            <Link href="/usuario">Ajustes de Usuario</Link>
+            <ImgProfile usuario={usuario}/>
           </>
         )}
-      {!usuario && (
-        <Link href="/login">Login</Link>
-      )}
+        {!usuario && <Link href="/login">Login</Link>}
       </div>
     </nav>
   );
