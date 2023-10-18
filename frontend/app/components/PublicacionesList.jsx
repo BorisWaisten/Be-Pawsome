@@ -1,19 +1,22 @@
-import Link from "next/link";
 import Image from "next/image"
+import {getPublicaciones,obtenerUsuarioLogeado} from "../persistencia/peticiones"
 
-async function getPublicaciones() {
- 
-  const res = await fetch ("http://localhost:5000/publicacion/publicaciones",{
-        cache: 'no-store',
-        next: {
-           validate: 0 // uso 0 para no tener nada en el cache y hacer siempre un fetch
-       } 
-    });
-    return res.json()
-}
 
 export default async function PublicacionesList() {
-  const publicaciones = await getPublicaciones();
+  var publicaciones = await getPublicaciones();
+  const { usuario, error } = await obtenerUsuarioLogeado();
+  
+  if (publicaciones && Array.isArray(publicaciones) && usuario) {
+    const publicacionesAMostrar = [];
+    publicaciones.forEach(p => {
+      // Verifica si p.usuario está definido y tiene la propiedad _id
+      if (p.usuario !== usuario) {
+        publicacionesAMostrar.push(p);
+      }
+    });
+    publicaciones = publicacionesAMostrar;
+  }
+  
 
   return (
         <>
@@ -41,7 +44,7 @@ export default async function PublicacionesList() {
                </div>
                <div>
                  {/* Nombre del usuario */}
-                 <p>Usuario Oferente: {publicacion.idUsuario}</p>
+                 <p>Usuario Oferente: {publicacion.usuario && publicacion.usuario.nombre}</p>
                  {/*<h4>Publicado por: {publicacion.animal.oferente.nombre} {publicacion.animal.oferente.apellido}</h4>*/}
                </div>
              </li>
