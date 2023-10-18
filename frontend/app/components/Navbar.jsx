@@ -1,8 +1,11 @@
+'use client'
 import Link from "next/link"
 import Image from "next/image"
 import Logo from "public/logoBePawsome.png"
 import { REACT_LOADABLE_MANIFEST } from "next/dist/shared/lib/constants"
 import {Login} from "../login/logica"
+import { useEffect, useState } from "react";
+
 export default function NavBar() {
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);

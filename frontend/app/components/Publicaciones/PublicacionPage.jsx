@@ -1,25 +1,24 @@
-import PublicacionList from "./PublicacionList";
+import PublicacionesList from "./PublicacionesList";
 
 function PublicacionPage() {
+  const publicaciones = getServerSideProps();
 
-  const publicaciones =  getServerSideProps();
-  console.log(publicaciones)
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Publicaciones</h1>
+    <div className="mx-auto w-4/5 border p-3">
       {/* Mostrar la lista de publicaciones */}
-      <PublicacionList publicaciones={...publicaciones} />
+      <h2 className="text-2xl font-bold mb-8 justify-center">Publicaciones disponibles</h2>
+      <PublicacionesList publicaciones={publicaciones} />
     </div>
   );
 }
 
- async function getServerSideProps() {
+async function getServerSideProps() {
   // Hacer una llamada a la API para obtener todas las publicaciones
   const res = await fetch(`http://localhost:5000/publicacion/publicaciones`);
   const publicaciones = await res.json();
 
   return {
-    publicaciones
+    publicaciones,
   };
 }
 
