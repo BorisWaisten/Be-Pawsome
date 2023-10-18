@@ -1,4 +1,4 @@
-import NavBar from './components/Navbar'
+import NavBar from './components/layout/Navbar'
 import './globals.css'
 import { Roboto_Slab } from 'next/font/google'
 
