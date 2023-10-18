@@ -66,18 +66,34 @@ class ServicioUsuario{
       }
     }
 
-    editarUsuario = async (idUsuario, usuario) =>{
-      try{
-        UserRequest.validacionEdit(usuario)
-        const userEditado = await this.model.editarUsuario(this.idObjeto(idUsuario), usuario)
-        if(!userEditado){
-          throw new UsuarioNotFoundError("El usuario no se pudo modificar")
+    editarUsuario = async (idUsuario, usuario) => {
+      try {
+        UserRequest.validacionEdit(usuario);
+    
+        
+        // Comparar la contraseña proporcionada con la almacenada en la base de datos
+        if(usuario.password){
+         const user = await this.obtenerUsuario(idUsuario);
+         
+         const contraseniaValida = await bcrypt.compare(usuario.password, user.password);
         }
-        return userEditado 
-      }catch(error){
-        throw error
+        if (!contraseniaValida) {
+        // Si las contraseñas no coinciden, encriptar la nueva contraseña
+          const contraseniaEncryptada = await bcrypt.hash(usuario.password, saltRounds);
+          usuario.password = contraseniaEncryptada;
+        }
+    
+        const userEditado = await this.model.editarUsuario(this.idObjeto(idUsuario), usuario);
+    
+        if (!userEditado) {
+          throw new UsuarioNotFoundError("El usuario no se pudo modificar");
+        }
+    
+        return userEditado;
+      } catch (error) {
+        throw error;
       }
-    }
+    };
 
     eliminarUsuario = async (idUsuario) =>{
       try{
@@ -134,16 +150,6 @@ class ServicioUsuario{
         return user;
       } catch (error) {
         throw error;
-      }
-    }
-
-    guardarDatos = async (publicacion)=>{
-      try {
-        //guardo los datos correspondientes al usuario que crea la publicacion
-        //guardando la publicacion y el animal en las listas del usuario
-        await this.model.guardarDatos(publicacion);
-      } catch (error) {
-        throw error
       }
     }
 

@@ -89,17 +89,6 @@ class RepositorioUser{
         }
     }
 
-    async guardarDatos(publicacion){
-        const id=new ObjectId(publicacion.usuario._id );
-        try{
-            const user = await this.usuariosCollection.findOne({ _id: id },{
-                 $push: {misPublicaciones: publicacion},
-                 $push: {misAnimales: publicacion.animal} });
-            return user
-        }catch(error){
-            throw new DatabaseError("Error al buscar usuario: " + error);
-        }
-    }
 }
 
 export default RepositorioUser

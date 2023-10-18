@@ -14,14 +14,10 @@ class ServicioPublicacion {
   async crearPublicacion(publicacion) {
     try {
       PublicRequest.validacionPublicacion(publicacion);      
+
       const publicacionCreada = await this.repository.crearPublicacion(publicacion);
-      //verifico que la publicacion fue creada
-      if (publicacionCreada) {
-        //de ser asi guardara los datos correspondientes al usuario que crea la publicacion
-        await this.servicioUsuario.guardarDatos(publicacionCreada)
-        ;
-      }
-      return publicacion
+
+      return publicacionCreada
     } catch (error) {
       throw new PublicacionRequestError("Error al crear publicación: " + error.message);
     }

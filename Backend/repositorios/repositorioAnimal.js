@@ -37,6 +37,8 @@ class RepositorioAnimal {
         animal.oferente,
         animal.historiaClinica
       );
+
+      console.log(nuevoAnimal.fotos + " hola database");
       await this.animalesCollection.insertOne(nuevoAnimal);
       return nuevoAnimal;
     } catch (error) {
