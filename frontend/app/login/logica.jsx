@@ -44,12 +44,9 @@ const Login = ({ onLogin }) => {
       // Llama a la función onLogin pasando el usuario
       onLogin(storedUser); // Solo pasa el objeto de usuario, no toda la respuesta
       setError(null); // Limpia cualquier error existente
-    
-      // Si esta todo bien redirige al usuario a la página principal
-     
-      router.refresh()
-      router.push('/')
-      
+      // Redirige al usuario a la página principal y forza la recarga del navbar
+      router.push('/').then(() => window.location.reload());
+
 
     } catch (error) {
       if (axios.isAxiosError(error)) {

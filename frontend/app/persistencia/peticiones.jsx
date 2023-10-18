@@ -25,15 +25,34 @@ export const obtenerUsuarioLogeado = async () => {
     }
   } catch (error) {
     console.error(error);
-    return { usuario: null, error: 'Error al cargar los datos del usuario.' };
+    throw new Error('Error al cargar los datos del usuario.'); // Captura y lanza el error para que sea manejado por el componente
   }
 };
 
+export const obtenerPublicacionesDelUsuario = async (usuarioId) => {
+  try {
+    const response = await fetch(`http://localhost:5000/publicacion/publicacionesUsuario/${usuarioId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}` // Incluye el token de autenticación en los headers
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return { publicaciones: data };
+    } else {
+      throw new Error('Error al obtener las publicaciones del usuario');
+    }
+  } catch (error) {
+    throw new Error('Error al obtener las publicaciones del usuario.'); // Captura y lanza el error para que sea manejado por el componente
+  }
+};
 
 export const editarUsuario = async (usuarioId, nuevosDatos) => {
   try {
-    // Realizar la solicitud PUT para actualizar los datos del usuario en el backend
-   const usuarioEditado =  await axios.put(`http://localhost:5000/usuarios/${usuarioId}`, nuevosDatos);
+    const usuarioEditado = await axios.put(`http://localhost:5000/usuarios/${usuarioId}`, nuevosDatos);
 
     // Actualizar la información del usuario en sessionStorage
     if (typeof window !== 'undefined' && window.sessionStorage) {
@@ -46,7 +65,6 @@ export const editarUsuario = async (usuarioId, nuevosDatos) => {
     return usuarioEditado.data;
   } catch (error) {
     console.error(error);
-    // Manejar errores, mostrar un mensaje al usuario, etc.
-    throw error; // Re-lanzar el error para que pueda ser manejado por el componente que llama a esta función
+    throw error; // Captura y lanza el error para que sea manejado por el componente
   }
 };
