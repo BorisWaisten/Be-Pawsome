@@ -67,16 +67,15 @@ class ControllerPublicacion {
     }
   }
 
-  //devolvera un array de las publicaciones de un usuario en especifico
   publicacionesUsuario = async (req, res) => {
     try {
-      const idUser = req.params.id;
-      const array = await this.servicioPublicacion.publicacionesUsuario(idUser);
-      res.status(200).json(array)
+      const idUsuario = req.params.idUsuario; // Asegúrate de obtener el ID del usuario correctamente
+      const array = await this.servicioPublicacion.publicacionesUsuario(idUsuario);
+      res.status(200).json(array);
     } catch (error) {
       res.status(404).json(error.message);
     }
-  }
+  };
 
   //Se buscaran publicaciones por palabras claves (String recibidos por parametros)
   publicacionesPorString = async (req, res) => {

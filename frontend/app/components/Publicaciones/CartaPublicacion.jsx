@@ -108,4 +108,4 @@ function PublicacionCard({ publicacion }) {
   );
 }
 
-export default PublicacionCard;
+export default PublicacionCard

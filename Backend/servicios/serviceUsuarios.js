@@ -70,19 +70,6 @@ class ServicioUsuario{
       try {
         UserRequest.validacionEdit(usuario);
     
-        
-        // Comparar la contraseña proporcionada con la almacenada en la base de datos
-        if(usuario.password){
-         const user = await this.obtenerUsuario(idUsuario);
-         
-         const contraseniaValida = await bcrypt.compare(usuario.password, user.password);
-        }
-        if (!contraseniaValida) {
-        // Si las contraseñas no coinciden, encriptar la nueva contraseña
-          const contraseniaEncryptada = await bcrypt.hash(usuario.password, saltRounds);
-          usuario.password = contraseniaEncryptada;
-        }
-    
         const userEditado = await this.model.editarUsuario(this.idObjeto(idUsuario), usuario);
     
         if (!userEditado) {

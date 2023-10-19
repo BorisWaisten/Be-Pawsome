@@ -1,15 +1,18 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { obtenerUsuarioLogeado,editarUsuario } from '@/app/persistencia/peticiones';
-import { useRouter } from "next/navigation"
+import { obtenerUsuarioLogeado, editarUsuario, obtenerPublicacionesDelUsuario } from '@/app/persistencia/peticiones';
+
 export default function Usuario() {
   //const router = useRouter();
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false); // Estado para mostrar/ocultar el modal
+  const [publicaciones, setPublicaciones] = useState([]);
+
+
   const [nuevosDatos, setNuevosDatos] = useState({
-   // imagenPerfil: "https://img2.freepng.es/20180331/khw/kisspng-computer-icons-user-clip-art-user-5abf13d4b67e20.4808850915224718927475.jpg",
+    // imagenPerfil: "https://img2.freepng.es/20180331/khw/kisspng-computer-icons-user-clip-art-user-5abf13d4b67e20.4808850915224718927475.jpg",
     nombre: '',
     apellido: '',
     celular: '',
@@ -20,37 +23,32 @@ export default function Usuario() {
     
   });
 
-  useEffect(() => {
-    const cargarUsuario = async () => {
-      try {
-        const { usuario, error } = await obtenerUsuarioLogeado();
-        console.log(usuario._id);
-        if (usuario) {
-          setUsuario(usuario);
-          setError(null);
-          // Puedes establecer los valores iniciales del formulario con los datos del usuario aquí
-          setNuevosDatos({
-            //imagenPerfil: usuario.imagenPerfil,
-            nombre: usuario.nombre,
-            apellido: usuario.apellido,
-            celular: usuario.celular,
-            localidad: usuario.localidad,
-            provincia: usuario.provincia,
-            nacionalidad: usuario.nacionalidad,
-            codigoPostal: usuario.codigoPostal,
-          });
-        } else {
-          setError(error);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+  const cargarUsuario = async () => {
+    try {
+      const { usuario, error } = await obtenerUsuarioLogeado();
+      if (usuario) {
+        setUsuario(usuario);
+        // Obtener las publicaciones del usuario
+        const { publicaciones } = await obtenerPublicacionesDelUsuario(usuario._id);
+        setPublicaciones(publicaciones);
+        // Inicializa los nuevos datos con los valores del usuario
+        
+        setNuevosDatos(usuario);
+      } else {
+        setError(error);
       }
-    };
-
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  useEffect(() => {
     cargarUsuario();
   }, []);
+
+ 
 
 
   const handleEditarClick = () => {
@@ -72,7 +70,13 @@ export default function Usuario() {
     e.preventDefault();
     try {
       // Hacer una solicitud PUT para actualizar los datos del usuario en el backend
-      setUsuario(await editarUsuario(usuario._id, nuevosDatos));
+      
+      const { _id,mail,password,imagenPerfil,esAdmin,casita, ...datosNecesarios } = nuevosDatos;
+      console.log(datosNecesarios);
+      const usuarioEditado = await editarUsuario(usuario._id, datosNecesarios);
+      
+      setUsuario(usuarioEditado);
+
       setModalVisible(false); // Cerrar el modal después de guardar los cambios
       //router.push('/usuario');
 
@@ -89,6 +93,33 @@ export default function Usuario() {
       ...prevState,
       [name]: value
     }));
+  };
+
+  const confirmarEliminar = (publicacionId) => {
+    const confirmacion = window.confirm("¿Estás seguro de que deseas eliminar esta publicación?");
+    if (confirmacion) {
+      // Llamar a la función para eliminar la publicación
+      eliminarPublicacion(publicacionId);
+    }
+  };
+
+  const eliminarPublicacion = async (publicacionId) => {
+    try {
+      // Hacer una solicitud DELETE para eliminar la publicación en el backend
+      // Implementa esta función usando fetch o axios
+      await fetch(`http://localhost:5000/publicacion/eliminar/${publicacionId}`, {
+        method: "DELETE",
+      });
+  
+      // Actualizar la lista de publicaciones después de eliminar
+      const nuevasPublicaciones = publicaciones.filter(
+        (publicacion) => publicacion._id !== publicacionId
+      );
+      setPublicaciones(nuevasPublicaciones);
+    } catch (error) {
+      console.error(error);
+      // Manejar errores, mostrar un mensaje al usuario, etc.
+    }
   };
 
   if (loading) {
@@ -116,6 +147,18 @@ export default function Usuario() {
       <p>Nacionalidad: {usuario.nacionalidad}</p>
       <p>Código Postal: {usuario.codigoPostal}</p>
       <button onClick={handleEditarClick}>Editar</button>
+
+      {/* Lista de publicaciones del usuario */}
+      <h3>Publicaciones del usuario:</h3>
+      <ul>
+        {Array.isArray(publicaciones) &&
+          publicaciones.map((publicacion) => (
+            <li key={publicacion._id}>
+              {publicacion.titulo}
+              <button onClick={() => confirmarEliminar(publicacion._id)}>Eliminar</button>
+            </li>
+          ))}
+      </ul>
 
       {/* Modal para editar los datos del usuario */}
       {modalVisible && (

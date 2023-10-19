@@ -70,10 +70,10 @@ class ServicioPublicacion {
     }
   }
 
-  async publicacionesUsuario(idUser) {
+  async publicacionesUsuario(idUsuario) {
     try {
-      const array = await this.repository.publicacionesUsuario(idUser); 
-      return array.length > 0 ? array : {"message": "Sin publicaciones disponibles"};  
+      const array = await this.repository.publicacionesUsuario(idUsuario);
+      return array.length > 0 ? array : { "message": "Sin publicaciones disponibles" };
     } catch (error) {
       throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);
     }

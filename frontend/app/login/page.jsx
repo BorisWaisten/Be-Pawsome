@@ -1,19 +1,12 @@
-"use client";
-import React from 'react';
-import Login from './logica';
+import Logica from "./logica";
 
-const LoginPage = () => {
-  const handleLogin = (user) => {
-    // Aquí puedes manejar los datos del usuario después de iniciar sesión
-    console.log('Usuario inició sesión:', user);
-    // Puedes realizar acciones adicionales, como redirigir a otra página, etc.
-  };
-
+export default function Login() {
   return (
     <main>
-      <Login onLogin={handleLogin} />
+      <h2>Iniciar Sesion</h2>
+      <div> 
+        <Logica />
+      </div>
     </main>
-  );
-};
-
-export default LoginPage;
+  )
+}

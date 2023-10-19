@@ -1,18 +1,21 @@
 import CartaPublicacion from "./CartaPublicacion";
+import {getPublicaciones,obtenerUsuarioLogeado} from "../../persistencia/peticiones"
 
-async function getPublicaciones() {
- 
-  const res = await fetch ("http://localhost:5000/publicacion/publicaciones",{
-        cache: 'no-store',
-        next: {
-           validate: 0 // uso 0 para no tener nada en el cache y hacer siempre un fetch
-       } 
-    });
-    return res.json()
-}
 
 export default async function PublicacionesList() {
-  const publicaciones = await getPublicaciones();
+  
+  var publicaciones = await getPublicaciones();
+  const { usuario } = await obtenerUsuarioLogeado();
+  if (publicaciones && usuario) {
+    const publicacionesAMostrar = [];
+    publicaciones.forEach(p => {
+      // Verifica si p.usuario está definido y tiene la propiedad _id
+      if (p.usuario !== usuario) {
+        publicacionesAMostrar.push(p);
+      }
+    });
+    publicaciones = publicacionesAMostrar;
+  }
 
   return (
         <>
