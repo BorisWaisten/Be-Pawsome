@@ -82,9 +82,9 @@ export const editarUsuario = async (usuarioId, nuevosDatos) => {
   }
 };
 
-export const adoptar = async (datos) =>{
+export const solicitar = async (datos) =>{
   try {
-    const response = await axios.post('http://localhost:5000/publicacion/adoptar', datos);
+    const response = await axios.post('http://localhost:5000/publicacion/solicitar', datos);
     return response.data;
   } catch (error) {
     console.error(error);

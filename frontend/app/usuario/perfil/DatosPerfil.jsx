@@ -78,7 +78,6 @@ export default function Usuario() {
       setUsuario(usuarioEditado);
 
       setModalVisible(false); // Cerrar el modal después de guardar los cambios
-      //router.push('/usuario');
 
     } catch (error) {
       console.error(error);

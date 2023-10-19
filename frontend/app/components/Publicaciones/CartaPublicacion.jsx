@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { useState, useRef } from "react";
-import { adoptar, obtenerUsuarioLogeado } from "@/app/persistencia/peticiones";
+import { solicitar, obtenerUsuarioLogeado } from "@/app/persistencia/peticiones";
 import { useRouter } from "next/navigation"
 
 
@@ -40,7 +40,7 @@ function PublicacionCard({ publicacion }) {
         idAdoptante: usuario._id,
         publicacion: publicacion,
       }
-      const mensajeSolicitud =await adoptar(datos);
+      const mensajeSolicitud =await solicitar(datos);
       router.push("/")
       return mensajeSolicitud
     } catch (error){
@@ -96,7 +96,7 @@ function PublicacionCard({ publicacion }) {
               Historia Clinica: {publicacion.animal.historiaClinica}
             </p>
             <p className="font-bold text-lg">
-              Usuario Oferente: {publicacion.idUsuario}
+              Usuario Oferente: {publicacion.usuario.nombre}
             </p>
             <button
               className="text-blue-500 hover:underline hover:text-violet-500"
