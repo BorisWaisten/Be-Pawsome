@@ -1,9 +1,15 @@
 import nodemailer from 'nodemailer'
-import passwordGenerator from 'generate-password'
 import dotenv from 'dotenv';
 dotenv.config();
 
+
+
 function pushEmail(users, dataAnimal, fechaCreacion) {
+
+  const fechaPublicacion = new Date(fechaCreacion);
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const fechaFormateada = fechaPublicacion.toLocaleDateString('es-ES', options);
+
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -23,7 +29,7 @@ function pushEmail(users, dataAnimal, fechaCreacion) {
       `Estimado ${users[1].nombre},\n
 
       Nos ponemos en contacto con usted para informarle el interés del usuario ${users[0].nombre} en adoptar una de sus adorables mascotas que tiene disponible para adopción.\n
-      En esta oportunidad la mascota afortunada es ${dataAnimal.nombre}, publicado el: ${fechaCreacion}\n
+      En esta oportunidad la mascota afortunada es ${dataAnimal.nombre}, publicado el: ${fechaFormateada}\n
       Acontinuacion le dejamos los datos para contactarse con el usuario interesado:\n
       - Nombre: ${users[0].nombre}\n
       - Mail: ${users[0].mail}\n

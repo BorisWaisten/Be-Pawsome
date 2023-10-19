@@ -93,7 +93,7 @@ class ControllerPublicacion {
     try {
       const idAdoptante = req.body.idAdoptante;
       const idOferente = req.body.idOferente;
-      const fechaCreacion = req.body.fechaCreacion.$date;
+      const fechaCreacion = req.body.fechaCreacion;
       //dataAnimal es el objeto completo del animal, se envia asi para sacar sus propiedades para enviarselas al oferente por mail
       const dataAnimal = req.body.animal;
       // se guardara un array con dos users, en la posicion 0 sera el de la persona interesada en adoptar y en la posicion 1 el del oferente

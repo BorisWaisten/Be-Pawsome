@@ -42,6 +42,7 @@ function PublicacionCard({ publicacion }) {
         fechaCreacion:publicacion.fechaCreacion,
         animal: publicacion.animal,
       }
+      console.log(datos);
       await adoptar(datos);
       router.push("/")
     } catch (error){
