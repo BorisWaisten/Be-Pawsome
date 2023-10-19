@@ -30,6 +30,7 @@ export default function Usuario() {
       const { usuario, error } = await obtenerUsuarioLogeado();
       if (usuario) {
         setUsuario(usuario);
+        console.log(usuario);
         // Obtener las publicaciones del usuario
         const { publicaciones } = await obtenerPublicacionesDelUsuario(
           usuario._id
