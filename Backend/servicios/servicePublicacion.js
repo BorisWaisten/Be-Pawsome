@@ -109,7 +109,7 @@ class ServicioPublicacion {
         this.servicioUsuario.obtenerUsuario(idAdoptante),
         this.servicioUsuario.obtenerUsuario(idOferente)
       ]);
-  
+
       const users = [userAdoptante, userOferente];
       return users;
     } catch (error) {

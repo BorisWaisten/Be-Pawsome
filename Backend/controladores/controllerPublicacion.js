@@ -1,10 +1,12 @@
 import ServicioPublicacion from "../servicios/servicePublicacion.js";
+import ServicioUsuario from "../servicios/serviceUsuarios.js";
 import { PublicacionRequestError, PublicacionNotFoundError } from "../errores.js";
 import emailAdoption from '../helpers/emailAdoption.js'
 
 class ControllerPublicacion {
   constructor() {
     this.servicioPublicacion = new ServicioPublicacion();
+    this.servicioUsuario = new ServicioUsuario();
   }
 
   crearPublicacion = async (req, res) => {
@@ -92,13 +94,18 @@ class ControllerPublicacion {
   adoptar = async (req, res) => {
     try {
       const idAdoptante = req.body.idAdoptante;
-      const idOferente = req.body.idOferente;
-      const fechaCreacion = req.body.fechaCreacion;
+      const idOferente = req.body.publicacion.usuario._id;
+      const fechaCreacion = req.body.publicacion.fechaCreacion;
       //dataAnimal es el objeto completo del animal, se envia asi para sacar sus propiedades para enviarselas al oferente por mail
-      const dataAnimal = req.body.animal;
+      const dataAnimal = req.body.publicacion.animal;
+      //guardo la publicacion en la casita del adoptante
+      const publicacionGuardad = await this.servicioUsuario.guardarPublicacion(idAdoptante, req.body.publicacion);
+      if (!publicacionGuardad) {
+        throw new PublicacionNotFoundError(`No se pudo guardar la publicacion en casita`);
+      }
       // se guardara un array con dos users, en la posicion 0 sera el de la persona interesada en adoptar y en la posicion 1 el del oferente
       const users = await this.servicioPublicacion.adoptar(idAdoptante, idOferente);
-      await emailAdoption(users, dataAnimal, fechaCreacion);
+      emailAdoption(users, dataAnimal, fechaCreacion);
       res.status(200).json({"message:" : `Solicitud enviada a ${users[1].mail}`})
     } catch (error) {
       res.status(404).json(error.message);

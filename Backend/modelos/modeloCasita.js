@@ -4,16 +4,16 @@ class Casita {
       this.animalesAdoptados = [];
     }
   
-    agregarPublicacion(idPublicacion) {
-      this.publicaciones.push(idPublicacion);
+    agregarPublicacion(publicacion) {
+      this.publicaciones.push(publicacion);
     }
   
-    eliminarPublicacion(idPublicacion) {
-      this.publicaciones = this.publicaciones.filter((id) => id !== idPublicacion);
+    eliminarPublicacion(publicacion) {
+      this.publicaciones = this.publicaciones.filter((id) => id !== publicacion._id);
     }
   
-    loAdopte(idAnimal) {
-      this.animalesAdoptados.push(idAnimal);
+    loAdopte(animal) {
+      this.animalesAdoptados.push(animal);
     }
   }
   

@@ -6,6 +6,7 @@ import { ObjectId } from "mongodb";
 
 const saltRounds = 10; // Número de rondas de sal (mayor es más seguro pero más lento)
 import bcrypt from 'bcrypt'
+import { log } from "console";
 
 class ServicioUsuario{
 
@@ -137,6 +138,24 @@ class ServicioUsuario{
         return user;
       } catch (error) {
         throw error;
+      }
+    }
+
+
+    guardarPublicacion = async (id,publicacion) =>{
+      try {
+        const user = await this.model.buscarId(this.idObjeto(id))
+        if(!user){
+          throw new UsuarioNotFoundError("El usuario no encontrado")
+        }
+        user.casita.publicaciones.push(publicacion)
+        const userEditado = await this.model.editarUsuario(this.idObjeto(id), user);
+        if(!userEditado){
+          throw new UsuarioNotFoundError("El usuario no se pudo modificar");
+        }
+        return userEditado;
+      } catch (error) {
+        throw error
       }
     }
 

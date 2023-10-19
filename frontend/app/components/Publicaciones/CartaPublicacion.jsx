@@ -38,13 +38,11 @@ function PublicacionCard({ publicacion }) {
       }
       const datos = {
         idAdoptante: usuario._id,
-        idOferente: publicacion.usuario._id,
-        fechaCreacion:publicacion.fechaCreacion,
-        animal: publicacion.animal,
+        publicacion: publicacion,
       }
-      console.log(datos);
-      await adoptar(datos);
+      const mensajeSolicitud =await adoptar(datos);
       router.push("/")
+      return mensajeSolicitud
     } catch (error){
       console.log(error);
     }

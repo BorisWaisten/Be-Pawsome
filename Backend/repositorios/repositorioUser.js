@@ -89,7 +89,6 @@ class RepositorioUser{
             throw new DatabaseError("Error al editar contraseña: " + error);
         }
     }
-
 }
 
 export default RepositorioUser
