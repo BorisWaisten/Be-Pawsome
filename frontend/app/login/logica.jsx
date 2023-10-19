@@ -45,7 +45,7 @@ const Login = ({ onLogin }) => {
       onLogin(storedUser); // Solo pasa el objeto de usuario, no toda la respuesta
       setError(null); // Limpia cualquier error existente
       // Redirige al usuario a la página principal y forza la recarga del navbar
-      router.push('/').then(() => window.location.reload());
+      router.push('/') //.then(() => window.location.reload());
 
 
     } catch (error) {
