@@ -2,6 +2,17 @@
 import axios from 'axios';
 
 
+export const login = async (datos) => {
+  try {
+    const response = await axios.post('http://localhost:5000/usuarios/login', datos);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error; // Captura y lanza el error para que sea manejado por el componente
+  }
+}
+
+
 export const getPublicaciones = async () => {
   try {
     const res = await fetch ("http://localhost:5000/publicacion/publicaciones", {

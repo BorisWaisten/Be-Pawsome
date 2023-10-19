@@ -1,8 +1,9 @@
-// login/logica.jsx
 "use client";
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation"
 import axios from "axios";
+import { login } from "../persistencia/peticiones";
 
 const Login = ({ onLogin }) => {
   const router = useRouter();
@@ -15,19 +16,13 @@ const Login = ({ onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/usuarios/login",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await login(formData);
+      console.log(response.userLogueado._id);
+      console.log(response.accesToken);
 
-      const storedUser = response.data.userLogueado;
+      const storedUser = response.userLogueado;
       const idUsuario = storedUser ? storedUser._id : null;
-      const accessToken = response.data.accesToken; // Corregir la propiedad del token
+      const accessToken = response.accesToken; // Corregir la propiedad del token
 
       if (idUsuario && accessToken) {
         // Resto del código para obtener el usuario
