@@ -81,3 +81,13 @@ export const editarUsuario = async (usuarioId, nuevosDatos) => {
     throw error; // Captura y lanza el error para que sea manejado por el componente
   }
 };
+
+export const adoptar = async (datos) =>{
+  try {
+    const response = await axios.post('http://localhost:5000/publicacion/adoptar', datos);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error; // Captura y lanza el error para que sea manejado por el componente
+  }
+}

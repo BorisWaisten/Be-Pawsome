@@ -92,7 +92,7 @@ class ControllerPublicacion {
   adoptar = async (req, res) => {
     try {
       const idAdoptante = req.body.idAdoptante;
-      const idOferente = req.body.idUsuario;
+      const idOferente = req.body.idOferente;
       const fechaCreacion = req.body.fechaCreacion.$date;
       //dataAnimal es el objeto completo del animal, se envia asi para sacar sus propiedades para enviarselas al oferente por mail
       const dataAnimal = req.body.animal;

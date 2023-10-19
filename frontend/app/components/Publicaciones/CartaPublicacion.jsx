@@ -1,12 +1,19 @@
 "use client";
+
 import React from "react";
 import Image from "next/image";
 import { useState, useRef } from "react";
+import { adoptar, obtenerUsuarioLogeado } from "@/app/persistencia/peticiones";
+import { useRouter } from "next/navigation"
+
+
 
 function PublicacionCard({ publicacion }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [mostrarDetalles, setMostrarDetalles] = useState(false);
   const sliderRef = useRef(null);
+  const router = useRouter();
+
 
   function handlePrevImage() {
     setCurrentImageIndex((prevIndex) =>
@@ -23,7 +30,25 @@ function PublicacionCard({ publicacion }) {
     setMostrarDetalles(!mostrarDetalles);
   };
   
-  function agregarACasita(publicacion) {}
+  async function agregarACasita() {
+    try {
+      const {usuario, error} = await obtenerUsuarioLogeado();
+      if(error){
+        router.push("/login")
+      }
+      const datos = {
+        idAdoptante: usuario._id,
+        idOferente: publicacion.usuario._id,
+        fechaCreacion:publicacion.fechaCreacion,
+        animal: publicacion.animal,
+      }
+      await adoptar(datos);
+      router.push("/")
+    } catch (error){
+      console.log(error);
+    }
+    
+  }
 
   return (
     <>
