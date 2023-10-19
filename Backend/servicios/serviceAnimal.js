@@ -61,12 +61,12 @@ class ServicioAnimal {
 
   async guardarUsuarioAdoptante(idUsuario,idAnimal) {
     try {
-      //busco el usuario que va a adoptar
+      //busco el usuario que va a solicitar
       const user = await this.servicioUsuario.obtenerUsuario(idUsuario);
       if(!user){
         throw new AnimalRequestError(`Usuario con ID ${idUsuario} no encontrado`);
       }
-      //guardo el usuario que va a adoptar en la base de datos del animal
+      //guardo el usuario que va a solicitar en la base de datos del animal
       const animalAdoptado = await this.repository.guardarUsuarioAdoptante(this.idObject(idAnimal),user);
       if(!animalAdoptado){
         throw new AnimalRequestError(`No se pudo guardar el usuario`);
@@ -74,7 +74,7 @@ class ServicioAnimal {
       //devuelvo el animal adoptado
       return animalAdoptado
     } catch (error) {
-      throw new AnimalRequestError("Error al adoptar animal: " + error.message);
+      throw new AnimalRequestError("Error al solicitar animal: " + error.message);
     }
   }
 }

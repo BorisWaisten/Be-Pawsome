@@ -91,7 +91,7 @@ class ControllerPublicacion {
   };
 
   // endpoint que responde al boton de 'Solicita Adopcion' 
-  adoptar = async (req, res) => {
+  solicitar = async (req, res) => {
     try {
       const idAdoptante = req.body.idAdoptante;
       const idOferente = req.body.publicacion.usuario._id;
@@ -103,8 +103,8 @@ class ControllerPublicacion {
       if (!publicacionGuardad) {
         throw new PublicacionNotFoundError(`No se pudo guardar la publicacion en casita`);
       }
-      // se guardara un array con dos users, en la posicion 0 sera el de la persona interesada en adoptar y en la posicion 1 el del oferente
-      const users = await this.servicioPublicacion.adoptar(idAdoptante, idOferente);
+      // se guardara un array con dos users, en la posicion 0 sera el de la persona interesada en solicitar y en la posicion 1 el del oferente
+      const users = await this.servicioPublicacion.solicitar(idAdoptante, idOferente);
       emailAdoption(users, dataAnimal, fechaCreacion);
       res.status(200).json({"message:" : `Solicitud enviada a ${users[1].mail}`})
     } catch (error) {

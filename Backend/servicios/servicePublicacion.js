@@ -103,7 +103,7 @@ class ServicioPublicacion {
     }
   }
   
-  async adoptar(idAdoptante, idOferente) {
+  async solicitar(idAdoptante, idOferente) {
     try {
       const [userAdoptante, userOferente] = await Promise.all([
         this.servicioUsuario.obtenerUsuario(idAdoptante),

@@ -28,7 +28,7 @@ function pushEmail(users, dataAnimal, fechaCreacion) {
       text: 
       `Estimado ${users[1].nombre},\n
 
-      Nos ponemos en contacto con usted para informarle el interés del usuario ${users[0].nombre} en adoptar una de sus adorables mascotas que tiene disponible para adopción.\n
+      Nos ponemos en contacto con usted para informarle el interés del usuario ${users[0].nombre} en solicitar una de sus adorables mascotas que tiene disponible para adopción.\n
       En esta oportunidad la mascota afortunada es ${dataAnimal.nombre}, publicado el: ${fechaFormateada}\n
       Acontinuacion le dejamos los datos para contactarse con el usuario interesado:\n
       - Nombre: ${users[0].nombre}\n
