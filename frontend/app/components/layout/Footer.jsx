@@ -15,7 +15,7 @@
 export default function Footer() {
  
 return (
-    <div id="seccion_footer" class="sticky top-[100vh] w-full bg-neutral-200 text-center dark:bg-neutral-700 lg:text-left">
+    <div id="seccion_footer" className="sticky top-[100vh] w-full bg-neutral-200 text-center dark:bg-neutral-700 lg:text-left">
       <div className="p-4 text-center text-neutral-700 dark:text-neutral-200">
         <p>© 2023 Copyright: GALAJO ¿Qué puedo hacer en caso de maltrato o crueldad con animales?</p>
         <a
