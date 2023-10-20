@@ -105,8 +105,8 @@ class ControllerUsuario{
       const idPublicacion = req.body.publicacionId;
       console.log(idUsuario,idPublicacion);
       try {
-        const publicacion = await this.servicioUsuario.eliminarSolicitud(idUsuario,idPublicacion);
-        res.status(200).json(publicacion);
+        const solicitud = await this.servicioUsuario.eliminarSolicitud(idUsuario,idPublicacion);
+        res.status(200).json(solicitud);
       }catch(error){
         res.status(400).json(error.message);
       }

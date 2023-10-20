@@ -17,6 +17,9 @@ const SolicitudesDeUsuario = ({ publicaciones,usuario}) => {
           // Hacer una solicitud DELETE para eliminar la solicitud en el backend
           // Implementa esta función usando fetch o axios
           const solcicitudEliminada = await eliminarSolicitudDeUsuario(usuario._id,publicacionId);
+          if(solcicitudEliminada){
+            window.location.reload()
+          }
           return solcicitudEliminada
         } catch (error) {
           console.error(error);
