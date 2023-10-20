@@ -55,7 +55,8 @@ export default function NavBar() {
           />
         </Link>
         <Link href="/aboutUs">About Us</Link>
-        <Link href="/registrar">Registrarse</Link>
+        {/*<Link href="/registrar">Registrarse</Link>*/}
+        <Link href="/uploadImagen">SubirImagenes</Link>
 
         {usuario && (
           <>
