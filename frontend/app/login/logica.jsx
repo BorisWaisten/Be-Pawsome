@@ -67,29 +67,37 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="mail">Email:</label>
-      <input
-        type="email"
-        id="mail"
-        name="mail"
-        placeholder="Email"
-        onChange={handleChange}
-        required
-      />
-      <label htmlFor="password">Contraseña:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        placeholder="Contraseña"
-        onChange={handleChange}
-        required
-      />
-      {error && <div style={{ color: "red" }}>{error}</div>}{" "}
-      {/* Muestra el mensaje de error si existe */}
-      <button type="submit">Iniciar Sesión</button>
-    </form>
+    <form onSubmit={handleSubmit} className="flex flex-col items-center">
+  <label htmlFor="mail" className="block text-gray-700 font-bold mb-2">
+    Email:
+  </label>
+  <input
+    type="email"
+    id="mail"
+    name="mail"
+    placeholder="Email"
+    onChange={handleChange}
+    required
+    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4"
+  />
+  <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+    Contraseña:
+  </label>
+  <input
+    type="password"
+    id="password"
+    name="password"
+    placeholder="Contraseña"
+    onChange={handleChange}
+    required
+    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4"
+  />
+  {error && <div style={{ color: "red" }} className="mb-4">{error}</div>}
+  <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4">
+    Iniciar Sesión
+  </button>
+  <a href="#" className="text-gray-500 hover:text-gray-700">¿Olvidaste tu contraseña?</a>
+</form>
   );
 };
 

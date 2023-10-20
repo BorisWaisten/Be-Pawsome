@@ -62,10 +62,13 @@ function Registrar() {
 
   return (
     <>
-      <div>
-        <h2>Registrarse</h2>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="nombre">Nombre:</label>
+     <h2 className="text-2xl font-bold mb-4">Registrarse</h2>
+    <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+      <form onSubmit={handleSubmit} className="flex flex-col">
+        <div className="mb-4">
+          <label htmlFor="nombre" className="block text-gray-700 font-bold mb-2">
+            Nombre:
+          </label>
           <input
             type="text"
             id="nombre"
@@ -73,8 +76,13 @@ function Registrar() {
             placeholder="Nombre"
             onChange={handleChange}
             required
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          <label htmlFor="apellido">Apellido:</label>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="apellido" className="block text-gray-700 font-bold mb-2">
+            Apellido:
+          </label>
           <input
             type="text"
             id="apellido"
@@ -82,8 +90,13 @@ function Registrar() {
             placeholder="Apellido"
             onChange={handleChange}
             required
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          <label htmlFor="mail">Email:</label>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="mail" className="block text-gray-700 font-bold mb-2">
+            Email:
+          </label>
           <input
             type="email"
             id="mail"
@@ -91,8 +104,13 @@ function Registrar() {
             placeholder="Email"
             onChange={handleChange}
             required
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          <label htmlFor="password">Contraseña:</label>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+            Contraseña:
+          </label>
           <input
             type="password"
             id="password"
@@ -100,8 +118,13 @@ function Registrar() {
             placeholder="Contraseña"
             onChange={handleChange}
             required
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          <label htmlFor="celular">Celular:</label>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="celular" className="block text-gray-700 font-bold mb-2">
+            Celular:
+          </label>
           <input
             type="text"
             id="celular"
@@ -109,8 +132,13 @@ function Registrar() {
             placeholder="Celular"
             onChange={handleChange}
             required
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          <label htmlFor="localidad">Localidad:</label>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="localidad" className="block text-gray-700 font-bold mb-2">
+            Localidad:
+          </label>
           <input
             type="text"
             id="localidad"
@@ -118,8 +146,13 @@ function Registrar() {
             placeholder="Localidad"
             onChange={handleChange}
             required
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          <label htmlFor="provincia">Provincia:</label>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="provincia" className="block text-gray-700 font-bold mb-2">
+            Provincia:
+          </label>
           <input
             type="text"
             id="provincia"
@@ -127,8 +160,13 @@ function Registrar() {
             placeholder="Provincia"
             onChange={handleChange}
             required
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          <label htmlFor="nacionalidad">Nacionalidad:</label>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="nacionalidad" className="block text-gray-700 font-bold mb-2">
+            Nacionalidad:
+          </label>
           <input
             type="text"
             id="nacionalidad"
@@ -136,8 +174,13 @@ function Registrar() {
             placeholder="Nacionalidad"
             onChange={handleChange}
             required
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          <label htmlFor="codigoPostal">Código Postal:</label>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="codigoPostal" className="block text-gray-700 font-bold mb-2">
+            Código Postal:
+          </label>
           <input
             type="text"
             id="codigoPostal"
@@ -145,16 +188,20 @@ function Registrar() {
             placeholder="Código Postal"
             onChange={handleChange}
             required
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          <button type="submit">Registrarse</button>
-        </form>
-      </div>
-      {apiError && (
-        <div className="error card my-5">
-          <p>{apiError}</p>
         </div>
-      )}
-    </>
+        <button type="submit" className="bg-blue-500 hover:bg-violet-700 text-center text-white text-center justify-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Registrarse
+        </button>
+      </form>
+    </div>
+    {apiError && (
+      <div className="error card my-5">
+        <p>{apiError}</p>
+      </div>
+    )}
+  </>
   );
 }
 

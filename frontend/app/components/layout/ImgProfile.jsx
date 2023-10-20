@@ -12,7 +12,7 @@ const ImgProfile = ({ usuario }) => {
 
   return (
     <>
-    <div className="relative">
+    <div className=" flex relative ml-auto">
       <button
         className="p-2 rounded-sm m-1 ml-auto"
         onClick={handleMenuClick}
