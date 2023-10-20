@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import CreatePublicacion from './CreatePublicacion.jsx';
+import CreatePublicacion from '../components/Publicaciones/CreatePublicacion.jsx';
 import { obtenerUsuarioLogeado } from '../persistencia/peticiones.jsx';
 
 const Publicacion = () => {
