@@ -78,6 +78,7 @@ function Registrar() {
             name="nombre"
             placeholder="Nombre"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
           />
           <label htmlFor="apellido">Apellido:</label>
@@ -87,6 +88,7 @@ function Registrar() {
             name="apellido"
             placeholder="Apellido"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
           />
           <label htmlFor="mail">Email:</label>
@@ -96,6 +98,7 @@ function Registrar() {
             name="mail"
             placeholder="Email"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
           />
           <label htmlFor="password">Contraseña:</label>
@@ -105,6 +108,7 @@ function Registrar() {
             name="password"
             placeholder="Contraseña"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
           />
           <label htmlFor="celular">Celular:</label>
@@ -114,6 +118,7 @@ function Registrar() {
             name="celular"
             placeholder="Celular"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
           />
           <label htmlFor="localidad">Localidad:</label>
@@ -123,6 +128,7 @@ function Registrar() {
             name="localidad"
             placeholder="Localidad"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
           />
           <label htmlFor="provincia">Provincia:</label>
@@ -132,6 +138,7 @@ function Registrar() {
             name="provincia"
             placeholder="Provincia"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
           />
           <label htmlFor="nacionalidad">Nacionalidad:</label>
@@ -141,6 +148,7 @@ function Registrar() {
             name="nacionalidad"
             placeholder="Nacionalidad"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
           />
           <label htmlFor="codigoPostal">Código Postal:</label>
@@ -150,6 +158,7 @@ function Registrar() {
             name="codigoPostal"
             placeholder="Código Postal"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
           />
           <button type="submit">Registrarse</button>
