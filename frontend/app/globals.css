@@ -20,6 +20,7 @@ p > a {
   @apply text-primary underline;
 }
 
+seccion_footer
 /* nav styles */
 nav {
   @apply

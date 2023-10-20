@@ -42,49 +42,38 @@ export default function NavBar() {
   }
 
   return (
-    <nav className="py-4 px-6">
-  <div className="flex items-center justify-between max-w-7xl mx-auto space-x-4 flex-wrap">
-    <div className="flex items-center space-x-4">
-      <Link href="/">
-        <Image
-          src={Logo}
-          alt="Logo BePawsome"
-          width={70}
-          height={70}
-          quality={100}
-          placeholder="blur"
-        />
-      </Link>
-      <Link href="/aboutUs" className="text-black-300 hover:text-primary">
-        About Us
-      </Link>
-      <Link href="/contactUs" className="text-black-300 hover:text-primary">
-        Publicaciones
-      </Link>
-    </div>
-    <div className="flex items-center space-x-4">
-      {usuario && (
-        <>
-          {/* Renderizar estos enlaces solo si el usuario está presente */}
-          <Link href="/publicacion" className="text-black-300 hover:text-primary">
-            Crear Publicacion
-          </Link>
-          <ImgProfile usuario={usuario} />
-        </>
-      )}
-      {!usuario && (
-        <>
-          {/* Renderizar estos enlaces solo si el usuario está presente */}
-          <Link href="/login" className="text-black-300 hover:text-primary">
-            Login
-          </Link>
-          <Link href="/registrar" className="text-black-300 hover:text-primary">
-            Registrarse
-          </Link>
-        </>
-      )}
-    </div>
-  </div>
-</nav>
+    <nav className="flex items-center justify-between py-4 px-6">
+      <div className="flex items-center space-x-4">
+        <Link href="/">
+          <Image
+            src={Logo}
+            alt="Logo BePawsome"
+            width={70}
+            height={70}
+            quality={100}
+            placeholder="blur"
+          />
+        </Link>
+        <Link href="/aboutUs">About Us</Link>
+        {/*<Link href="/registrar">Registrarse</Link>*/}
+        <Link href="/uploadImagen">SubirImagenes</Link>
+
+        {usuario && (
+          <>
+            {/* Renderizar estos enlaces solo si el usuario está presente */}
+            <Link href="/publicacion">Crear Publicacion</Link>
+            <ImgProfile usuario={usuario}/>
+          </>
+        )}
+        {!usuario && 
+        (
+          <>
+            {/* Renderizar estos enlaces solo si el usuario está presente */}
+            <Link href="/login">Login</Link>
+            <Link href="/registrar">Registrarse</Link>
+          </>
+        )}
+      </div>
+    </nav>
   );
 }

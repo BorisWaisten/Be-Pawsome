@@ -1,8 +1,11 @@
 "use client";
 import axios from "axios";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+//Ojo recordar que estoy usando el Router de Next/navigation por ser app/router
 
 function Registrar() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
@@ -42,14 +45,17 @@ function Registrar() {
           headers: {
             "Content-Type": "application/json",
           },
+        
         }
       );
       console.log(response.data); // Maneja la respuesta del servidor según tus necesidades, por ejemplo, muestra un mensaje de éxito al usuario.
+      router.push('/login') //.then(() => window.location.reload()); // Si registro correcamtente lo mando a la pagina de home  
     } catch (error) {
       setApiError(error.response.data);
       //console.log(apiError);
       console.error(error.response.data);
     }
+
   };
 
   const handleChange = (e) => {
@@ -75,6 +81,7 @@ function Registrar() {
             name="nombre"
             placeholder="Nombre"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -89,6 +96,7 @@ function Registrar() {
             name="apellido"
             placeholder="Apellido"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -103,6 +111,7 @@ function Registrar() {
             name="mail"
             placeholder="Email"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -117,6 +126,7 @@ function Registrar() {
             name="password"
             placeholder="Contraseña"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -131,6 +141,7 @@ function Registrar() {
             name="celular"
             placeholder="Celular"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -145,6 +156,7 @@ function Registrar() {
             name="localidad"
             placeholder="Localidad"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -159,6 +171,7 @@ function Registrar() {
             name="provincia"
             placeholder="Provincia"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -173,6 +186,7 @@ function Registrar() {
             name="nacionalidad"
             placeholder="Nacionalidad"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -187,6 +201,7 @@ function Registrar() {
             name="codigoPostal"
             placeholder="Código Postal"
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
