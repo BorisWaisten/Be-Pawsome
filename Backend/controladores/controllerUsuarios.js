@@ -100,6 +100,18 @@ class ControllerUsuario{
       }
     }
 
+    eliminarSolicitud = async (req, res) => {
+      const idUsuario = req.params.id;
+      const idPublicacion = req.body.publicacionId;
+      console.log(idUsuario,idPublicacion);
+      try {
+        const publicacion = await this.servicioUsuario.eliminarSolicitud(idUsuario,idPublicacion);
+        res.status(200).json(publicacion);
+      }catch(error){
+        res.status(400).json(error.message);
+      }
+    }
+
     recuperarContrasenia = async (req, res) => {
       // del request deberan pasarse los datos del usuario: mail y la nueva contrasenia 
       const nuevoDatos = {

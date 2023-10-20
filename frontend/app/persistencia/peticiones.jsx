@@ -102,3 +102,16 @@ export const solicitar = async (datos) =>{
     throw error; // Captura y lanza el error para que sea manejado por el componente
   }
 }
+
+export const eliminarSolicitudDeUsuario = async (idUsuario, publicacionId) => {
+  try {
+    const res = await axios.delete(`http://localhost:5000/usuarios/eliminarSolicitud/${idUsuario}`, {
+      data: { publicacionId }, // Pasar publicacionId en el cuerpo de la solicitud
+    });
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+

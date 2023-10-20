@@ -81,6 +81,37 @@ class RepositorioUser{
         }
     //se le cambia la pass por la pasada por parametros
     }
+
+    async eliminarSolicitud(idUsuario, idPublicacion) {
+        try {
+            // Buscar al usuario por su ID
+            const usuario = await this.usuariosCollection.findOne({ _id: idUsuario });
+            if (!usuario) {
+                throw new DatabaseError("Usuario no encontrado");
+            }
+    
+            // Filtrar las publicaciones para excluir la publicación que deseas eliminar
+            const nuevasPublicaciones = usuario.casita.publicaciones.filter(
+                (publicacion) => publicacion._id !== idPublicacion
+            );
+            console.log(nuevasPublicaciones);
+            // Actualizar el usuario en la base de datos con las nuevas publicaciones
+            const resultado = await this.usuariosCollection.updateOne(
+                { _id: idUsuario },
+                { $set: { "casita.publicaciones": nuevasPublicaciones } }
+            );
+    
+            if (resultado.modifiedCount === 1) {
+                // La actualización fue exitosa
+                return { mensaje: "Solicitud eliminada correctamente" };
+            } else {
+                throw new DatabaseError("No se pudo eliminar la Solicitud");
+            }
+        } catch (error) {
+            throw new DatabaseError("Error al eliminar Solicitud: " + error.message);
+        }
+    }
+
     async savePassword(mail, newPassword){
         try {
             const usuarioEditado = await this.usuariosCollection.updateOne({ mail }, { $set: { password: newPassword } });

@@ -95,6 +95,18 @@ class ServicioUsuario{
       }
     }
 
+    eliminarSolicitud = async (idUsuario,idPublicacion) =>{
+      try{
+        const solicitudEliminada = await this.model.eliminarSolicitud(this.idObjeto(idUsuario),idPublicacion)
+        if(!solicitudEliminada){
+          throw new UsuarioNotFoundError("El solicitud no se elimino")
+        }
+        return solicitudEliminada 
+      }catch(error){
+        throw error
+      }
+    }
+
     recuperarContrasenia = async (nuevoDatos) =>{
       try {
         const user = await this.model.buscarEmail(nuevoDatos.mail)

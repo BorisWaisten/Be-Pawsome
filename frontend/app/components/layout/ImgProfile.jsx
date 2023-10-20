@@ -34,7 +34,7 @@ const ImgProfile = ({ usuario }) => {
                 Mi perfil
               </a>
             </Link>
-            <Link legacyBehavior href={path.normalize("/usuario/casita")}>
+            <Link legacyBehavior href={"/usuario/casita"}>
               <a className="block px-4 py-2 text-gray-800 hover:bg-violet-100 transition duration-300 ease-in-out">
                 Casita de adopciones
               </a>
