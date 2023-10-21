@@ -115,3 +115,35 @@ export const eliminarSolicitudDeUsuario = async (idUsuario, publicacionId) => {
   }
 };
 
+export const crearAnimal = async (datosAnimal) =>{
+  try{
+    const response = await axios.post('http://localhost:5000/animal/crear', datosAnimal,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}` // Inclirts el token de autenticación en los headers
+      },
+    });
+    return response.data;
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+}
+
+export const crearPublicacion = async (datos) => {
+  try{
+    const response = await axios.post('http://localhost:5000/publicacion/crear', datos,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}` // Inclirts el token de autenticación en los headers
+      },
+    });
+    return response.data;
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+}
+

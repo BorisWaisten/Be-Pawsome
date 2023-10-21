@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CreatePublicacion from '../components/Publicaciones/CreatePublicacion.jsx';
-import { obtenerUsuarioLogeado } from '../persistencia/peticiones.jsx';
+import { crearAnimal, crearPublicacion, obtenerUsuarioLogeado } from '../persistencia/peticiones.jsx';
 
 const Publicacion = () => {
   
@@ -50,13 +50,11 @@ const Publicacion = () => {
   
     try {
 
-      console.log(formData) // quiero probar que sale
       // Crear el animal primero
-      const animalResponse = await axios.post(
-        'http://localhost:5000/animal/crear',
-        {
-          nombre: formData.nombre,  // Ajusta según la estructura de tu formulario
-          fotos: ["https://images.dog.ceo/breeds/affenpinscher/n02110627_735.jpg"],
+
+      const datosAnimal ={
+          nombre: formData.nombre,  
+          fotos: formData.fotos,
           edad: formData.edad,
           tipoAnimal: formData.tipoAnimal,
           descripcion: formData.descripcion,
@@ -65,27 +63,21 @@ const Publicacion = () => {
           ubicacion: formData.ubicacion,
           historiaClinica: formData.historiaClinica,
           oferente: usuario,
-          // Otros campos necesarios para la creación del animal
-        }
-      );
-  
-      // Luego, utilizar la respuesta del animal para crear la publicación
-      const response = await axios.post(
-        'http://localhost:5000/publicacion/crear',
-        {
+      }
+      console.log(datosAnimal.fotos);
+
+      const animalResponse = await crearAnimal(datosAnimal);
+     
+      const datosPublicacion = {
           titulo: formData.titulo,
-          usuario: usuario, // Usamos el _id del usuario obtenido
-          animal: animalResponse.data, // Usar la respuesta del animal
-          // Otros campos necesarios para la creación de la publicación
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-          },
-        }
-      );
-  
-      console.log('Publicación creada:', response.data);
+          usuario: usuario,
+          animal: animalResponse,
+      }
+
+      // Luego, utilizar la respuesta del animal para crear la publicación
+      const responsePublicacion = await crearPublicacion(datosPublicacion);
+
+      console.log('Publicación creada:', responsePublicacion);
       // Puedes manejar la respuesta del servidor según tus necesidades.
     } catch (error) {
       console.error('Error al crear la publicación:', error);

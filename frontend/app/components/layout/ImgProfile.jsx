@@ -3,7 +3,6 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import path from "path";
 
 const ImgProfile = ({ usuario }) => {
   const [menuOpen, setMenuOpen] = useState(false);
