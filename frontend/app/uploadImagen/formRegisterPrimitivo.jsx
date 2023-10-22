@@ -1,7 +1,11 @@
 "use client"
 import { useState } from 'react';
-
+import { useRouter } from "next/navigation"
 export default function FormRegisterUnico() {
+  const router = useRouter();
+  const {fotos} = router.query
+
+  
   const [imageSrc, setImageSrc] = useState();
   const [uploadData, setUploadData] = useState();
 
@@ -38,7 +42,7 @@ export default function FormRegisterUnico() {
       formData.append('file', file);
     }
 
-    formData.append('upload_preset', 'my-uploads');
+    formData.append('upload_preset', 'animales');
 
     const data = await fetch('https://api.cloudinary.com/v1_1/bepawsome/image/upload', {
       method: 'POST',
@@ -47,6 +51,11 @@ export default function FormRegisterUnico() {
 
     setImageSrc(data.secure_url);
     setUploadData(data);
+
+    fotos.push(data.secure_url);
+
+    router.back();
+
   }
 
   return (

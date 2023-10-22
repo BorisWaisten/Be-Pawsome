@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
   const [localFormData, setFormData] = useState({
@@ -14,37 +15,6 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
     ubicacion: "",
     historiaClinica: "",
   });
-
-  const SEXO = {
-    MACHO: "MACHO",
-    HEMBRA: "HEMBRA",
-  };
-
-  const TIPOANIMAL = {
-    PERRO: "PERRO",
-    GATO: "GATO",
-    CONEJO: "CONEJO",
-    REPTIL: "REPTIL",
-    VACA: "VACA",
-    PEZ: "PEZ",
-  };
-
-  // const handleFileChange = (e) => {
-  //   const files = e.target.files;
-
-  //   // Crear un array de rutas de archivos
-  //   console.log(files);
-  //   const newFiles = Array.from(files).map(file => file.name);
-
-  //   updateFormData({
-  //     fotos: newFiles,
-  //   });
-
-  //   setFormData({
-  //     ...localFormData,
-  //     fotos: newFiles,
-  //   });
-  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,6 +39,20 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
       [name]: value,
     });
   };
+
+  const handleButtonClick = async () => {
+    // Navegar a /uploadImagen con formData.fotos como query parameter
+    
+    
+    await router.push({
+      pathname: '/uploadImagen',
+      query: { fotos: formData.fotos },
+    });
+    console.log(router.query.fotos);
+
+    formData.fotos = router.query.fotos;
+  };
+
 
   return (
     <>
@@ -182,6 +166,13 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
             className="w-full border border-gray-400 p-2 rounded-md"
           />
         </label>
+        <div className="block mb-2 font-bold text-gray-700">
+          <Link legacyBehavior href="/uploadImagen" passHref>
+            <a className="bg-blue-500 hover:bg-primary text-white font-bold py-2 px-4 rounded w-1/3 h-10 flex items-center justify-center">
+              Subir Fotos Del Animal
+            </a>
+          </Link>
+        </div>
         <div className="flex items-center justify-center w-full">
           <button
             type="submit"
