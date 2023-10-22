@@ -29,16 +29,6 @@ export default function NavBar() {
     };
     cargarUsuario();
   }, [])
-
-  {/*
-  useEffect(() => {
-    // Este efecto se ejecutará cada vez que cambie el estado de usuario
-    // Aquí puedes agregar lógica adicional si es necesario
-    console.log('HICE EL EFFECTO');
-    console.log('Esto no deberia aparecer');
-    router.push('/'); // esto hace que se refresque la pagina
-  }, [usuario]);
-*/}
   
 if (loading) {
     return <div>Cargando...</div>;

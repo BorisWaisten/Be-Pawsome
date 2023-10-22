@@ -13,11 +13,9 @@ const FormLogin = () => {
     password: "",
   });
   
-  //console.log(formData);
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    //if (formData.mail !== null && formData.password !== null) 
     try {
         const response = await login(formData);
         console.log(response.userLogueado._id);
