@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import axios from "axios";
 import { login } from "../persistencia/peticiones";
 
-const Login = ({ onLogin }) => {
+const LoginForm = ({ onLogin }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     mail: "",
@@ -101,4 +101,4 @@ const Login = ({ onLogin }) => {
   );
 };
 
-export default Login;
+export default LoginForm;

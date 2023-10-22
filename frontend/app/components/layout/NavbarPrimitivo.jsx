@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -6,12 +7,10 @@ import Image from "next/image";
 import Logo from "public/logoBePawsome.png";
 import { obtenerUsuarioLogeado } from "../../persistencia/peticiones";
 import ImgProfile from "./ImgProfile";
-import { useRouter } from "next/navigation";
 
 export default function NavBar() {
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     const cargarUsuario = async () => {
@@ -20,6 +19,8 @@ export default function NavBar() {
         if (usuario) {
           setUsuario(usuario);
           console.log(usuario);
+        } else {
+          console.error(error);
         }
       } catch (error) {
         console.error(error);
@@ -27,24 +28,18 @@ export default function NavBar() {
         setLoading(false);
       }
     };
-    cargarUsuario();
-  }, [])
 
-  {/*
+    cargarUsuario();
+  }, []);
+
   useEffect(() => {
     // Este efecto se ejecutará cada vez que cambie el estado de usuario
     // Aquí puedes agregar lógica adicional si es necesario
-    console.log('HICE EL EFFECTO');
-    console.log('Esto no deberia aparecer');
-    router.push('/'); // esto hace que se refresque la pagina
   }, [usuario]);
-*/}
-  
-if (loading) {
+
+  if (loading) {
     return <div>Cargando...</div>;
   }
-
-
 
   return (
     <nav className="flex items-center justify-between py-4 px-6">
@@ -67,10 +62,11 @@ if (loading) {
           <>
             {/* Renderizar estos enlaces solo si el usuario está presente */}
             <Link href="/publicacion">Crear Publicacion</Link>
-            <ImgProfile usuario={usuario} />
+            <ImgProfile usuario={usuario}/>
           </>
         )}
-        {!usuario && (
+        {!usuario && 
+        (
           <>
             {/* Renderizar estos enlaces solo si el usuario está presente */}
             <Link href="/login">Login</Link>

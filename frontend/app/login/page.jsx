@@ -1,11 +1,11 @@
-import Logica from "./logica";
+"use client"
+import FormLogin from "./FormLogin";
 
-export default function Login() {
+export default function Logearse() {
   return (
     <main>
-      <h2>Iniciar Sesion</h2>
       <div> 
-        <Logica />
+        <FormLogin/>
       </div>
     </main>
   )
