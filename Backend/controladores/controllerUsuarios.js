@@ -78,12 +78,29 @@ class ControllerUsuario{
       }
     }
 
+    editarImagenPerfil = async(req,res)=>{
+      const idUsuario = req.params.id;
+      const imagenPerfil = req.body.imagenPerfil;
+      console.log(imagenPerfil);
+      try {
+        const user = await this.servicioUsuario.editarImagenPerfil(idUsuario ,imagenPerfil);
+        res.status(200).json(user);
+      }catch(error){
+        res.status(400).json(error.message);
+      }
+    } 
+    
     editarUsuario = async (req, res) => {
       const idUsuario = req.params.id;
       console.log(idUsuario);
       console.log(req.body);
+      if(req.body.imagenPerfil){
+        const usuario = {
+          imagenPerfil: req.body.imagenPerfil
+        }
+      }
       try {
-        const user = await this.servicioUsuario.editarUsuario(idUsuario, req.body);
+        const user = await this.servicioUsuario.editarUsuario(idUsuario, usuario);
         res.status(200).json(user);
       }catch(error){
         res.status(400).json(error.message);

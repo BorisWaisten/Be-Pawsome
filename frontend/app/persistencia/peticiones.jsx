@@ -73,6 +73,15 @@ export const obtenerPublicacionesDelUsuario = async (usuarioId) => {
   }
 };
 
+export const editarImagenUsuario = async (id,imagenPerfil) => {
+  try {
+    const usuarioEditado = await axios.put(`http://localhost:5000/usuarios/editarImagen/${id}`, imagenPerfil);
+    return usuarioEditado
+  } catch (error) {
+    throw error
+  }
+}
+
 export const editarUsuario = async (usuarioId, nuevosDatos) => {
   try {
     const usuarioEditado = await axios.put(`http://localhost:5000/usuarios/${usuarioId}`, nuevosDatos);

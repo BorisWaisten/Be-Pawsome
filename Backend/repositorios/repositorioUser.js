@@ -62,8 +62,18 @@ class RepositorioUser{
         }
     }
 
+    async editarImagenPerfil(idUsuario, imagenPerfil) {
+        try {
+            const userEditado = await this.usuariosCollection.updateOne(
+                { _id: idUsuario },
+                { $set: { imagenPerfil:imagenPerfil } }
+            );
+            return userEditado;
+        } catch (error) {
+            throw new DatabaseError("Error al editar imagen de perfil: " + error);
+        }
+    }
     async editarUsuario(id, usuario){
-        console.log(id+" databse");
         try{
             const userEditado = await this.usuariosCollection.updateOne({ _id: id }, { $set: usuario });
             return userEditado 

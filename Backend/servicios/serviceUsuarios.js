@@ -67,6 +67,18 @@ class ServicioUsuario{
       }
     }
 
+    editarImagenPerfil = async (idUsuario ,imagenPerfil) =>{
+      try {
+        const user = await this.model.editarImagenPerfil(this.idObjeto(idUsuario),imagenPerfil)
+        if(!user){
+          throw new UsuarioNotFoundError("No se pudo editar la imagen de perfil")
+        }
+        return user
+      }catch(error){
+        throw error
+      }
+    }
+
     editarUsuario = async (idUsuario, usuario) => {
       try {
         UserRequest.validacionEdit(usuario);

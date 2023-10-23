@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import {
   obtenerUsuarioLogeado,
   editarUsuario,
-  obtenerPublicacionesDelUsuario,
+  editarImagenUsuario,
 } from "@/app/persistencia/peticiones";
+import ImagenUsuario from "@/app/uploadImagen/usuario/page";
 
 export default function Usuario() {
   //const router = useRouter();
@@ -12,10 +13,9 @@ export default function Usuario() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false); // Estado para mostrar/ocultar el modal
-  const [publicaciones, setPublicaciones] = useState([]);
-
+  
   const [nuevosDatos, setNuevosDatos] = useState({
-    //imagenPerfil: "",
+    imagenPerfil: "",
     nombre: "",
     apellido: "",
     celular: "",
@@ -31,11 +31,6 @@ export default function Usuario() {
       if (usuario) {
         setUsuario(usuario);
         console.log(usuario);
-        // Obtener las publicaciones del usuario
-        const { publicaciones } = await obtenerPublicacionesDelUsuario(
-          usuario._id
-        );
-        setPublicaciones(publicaciones);
         // Inicializa los nuevos datos con los valores del usuario
 
         setNuevosDatos(usuario);
@@ -57,16 +52,23 @@ export default function Usuario() {
     setModalVisible(true); // Mostrar el modal al hacer clic en "Editar"
   };
 
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   // Verifica que se haya seleccionado un archivo
-  //   if (file) {
-  //     setNuevosDatos(prevState => ({
-  //       ...prevState,
-  //       imagenPerfil: file
-  //     }));
-  //   }
-  // };
+  const handleImageUpload = async (secureUrl) => {
+    // Puedes hacer lo que necesites con secureUrl
+    // Actualizar el estado solo para la imagenPerfil
+    setNuevosDatos((prevState) => ({
+      ...prevState,
+      imagenPerfil: secureUrl,
+    }));
+  
+    // Guardar la imagen en el backend al mismo tiempo
+    try {
+      const usuarioEditado = await editarImagenUsuario(usuario._id, { imagenPerfil: secureUrl });
+      setUsuario(usuarioEditado);
+    } catch (error) {
+      console.error("Error al guardar la imagen en el backend:", error);
+      // Manejar errores, mostrar un mensaje al usuario, etc.
+    }
+  };
 
   const handleGuardarCambios = async (e) => {
     e.preventDefault();
@@ -77,9 +79,9 @@ export default function Usuario() {
         _id,
         mail,
         password,
-        imagenPerfil,
         esAdmin,
         casita,
+        imagenPerfil,
         ...datosNecesarios
       } = nuevosDatos;
       console.log(datosNecesarios);
@@ -103,38 +105,6 @@ export default function Usuario() {
     }));
   };
 
-  const confirmarEliminar = (publicacionId) => {
-    const confirmacion = window.confirm(
-      "¿Estás seguro de que deseas eliminar esta publicación?"
-    );
-    if (confirmacion) {
-      // Llamar a la función para eliminar la publicación
-      eliminarPublicacion(publicacionId);
-    }
-  };
-
-  const eliminarPublicacion = async (publicacionId) => {
-    try {
-      // Hacer una solicitud DELETE para eliminar la publicación en el backend
-      // Implementa esta función usando fetch o axios
-      await fetch(
-        `http://localhost:5000/publicacion/eliminar/${publicacionId}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      // Actualizar la lista de publicaciones después de eliminar
-      const nuevasPublicaciones = publicaciones.filter(
-        (publicacion) => publicacion._id !== publicacionId
-      );
-      setPublicaciones(nuevasPublicaciones);
-    } catch (error) {
-      console.error(error);
-      // Manejar errores, mostrar un mensaje al usuario, etc.
-    }
-  };
-
   if (loading) {
     return <div>Cargando usuario...</div>;
   }
@@ -147,16 +117,42 @@ export default function Usuario() {
     return <div>No se pudo cargar el usuario. Por favor, inicia sesión.</div>;
   }
 
+
+  //CARGAR UNA IMAGEN DE PERFIL DEFAULT AL USUARIO BORIS 
+  //CARGAR UNA IMAGEN DE PERFIL DEFAULT AL USUARIO BORIS 
+  //CARGAR UNA IMAGEN DE PERFIL DEFAULT AL USUARIO BORIS 
+  //CARGAR UNA IMAGEN DE PERFIL DEFAULT AL USUARIO BORIS 
+  //CARGAR UNA IMAGEN DE PERFIL DEFAULT AL USUARIO BORIS 
+  //CARGAR UNA IMAGEN DE PERFIL DEFAULT AL USUARIO BORIS 
+  //CARGAR UNA IMAGEN DE PERFIL DEFAULT AL USUARIO BORIS 
+  //CARGAR UNA IMAGEN DE PERFIL DEFAULT AL USUARIO BORIS 
+
   // Muestra los detalles del usuario y el botón para abrir el modal de edición
   return (
     <main>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center" onSubmit={handleGuardarCambios}>
+        <div className="w-full flex">
         <img
           className=" flex rounded-full m-10 justify-center items-center"
           src={usuario.imagenPerfil}
           alt="Foto de perfil"
           style={{ width: "150px", height: "150px" }}
         />
+        </div>
+        <div className="w-full flex items-center">
+        <div>
+          <ImagenUsuario onImageUpload={handleImageUpload} />
+        </div>
+        <div className="">
+          <button
+            type="button"  // Cambiado a type="button" para evitar que el formulario se envíe
+            onClick={(e)=>handleImageUpload(e)}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
+          >
+            Subir Imagen
+          </button>
+        </div>
+      </div>
       </div>
       <div className="items-center flex flex-col">
         <div className="w-full flex">
@@ -258,38 +254,6 @@ export default function Usuario() {
           </button>
         </div>
       </div>
-
-      {/* Lista de publicaciones del usuario */}
-      <h1 className="mt-3">Publicaciones del usuario</h1>
-      <ul className="divide-y divide-violet-200">
-  {Array.isArray(publicaciones) &&
-    publicaciones.map((publicacion) => (
-      <li key={publicacion._id} className="my-4">
-        <div className="flex items-center justify-between space-x-5 border-1 border-gray-200 py-4 px-2">
-          <div className="rounded-lg w-24 h-24 overflow-hidden">
-            <img
-              src={publicacion.animal.fotos[0]}
-              className="object-cover w-full h-full"
-            />
-          </div>
-          <div className="flex-1">
-            <div className="text-lg font-medium text-violet-900 truncate">
-              {publicacion.titulo}
-            </div>
-            <div className="text-sm text-black-500">
-              {publicacion.animal.descripcion}
-            </div>
-          </div>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => confirmarEliminar(publicacion._id)}
-          >
-            Eliminar
-          </button>
-        </div>
-      </li>
-    ))}
-</ul>
 
       {/* Modal para editar los datos del usuario */}
       {modalVisible && (
