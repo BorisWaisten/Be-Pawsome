@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { login } from "../persistencia/peticiones";
+import Link from "next/link";
 
 const FormLogin = () => {
   const router = useRouter();
@@ -12,6 +13,7 @@ const FormLogin = () => {
     mail: "",
     password: "",
   });
+
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -108,9 +110,11 @@ const FormLogin = () => {
           >
             Iniciar Sesión
           </button>
-          <a href="#" className="text-gray-500 hover:text-gray-700 text-center justify-center">
-            ¿Olvidaste tu contraseña?
-          </a>
+          <br />
+          <Link href="/login/recuperarContrasenia" 
+            className="bg-blue-500 hover:bg-violet-700 text-center text-white justify-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            ¿Olvidaste tu contraseña?
+          </Link>
         </form>
       </div>
       {apiError && (

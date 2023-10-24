@@ -11,6 +11,13 @@ export const login = async (datos) => {
   }
 }
 
+export const recuperacionContrasenia = async (mail) => {
+  try {
+    return await axios.post('http://localhost:5000/usuarios/changePassword', mail);
+  } catch (error) {
+    throw error
+  }
+}
 
 export const getPublicaciones = async () => {
   try {

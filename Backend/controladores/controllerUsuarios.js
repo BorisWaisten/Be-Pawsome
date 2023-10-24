@@ -149,9 +149,6 @@ class ControllerUsuario{
         // Busqueda del mail si existe o no 
         await this.servicioUsuario.changePassword(mail);
 
-        const newPass = await pushEmail(mail);
-        //guarda la nueva password generada
-        await this.servicioUsuario.savePassword(mail, newPass);
         res.status(200).json({'message': `Se envio un mail a ${mail} con una nueva password generada. Te recomendamos cambiarla.`});
       } catch (error) {
         res.status(401).json(error.message);

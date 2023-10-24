@@ -156,6 +156,7 @@ class ServicioUsuario{
         //aca deberiamos llamar al modelo para guardar la password
         const passwordEncrypted = await bcrypt.hash(newPassword, 10);
         const user = await this.model.savePassword(mail, passwordEncrypted);
+        console.log(user);
         if(!user){
           throw new InvalidCredentialsError("No se pudo cambiar la contraseña")
         }
