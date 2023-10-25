@@ -1,5 +1,6 @@
 
 import React from "react";
+import { eliminarPublicacion } from "@/app/persistencia/peticiones";
 
 const PublicacionesDeUsuario = ({ publicaciones }) => {
 
