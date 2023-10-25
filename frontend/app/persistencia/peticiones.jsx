@@ -74,19 +74,36 @@ export const obtenerPublicacionesDelUsuario = async (usuarioId) => {
   }
 };
 
-export const editarUsuario = async (usuarioId, nuevosDatos) => {
+export const editarUsuario = async (usuarioProp) => {
   try {
-    const usuarioEditado = await axios.put(`http://localhost:5000/usuarios/${usuarioId}`, nuevosDatos);
+    const id = usuarioProp._id;
+    const {
+      _id,
+      mail,
+      password,
+      imagenPerfil,
+      esAdmin,
+      casita,
+      ...restoPropiedades
+    } = usuarioProp;
+
+    const nuevosDatos = {
+      ...restoPropiedades,
+    };
+
+  
+
+    const usuarioEditado = await axios.put(`http://localhost:5000/usuarios/${id}`, nuevosDatos);
 
     // Actualizar la información del usuario en sessionStorage
     if (typeof window !== 'undefined' && window.sessionStorage) {
       const usuarioEnSesion = JSON.parse(sessionStorage.getItem('user'));
       if (usuarioEnSesion) {
         // Actualizar solo los campos editados
-        sessionStorage.setItem('user', JSON.stringify({ ...usuarioEnSesion, ...nuevosDatos }));
+        sessionStorage.setItem('user', JSON.stringify({ ...usuarioEnSesion,...usuarioEditado}));
       }
     }
-    return usuarioEditado.data;
+    return usuarioEditado;
   } catch (error) {
     console.error(error);
     throw error; // Captura y lanza el error para que sea manejado por el componente
