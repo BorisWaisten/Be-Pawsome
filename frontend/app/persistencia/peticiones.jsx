@@ -130,6 +130,17 @@ export const eliminarSolicitudDeUsuario = async (idUsuario, publicacionId) => {
   }
 };
 
+
+export const eliminarPublicacion = async (publicacionId) => {
+  try {
+    const res = await axios.delete(`http://localhost:5000/publicacion/eliminar/${publicacionId}`);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const crearAnimal = async (datosAnimal) =>{
   try{
     const response = await axios.post('http://localhost:5000/animal/crear', datosAnimal,
