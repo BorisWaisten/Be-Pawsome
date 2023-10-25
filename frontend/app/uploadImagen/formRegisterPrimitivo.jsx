@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from "next/navigation"
 export default function FormRegisterUnico() {
   const router = useRouter();
-  const { fotos } = router.query || { fotos: [] };
+  const {fotos} = router.query
 
   
   const [imageSrc, setImageSrc] = useState();
@@ -52,9 +52,9 @@ export default function FormRegisterUnico() {
     setImageSrc(data.secure_url);
     setUploadData(data);
 
-    
+    fotos.push(data.secure_url);
 
-    router.back({ query: { fotos: fotos.concat(data.secure_url) } });
+    router.back();
 
   }
 

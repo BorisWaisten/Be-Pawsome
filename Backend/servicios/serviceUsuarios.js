@@ -67,6 +67,18 @@ class ServicioUsuario{
       }
     }
 
+    editarImagenPerfil = async (idUsuario ,imagenPerfil) =>{
+      try {
+        const user = await this.model.editarImagenPerfil(this.idObjeto(idUsuario),imagenPerfil)
+        if(!user){
+          throw new UsuarioNotFoundError("No se pudo editar la imagen de perfil")
+        }
+        return user
+      }catch(error){
+        throw error
+      }
+    }
+
     editarUsuario = async (idUsuario, usuario) => {
       try {
         UserRequest.validacionEdit(usuario);
@@ -90,6 +102,18 @@ class ServicioUsuario{
           throw new UsuarioNotFoundError("El usuario no eliminado")
         }
         return userEliminado 
+      }catch(error){
+        throw error
+      }
+    }
+
+    eliminarSolicitud = async (idUsuario,idPublicacion) =>{
+      try{
+        const solicitudEliminada = await this.model.eliminarSolicitud(this.idObjeto(idUsuario),idPublicacion)
+        if(!solicitudEliminada){
+          throw new UsuarioNotFoundError("El solicitud no se elimino")
+        }
+        return solicitudEliminada 
       }catch(error){
         throw error
       }
@@ -132,6 +156,7 @@ class ServicioUsuario{
         //aca deberiamos llamar al modelo para guardar la password
         const passwordEncrypted = await bcrypt.hash(newPassword, 10);
         const user = await this.model.savePassword(mail, passwordEncrypted);
+        console.log(user);
         if(!user){
           throw new InvalidCredentialsError("No se pudo cambiar la contraseña")
         }

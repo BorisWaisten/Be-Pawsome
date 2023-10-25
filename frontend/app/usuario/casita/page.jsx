@@ -1,9 +1,9 @@
-import Casita from "./logica.jsx"
+import Logica from "./logica.jsx"
 export default function Casita() {
     return (
       <main>
         <div> 
-          <Casita /> 
+          <Logica /> 
         </div>
       </main>
     )

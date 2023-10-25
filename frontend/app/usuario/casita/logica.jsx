@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { obtenerUsuarioLogeado } from "@/app/persistencia/peticiones";
-import PublicacionesDeUsuario from "@/app/components/Publicaciones/PublicacionesDeUsuario";
+import SolicitudesDeUsuario from "@/app/components/Solicitudes/SolicitudesDeUsuario";
 
 
 const Casita = () => {
@@ -30,7 +30,7 @@ const Casita = () => {
             {usuario && (
                 <h1>Solicitudes Realizadas</h1>
             )}
-            <PublicacionesDeUsuario publicaciones={publicaciones} />
+            <SolicitudesDeUsuario publicaciones={publicaciones} usuario={usuario}/>
         </div>
     )
 

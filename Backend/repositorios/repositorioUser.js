@@ -62,8 +62,18 @@ class RepositorioUser{
         }
     }
 
+    async editarImagenPerfil(idUsuario, imagenPerfil) {
+        try {
+            const userEditado = await this.usuariosCollection.updateOne(
+                { _id: idUsuario },
+                { $set: { imagenPerfil:imagenPerfil } }
+            );
+            return userEditado;
+        } catch (error) {
+            throw new DatabaseError("Error al editar imagen de perfil: " + error);
+        }
+    }
     async editarUsuario(id, usuario){
-        console.log(id+" databse");
         try{
             const userEditado = await this.usuariosCollection.updateOne({ _id: id }, { $set: usuario });
             return userEditado 
@@ -81,14 +91,55 @@ class RepositorioUser{
         }
     //se le cambia la pass por la pasada por parametros
     }
-    async savePassword(mail, newPassword){
+
+    async eliminarSolicitud(idUsuario, idPublicacion) {
         try {
-            const usuarioEditado = await this.usuariosCollection.updateOne({ mail }, { $set: { password: newPassword } });
-            return usuarioEditado;
+            // Buscar al usuario por su ID
+            const usuario = await this.usuariosCollection.findOne({ _id: idUsuario });
+            if (!usuario) {
+                throw new DatabaseError("Usuario no encontrado");
+            }
+    
+            // Filtrar las publicaciones para excluir la publicación que deseas eliminar
+            const nuevasPublicaciones = usuario.casita.publicaciones.filter(
+                (publicacion) => publicacion._id !== idPublicacion
+            );
+            console.log(nuevasPublicaciones);
+            // Actualizar el usuario en la base de datos con las nuevas publicaciones
+            const resultado = await this.usuariosCollection.updateOne(
+                { _id: idUsuario },
+                { $set: { "casita.publicaciones": nuevasPublicaciones } }
+            );
+    
+            if (resultado.modifiedCount === 1) {
+                // La actualización fue exitosa
+                return { mensaje: "Solicitud eliminada correctamente" };
+            } else {
+                throw new DatabaseError("No se pudo eliminar la Solicitud");
+            }
         } catch (error) {
-            throw new DatabaseError("Error al editar contraseña: " + error);
+            throw new DatabaseError("Error al eliminar Solicitud: " + error.message);
         }
     }
+
+    async savePassword(mail, newPassword) {
+        try {
+          const usuarioEditado = await this.usuariosCollection.findOneAndUpdate(
+            { mail },
+            { $set: { password: newPassword } },
+            { returnDocument: 'after' } // Devuelve el documento después de la actualización
+          );
+      
+          if (!usuarioEditado.value) {
+            // Manejar el caso en el que no se encontró el usuario
+            throw new DatabaseError("Usuario no encontrado");
+          }
+      
+          return usuarioEditado.value;
+        } catch (error) {
+          throw new DatabaseError("Error al editar contraseña: " + error);
+        }
+      }
 }
 
 export default RepositorioUser

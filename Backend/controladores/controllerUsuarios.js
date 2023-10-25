@@ -78,12 +78,29 @@ class ControllerUsuario{
       }
     }
 
+    editarImagenPerfil = async(req,res)=>{
+      const idUsuario = req.params.id;
+      const imagenPerfil = req.body.imagenPerfil;
+      console.log(imagenPerfil);
+      try {
+        const user = await this.servicioUsuario.editarImagenPerfil(idUsuario ,imagenPerfil);
+        res.status(200).json(user);
+      }catch(error){
+        res.status(400).json(error.message);
+      }
+    } 
+    
     editarUsuario = async (req, res) => {
       const idUsuario = req.params.id;
       console.log(idUsuario);
       console.log(req.body);
+      if(req.body.imagenPerfil){
+        const usuario = {
+          imagenPerfil: req.body.imagenPerfil
+        }
+      }
       try {
-        const user = await this.servicioUsuario.editarUsuario(idUsuario, req.body);
+        const user = await this.servicioUsuario.editarUsuario(idUsuario, usuario);
         res.status(200).json(user);
       }catch(error){
         res.status(400).json(error.message);
@@ -95,6 +112,18 @@ class ControllerUsuario{
       try {
         const user = await this.servicioUsuario.eliminarUsuario(idUsuario);
         res.status(200).json(user);
+      }catch(error){
+        res.status(400).json(error.message);
+      }
+    }
+
+    eliminarSolicitud = async (req, res) => {
+      const idUsuario = req.params.id;
+      const idPublicacion = req.body.publicacionId;
+      console.log(idUsuario,idPublicacion);
+      try {
+        const solicitud = await this.servicioUsuario.eliminarSolicitud(idUsuario,idPublicacion);
+        res.status(200).json(solicitud);
       }catch(error){
         res.status(400).json(error.message);
       }
@@ -120,9 +149,6 @@ class ControllerUsuario{
         // Busqueda del mail si existe o no 
         await this.servicioUsuario.changePassword(mail);
 
-        const newPass = await pushEmail(mail);
-        //guarda la nueva password generada
-        await this.servicioUsuario.savePassword(mail, newPass);
         res.status(200).json({'message': `Se envio un mail a ${mail} con una nueva password generada. Te recomendamos cambiarla.`});
       } catch (error) {
         res.status(401).json(error.message);

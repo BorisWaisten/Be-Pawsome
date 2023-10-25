@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 
 
@@ -12,6 +11,13 @@ export const login = async (datos) => {
   }
 }
 
+export const recuperacionContrasenia = async (mail) => {
+  try {
+    return await axios.post('http://localhost:5000/usuarios/changePassword', mail);
+  } catch (error) {
+    throw error
+  }
+}
 
 export const getPublicaciones = async () => {
   try {
@@ -74,26 +80,18 @@ export const obtenerPublicacionesDelUsuario = async (usuarioId) => {
   }
 };
 
-export const editarUsuario = async (usuarioProp) => {
+export const editarImagenUsuario = async (id,imagenPerfil) => {
   try {
-    const id = usuarioProp._id;
-    const {
-      _id,
-      mail,
-      password,
-      imagenPerfil,
-      esAdmin,
-      casita,
-      ...restoPropiedades
-    } = usuarioProp;
+    const usuarioEditado = await axios.put(`http://localhost:5000/usuarios/editarImagen/${id}`, imagenPerfil);
+    return usuarioEditado
+  } catch (error) {
+    throw error
+  }
+}
 
-    const nuevosDatos = {
-      ...restoPropiedades,
-    };
-
-  
-
-    const usuarioEditado = await axios.put(`http://localhost:5000/usuarios/${id}`, nuevosDatos);
+export const editarUsuario = async (usuarioId, nuevosDatos) => {
+  try {
+    const usuarioEditado = await axios.put(`http://localhost:5000/usuarios/${usuarioId}`, nuevosDatos);
 
     // Actualizar la información del usuario en sessionStorage
     if (typeof window !== 'undefined' && window.sessionStorage) {
@@ -119,3 +117,48 @@ export const solicitar = async (datos) =>{
     throw error; // Captura y lanza el error para que sea manejado por el componente
   }
 }
+
+export const eliminarSolicitudDeUsuario = async (idUsuario, publicacionId) => {
+  try {
+    const res = await axios.delete(`http://localhost:5000/usuarios/eliminarSolicitud/${idUsuario}`, {
+      data: { publicacionId }, // Pasar publicacionId en el cuerpo de la solicitud
+    });
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const crearAnimal = async (datosAnimal) =>{
+  try{
+    const response = await axios.post('http://localhost:5000/animal/crear', datosAnimal,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}` // Inclirts el token de autenticación en los headers
+      },
+    });
+    return response.data;
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+}
+
+export const crearPublicacion = async (datos) => {
+  try{
+    const response = await axios.post('http://localhost:5000/publicacion/crear', datos,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}` // Inclirts el token de autenticación en los headers
+      },
+    });
+    return response.data;
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+}
+

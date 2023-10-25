@@ -1,7 +1,34 @@
-
+import { eliminarSolicitudDeUsuario } from "@/app/persistencia/peticiones";
 import React from "react";
 
-const PublicacionesDeUsuario = ({ publicaciones }) => {
+const SolicitudesDeUsuario = ({ publicaciones,usuario}) => {
+    const confirmarEliminar = async (publicacionId) => {
+        const confirmacion = window.confirm(
+          "¿Estás seguro de que deseas eliminar esta solicitud?"
+        );
+        if (confirmacion) {
+          // Llamar a la función para eliminar la solicitud
+          eliminarSolicitud( publicacionId);
+        }
+      };
+    
+      const eliminarSolicitud = async (publicacionId) => {
+        try {
+          // Hacer una solicitud DELETE para eliminar la solicitud en el backend
+          // Implementa esta función usando fetch o axios
+          const solcicitudEliminada = await eliminarSolicitudDeUsuario(usuario._id,publicacionId);
+          if(solcicitudEliminada){
+            window.location.reload()
+          }
+          return solcicitudEliminada
+        } catch (error) {
+          console.error(error);
+          // Manejar errores, mostrar un mensaje al usuario, etc.
+        }   
+      };
+
+
+
   return (
     <div>
       <h1 className="mt-3">Publicaciones del usuario</h1>
@@ -38,4 +65,4 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
   );
 };
 
-export default PublicacionesDeUsuario;
+export default SolicitudesDeUsuario;

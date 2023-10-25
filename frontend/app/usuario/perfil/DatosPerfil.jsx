@@ -3,17 +3,19 @@ import React, { useEffect, useState } from "react";
 import {
   obtenerUsuarioLogeado,
   editarUsuario,
-  obtenerPublicacionesDelUsuario,
+  editarImagenUsuario,
 } from "@/app/persistencia/peticiones";
-import InputEditable from "@/app/components/InputEditable";
+import ImagenUsuario from "@/app/uploadImagen/usuario/page";
 
 export default function Usuario() {
   //const router = useRouter();
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false); // Estado para mostrar/ocultar el modal
+  
   const [nuevosDatos, setNuevosDatos] = useState({
-    // imagenPerfil: "https://img2.freepng.es/20180331/khw/kisspng-computer-icons-user-clip-art-user-5abf13d4b67e20.4808850915224718927475.jpg",
+    imagenPerfil: "",
     nombre: "",
     apellido: "",
     celular: "",
@@ -28,7 +30,9 @@ export default function Usuario() {
       const { usuario, error } = await obtenerUsuarioLogeado();
       if (usuario) {
         setUsuario(usuario);
-      
+        console.log(usuario);
+        // Inicializa los nuevos datos con los valores del usuario
+
         setNuevosDatos(usuario);
       } else {
         setError(error);
@@ -44,30 +48,27 @@ export default function Usuario() {
     cargarUsuario();
   }, []);
 
-  const actualizarDatos = async (campoActualizable, valor) => {
+  const handleEditarClick = () => {
+    setModalVisible(true); // Mostrar el modal al hacer clic en "Editar"
+  };
+
+  const handleImageUpload = async (secureUrl) => {
+    // Puedes hacer lo que necesites con secureUrl
+    // Actualizar el estado solo para la imagenPerfil
+    setNuevosDatos((prevState) => ({
+      ...prevState,
+      imagenPerfil: secureUrl,
+    }));
+  
+    // Guardar la imagen en el backend al mismo tiempo
     try {
-      // Hacer una solicitud PUT para actualizar los datos del usuario en el backend
-      usuario[valor] = campoActualizable;
-      console.log(usuario);
-      const usuarioEditado = await editarUsuario(usuario);
-      console.log(usuarioEditado)
+      const usuarioEditado = await editarImagenUsuario(usuario._id, { imagenPerfil: secureUrl });
       setUsuario(usuarioEditado);
     } catch (error) {
-      console.error(error);
+      console.error("Error al guardar la imagen en el backend:", error);
+      // Manejar errores, mostrar un mensaje al usuario, etc.
     }
   };
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   // Verifica que se haya seleccionado un archivo
-  //   if (file) {
-  //     setNuevosDatos(prevState => ({
-  //       ...prevState,
-  //       imagenPerfil: file
-  //     }));
-  //   }
-  // };
-
-  const handleEditarClick = () => {};
 
   const handleGuardarCambios = async (e) => {
     e.preventDefault();
@@ -78,9 +79,9 @@ export default function Usuario() {
         _id,
         mail,
         password,
-        imagenPerfil,
         esAdmin,
         casita,
+        imagenPerfil,
         ...datosNecesarios
       } = nuevosDatos;
       console.log(datosNecesarios);
@@ -118,51 +119,207 @@ export default function Usuario() {
 
   return (
     <main>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center" onSubmit={handleGuardarCambios}>
+        <div className="w-full flex">
         <img
           className=" flex rounded-full m-10 justify-center items-center"
           src={usuario.imagenPerfil}
           alt="Foto de perfil"
           style={{ width: "150px", height: "150px" }}
         />
+        </div>
+        <div className="w-full flex items-center">
+        <div>
+          <ImagenUsuario onImageUpload={handleImageUpload} />
+        </div>
+        <div className="">
+          <button
+            type="button"  // Cambiado a type="button" para evitar que el formulario se envíe
+            onClick={(e)=>handleImageUpload(e)}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
+          >
+            Subir Imagen
+          </button>
+        </div>
       </div>
-      <div className="flex flex-col items-center">
-        <InputEditable
-          id="nombre"
-          valorInicial={usuario.nombre}
-          onGuardar={actualizarDatos}
-        />
-        <InputEditable
-          id="apellido"
-          valorInicial={usuario.apellido}
-          onGuardar={actualizarDatos}
-        />
-        <InputEditable
-          id="celular"
-          valorInicial={usuario.celular}
-          onGuardar={actualizarDatos}
-        />
-        <InputEditable
-          id="localidad"
-          valorInicial={usuario.localidad}
-          onGuardar={actualizarDatos}
-        />
-        <InputEditable
-          id="provincia"
-          valorInicial={usuario.provincia}
-          onGuardar={actualizarDatos}
-        />
-        <InputEditable
-          id="nacionalidad"
-          valorInicial={usuario.nacionalidad}
-          onGuardar={actualizarDatos}
-        />
-        <InputEditable
-          id="codigoPostal"
-          valorInicial={usuario.codigoPostal}
-          onGuardar={actualizarDatos}
-        />
       </div>
+      <div className="items-center flex flex-col">
+        <div className="w-full flex">
+          <input
+            type="text"
+            value={usuario.nombre}
+            disabled
+            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
+          />
+          <button
+            onClick={handleEditarClick}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
+          >
+            Editar
+          </button>
+        </div>
+        <div className="w-full flex">
+          <input
+            type="text"
+            value={usuario.apellido}
+            disabled
+            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
+          />
+          <button
+            onClick={handleEditarClick}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
+          >
+            Editar
+          </button>
+        </div>
+        <div className="w-full flex">
+          <input
+            type="text"
+            value={usuario.celular}
+            disabled
+            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
+          />
+          <button
+            onClick={handleEditarClick}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
+          >
+            Editar
+          </button>
+        </div>
+        <div className="w-full flex">
+          <input
+            type="text"
+            value={usuario.localidad}
+            disabled
+            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
+          />
+          <button
+            onClick={handleEditarClick}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
+          >
+            Editar
+          </button>
+        </div>
+        <div className="w-full flex">
+          <input
+            type="text"
+            value={usuario.provincia}
+            disabled
+            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
+          />
+          <button
+            onClick={handleEditarClick}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
+          >
+            Editar
+          </button>
+        </div>
+        <div className="w-full flex">
+          <input
+            type="text"
+            value={usuario.nacionalidad}
+            disabled
+            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
+          />
+          <button
+            onClick={handleEditarClick}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
+          >
+            Editar
+          </button>
+        </div>
+        <div className="w-full flex">
+          <input
+            type="text"
+            value={usuario.codigoPostal}
+            disabled
+            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
+          />
+          <button
+            onClick={handleEditarClick}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
+          >
+            Editar
+          </button>
+        </div>
+      </div>
+
+      {/* Modal para editar los datos del usuario */}
+      {modalVisible && (
+        <div className="modal">
+          <form onSubmit={handleGuardarCambios}>
+            {/* <label>
+              Imagen de Perfil:
+              <input type="file" accept="image/*" onChange={handleFileChange} />
+            </label> */}
+            <label>
+              Nombre:
+              <input
+                type="text"
+                name="nombre"
+                value={nuevosDatos.nombre}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label>
+              Apellido:
+              <input
+                type="text"
+                name="apellido"
+                value={nuevosDatos.apellido}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label>
+              Celular:
+              <input
+                type="text"
+                name="celular"
+                value={nuevosDatos.celular}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label>
+              Localidad:
+              <input
+                type="text"
+                name="localidad"
+                value={nuevosDatos.localidad}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label>
+              Provincia:
+              <input
+                type="text"
+                name="provincia"
+                value={nuevosDatos.provincia}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label>
+              Nacionalidad:
+              <input
+                type="text"
+                name="nacionalidad"
+                value={nuevosDatos.nacionalidad}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label>
+              Código Postal:
+              <input
+                type="text"
+                name="codigoPostal"
+                value={nuevosDatos.codigoPostal}
+                onChange={handleInputChange}
+              />
+            </label>
+            <button type="submit">Guardar Cambios</button>
+            <button onClick={() => setModalVisible(false)}>Cancelar</button>
+          </form>
+        </div>
+      )}
     </main>
   );
 }

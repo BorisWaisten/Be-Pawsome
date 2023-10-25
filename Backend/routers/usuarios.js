@@ -33,7 +33,10 @@ class RouterUsuario {
     this.router.post("/register",this.controlador.register);
     this.router.post("/login", this.controlador.login);
     this.router.get("/:id", this.controlador.obtenerUsuario);
+   
     this.router.put("/:id", this.controlador.editarUsuario);
+    this.router.put('/editarImagen/:id',this.controlador.editarImagenPerfil);
+
     this.router.delete("/:id", this.controlador.eliminarUsuario);
    
     //rutas de recuperacion de contrasenia
@@ -42,6 +45,8 @@ class RouterUsuario {
     this.router.post("/recuperarContrasenia", this.controlador.recuperarContrasenia);
     //se recupera la contrasenia via mail y se le genera una nueva contrasenia
     this.router.post('/changePassword', this.controlador.changePassword)
+
+    this.router.delete("/eliminarSolicitud/:id", this.controlador.eliminarSolicitud);
    
    
    

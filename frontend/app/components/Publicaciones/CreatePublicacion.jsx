@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import ImagenAnimal from "@/app/uploadImagen/animal/page";
 
 const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
   const [localFormData, setFormData] = useState({
@@ -14,37 +15,6 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
     ubicacion: "",
     historiaClinica: "",
   });
-
-  const SEXO = {
-    MACHO: "MACHO",
-    HEMBRA: "HEMBRA",
-  };
-
-  const TIPOANIMAL = {
-    PERRO: "PERRO",
-    GATO: "GATO",
-    CONEJO: "CONEJO",
-    REPTIL: "REPTIL",
-    VACA: "VACA",
-    PEZ: "PEZ",
-  };
-
-  // const handleFileChange = (e) => {
-  //   const files = e.target.files;
-
-  //   // Crear un array de rutas de archivos
-  //   console.log(files);
-  //   const newFiles = Array.from(files).map(file => file.name);
-
-  //   updateFormData({
-  //     fotos: newFiles,
-  //   });
-
-  //   setFormData({
-  //     ...localFormData,
-  //     fotos: newFiles,
-  //   });
-  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -67,6 +37,13 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
     // Llama al método para actualizar formData después de actualizar el estado local
     updateFormData({
       [name]: value,
+    });
+  };
+
+  const handleImageUpload = (secureUrl) => {
+    // Puedes hacer lo que necesites con secureUrl, por ejemplo, actualizar formData.fotos
+    updateFormData({
+      fotos: [...formData.fotos, secureUrl], // Añade la nueva imagen al array existente
     });
   };
 
@@ -182,6 +159,11 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
             className="w-full border border-gray-400 p-2 rounded-md"
           />
         </label>
+        <div className="block mb-2 font-bold text-gray-700">
+        <ImagenAnimal
+          onImageUpload={handleImageUpload} // Pasa la función como prop
+        />
+        </div>
         <div className="flex items-center justify-center w-full">
           <button
             type="submit"
