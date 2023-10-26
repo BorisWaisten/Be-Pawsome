@@ -1,7 +1,21 @@
 
 import React from "react";
+import { eliminarPublicacion } from "@/app/persistencia/peticiones";
 
 const PublicacionesDeUsuario = ({ publicaciones }) => {
+
+  const confirmarEliminar = async (publicacionId) => {
+    const confirmacion = window.confirm(
+      "¿Estás seguro de que deseas eliminar esta publicación?"
+    );
+    if (confirmacion) {
+      // Llamar a la función para eliminar la publicación
+      await eliminarPublicacion(publicacionId);
+      window.location.reload();
+    }
+  };
+
+
   return (
     <div>
       <h1 className="mt-3">Publicaciones del usuario</h1>
