@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { login } from "../persistencia/peticiones";
 import Link from "next/link";
 
 const FormLogin = () => {
@@ -19,32 +18,10 @@ const FormLogin = () => {
     e.preventDefault();
     
     try {
-        const response = await login(formData);
-        console.log(response.userLogueado._id);
-        console.log(response.accesToken);
-
-        const storedUser = response.userLogueado;
-        const idUsuario = storedUser ? storedUser._id : null;
-        const accessToken = response.accesToken; // Corregir la propiedad del token
-
-        if (idUsuario && accessToken) {
-          // Resto del código para obtener el usuario
-          // Agregar el ID del usuario y el token a sessionStorage
-          sessionStorage.setItem("idUsuario", idUsuario);
-          sessionStorage.setItem("token", accessToken);
-        } else {
-          console.error("No se pudo obtener el ID del usuario o el token.");
+        const response = await axios.post("/api/auth/login",formData)
+        if(response.status == 200){
+          router.push("/");
         }
-
-        // Almacena el usuario en sessionStorage
-        sessionStorage.setItem("user", JSON.stringify(storedUser));
-
-        // Llama a la función onLogin pasando el usuario
-        setApiError(null); // Limpia cualquier error existente
-        // Redirige al usuario a la página principal y forza la recarga del navbar
-        router.push("/"); //.then(() => window.location.reload());
-        router.refresh(); //este no logra mandar el refresh a la página principal
-      
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response.status === 401) {
