@@ -13,6 +13,7 @@ class ServicioAdopcion {
     } catch (error) {
       throw new AdopcionRequestError("Error al crear adopción: " + error.message);
     }
+    
   }
 
   async obtenerAdopcionPorUsuario(idUsuario) {
