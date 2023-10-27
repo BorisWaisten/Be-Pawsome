@@ -20,6 +20,7 @@ const FormLogin = () => {
     try {
         const response = await axios.post("/api/auth/login",formData)
         if(response.status == 200){
+          console.log(response.data +"hola ")
           router.push("/");
         }
     } catch (error) {
