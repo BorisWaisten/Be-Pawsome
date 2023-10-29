@@ -3,21 +3,33 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import Logo from "public/logoBePawsome.png";
 
-export default function Navbar () {
-  const { data: session, status  } = useSession();
-  //console.log({ session });
+export default function Navbar() {
+  const { data: session, status } = useSession();
 
   if (status === "loading") {
     return <p>Loading...</p>;
   }
 
-  
-  if (session) {
-    return (
-      <div className="bg-gradient-to-b from-cyan-50 to-cyan-200 p-2 flex gap-5">
-        <div className="ml-auto flex gap-2">
-          <>
+  return (
+    <nav className="flex items-center justify-between py-4 px-6">
+      <div className="flex items-center space-x-4">
+        <Link href="/">
+          <Image
+            src={Logo}
+            alt="Logo BePawsome"
+            width={70}
+            height={70}
+            quality={100}
+            placeholder="blur"
+          />
+        </Link>
+        <Link href="/aboutUs">About Us</Link>
+      </div>
+      {session ? (
+        <div className="bg-gradient-to-b from-cyan-50 to-cyan-200 p-2 flex gap-5">
+          <div className="ml-auto flex gap-2">
             Bienvenido {session.user?.userLogueado.nombre} <br />
             <Image
               src={session.user?.userLogueado.imagenPerfil}
@@ -29,48 +41,16 @@ export default function Navbar () {
             <button onClick={() => signOut()} className="btn btn-danger">
               Salir
             </button>
-          </>
+          </div>
         </div>
-      </div>
-    );
-  }
-  return (
-    <>
-      No esta Logueado <br />
-      <button onClick={() => signIn()} className="btn btn-primary">
-        Loguearse
-      </button>
-    </>
+      ) : (
+        <div>
+          No está Logueado <br />
+          <button onClick={() => signIn()} className="btn btn-primary">
+            Loguearse
+          </button>
+        </div>
+      )}
+    </nav>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-{/*}
-  return (
-    <div className="bg-gradient-to-b from-cyan-50 to-cyan-200 p-2 flex gap-5 ">
-      <div className="ml-auto flex gap-2">
-        {session?.user ? (
-          <>
-            <p className="text-sky-600"> {session.user?.userLogueado.nombre}</p>
-            <button className="text-red-500" onClick={() => signOut()}>
-              Sign Out
-            </button>
-          </>
-        ) : (
-          <button className="text-green-600" onClick={() => signIn()}>
-            Sign In
-          </button>
-        )}
-      </div>
-    </div>
-  );
-};*/}
