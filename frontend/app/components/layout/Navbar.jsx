@@ -7,26 +7,20 @@ import Logo from "public/logoBePawsome.png";
 import { obtenerUsuarioLogeado } from "../../persistencia/peticiones";
 import ImgProfile from "./ImgProfile";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
-export default function NavBar() {
+export default function NavBar(token) {
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+
   useEffect(() => {
     const cargarUsuario = async () => {
       try {
-        const { usuario, error } = await obtenerUsuarioLogeado();
-        if (usuario) {
-          setUsuario(usuario);
-<<<<<<< HEAD
-          
-        } else {
-          console.error(error);
-=======
-          console.log(usuario);
->>>>>>> boris
-        }
+        const profile = await axios.get("/api/profile");
+        console.log(profile.data);
+        setUsuario(profile.data);
       } catch (error) {
         console.error(error);
       } finally {
