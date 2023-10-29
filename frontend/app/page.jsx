@@ -1,15 +1,13 @@
-import { Suspense } from "react"
-import Cargando from "./components/cargando"
-import PublicacionPage from "./components/Publicaciones/PublicacionPage"
-
-export default function page() {
+"use client";
+import Image from "next/image";
+import Loginbtn from "./components/Loginbtn";
+export default function Home() {
   return (
-      <>
-        <div>
-          <Suspense fallback={<Cargando/>}>
-            <PublicacionPage/>
-          </Suspense> 
-        </div>
-      </>
-    )
-  }
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
+        <p>HOLA ESTE ES LA PAGINA MAIN</p>
+        <Loginbtn />
+      </div>
+    </main>
+  );
+}
