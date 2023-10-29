@@ -12,7 +12,7 @@ export default function Loginbtn() {
   if (session) {
     return (
       <>
-        Signed in as {session.user?.userLogueado.nombre} <br />
+        Logueado como {session.user?.userLogueado.nombre} <br />
         <Image
           src={session.user?.userLogueado.imagenPerfil}
           alt="Imagen Usuario"

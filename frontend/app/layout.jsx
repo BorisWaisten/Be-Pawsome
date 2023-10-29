@@ -1,4 +1,5 @@
 import "./globals.css";
+import NavBar from "./components/NavBar";
 import { Roboto_Slab } from "next/font/google";
 import SessionAuthProvider from "./context/SessionAuthProvider"; // Aca Van a ir todos los componentes que voy a ir importando
 
@@ -15,7 +16,7 @@ export default function RootLayout({ children }) {
       <body className={roboto.className}>
         
         <SessionAuthProvider>
-          {/*<NavBar />*/}
+          <NavBar />
           {children}
           {/*<Footer />*/}
         </SessionAuthProvider>
