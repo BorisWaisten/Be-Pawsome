@@ -48,7 +48,7 @@ const ImgProfile = () => {
                   Mis publicaciones
                 </a>
               </Link>
-              <button onClick={() => signOut()} legacyBehavior className="px-4 py-2 w-full text-m text-gray-800 hover:bg-violet-100 transition duration-300 ease-in-out">
+              <button onclick={signOut} legacyBehavior className="px-4 py-2 w-full text-m text-gray-800 hover:bg-violet-100 transition duration-300 ease-in-out">
                 Salir de la cuenta
               </button>
             </div>
