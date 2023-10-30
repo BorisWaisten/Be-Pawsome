@@ -3,7 +3,7 @@ import { signIn } from "next-auth/react";
 import React, { useRef } from "react";
 
 const LoginPage = () => {
-  const userName = useRef("");
+  const mail = useRef("");
   const pass = useRef("");
 
   const onSubmit = async () => {
