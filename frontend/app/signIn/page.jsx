@@ -16,6 +16,9 @@ const login = async (datos) => {
   }
 }
 
+
+
+
 const FormLogin = () => {
   const router = useRouter();
   const [apiError, setApiError] = useState(null);
@@ -62,8 +65,8 @@ const mandarANextAuth = async () => {
         // Llama a la función onLogin pasando el usuario
         setApiError(null); // Limpia cualquier error existente
         // Redirige al usuario a la página principal y forza la recarga del navbar
-        //router.push("/"); //.then(() => window.location.reload());
-        //router.refresh(); //este no logra mandar el refresh a la página principal
+        router.push("/"); //.then(() => window.location.reload());
+        router.refresh(); //este no logra mandar el refresh a la página principal
       
     } catch (error) {
       if (axios.isAxiosError(error)) {
