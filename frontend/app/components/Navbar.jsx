@@ -12,7 +12,7 @@ export default function Navbar() {
     return <p>Loading...</p>;
   }
 
-  return (
+ return (
     <nav className="flex items-center justify-between py-4 px-6">
       <div className="flex items-center space-x-4">
         <Link href="/">
@@ -28,35 +28,33 @@ export default function Navbar() {
         <Link href="/aboutUs">About Us</Link>
         <Link href="/restringida">Retringida</Link>
       </div>
-      {session ? (
-        <div className="bg-gradient-to-b from-cyan-50 to-cyan-200 p-2 flex gap-5">
-          <div className="ml-auto flex gap-2">
-            Bienvenido {session.user?.userLogueado.nombre} <br />
-            <Image
-              src={session.user?.userLogueado.imagenPerfil}
-              alt="Imagen Usuario"
-              width={50}
-              height={50}
-              quality={100}
-            />
-            <button onClick={() => signOut()} className="btn btn-danger">
-              Salir
+
+      <div className="ml-auto flex space-x-2"> {/* Agregado un contenedor flex */}
+        {session ? (
+          <div className="bg-gradient-to-b from-cyan-50 to-cyan-200 p-2 flex gap-5">
+            <div className="flex gap-2">
+              Bienvenido {session.user?.userLogueado.nombre} <br />
+              <Image
+                src={session.user?.userLogueado.imagenPerfil}
+                alt="Imagen Usuario"
+                width={50}
+                height={50}
+                quality={100}
+              />
+              <button onClick={() => signOut()} className="btn btn-primary">
+                Salir
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex space-x-2"> {/* Agregado un contenedor flex */}
+            <Link href="/register">Registrarse</Link>
+            <button onClick={() => signIn()} className="btn btn-primary">
+              Loguearse
             </button>
           </div>
-        </div>
-      ) : (
-        <div>
-          <div>
-            No está Logueado <br />
-          </div>
-          <div>
-            <Link href="/register" className="btn btn-primary" >Registrarse</Link>
-          </div>
-          <button onClick={() => signIn()} className="btn btn-primary">
-            Loguearse
-          </button>
-        </div>
-      )}
+        )}
+      </div>
     </nav>
   );
 }
