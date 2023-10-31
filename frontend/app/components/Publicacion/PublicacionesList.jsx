@@ -16,7 +16,7 @@ export default function PublicacionesList() {
 
         // Verifica que session y sus propiedades estén definidas antes de acceder a subpropiedades
         const idUsuario = session?.user?.userLogueado?._id;
-
+        
         if (publicacionesData && idUsuario) {
           const publicacionesFiltradas = publicacionesData.filter((p) => p.usuario._id !== idUsuario);
           setPublicaciones(publicacionesFiltradas);

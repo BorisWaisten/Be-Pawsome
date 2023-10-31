@@ -68,7 +68,7 @@ const Publicacion = () => {
       const datosPublicacion = {
           titulo: formData.titulo,
           usuario: usuario,
-          animal: animalResponse,
+          animal: animalResponse.data,
       }
 
       // Luego, utilizar la respuesta del animal para crear la publicación
