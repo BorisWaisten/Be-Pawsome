@@ -46,7 +46,12 @@ export default function Navbar() {
         </div>
       ) : (
         <div>
-          No está Logueado <br />
+          <div>
+            No está Logueado <br />
+          </div>
+          <div>
+            <Link href="/register" className="btn btn-primary" >Registrarse</Link>
+          </div>
           <button onClick={() => signIn()} className="btn btn-primary">
             Loguearse
           </button>
