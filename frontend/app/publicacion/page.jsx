@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import CreatePublicacion from '../components/Publicacion/CreatePublicacion.jsx';
+import { useRouter } from "next/navigation";
 const Publicacion = () => {
+  const router = useRouter();
 
   const { data: session } = useSession();
   const [usuario, setUsuario] = useState(null);
@@ -73,8 +75,9 @@ const Publicacion = () => {
 
       // Luego, utilizar la respuesta del animal para crear la publicación
       const responsePublicacion = await axios.post("http://localhost:5000/publicacion/crear", datosPublicacion);
-
+      
       console.log('Publicación creada:', responsePublicacion);
+      router.push("/");
       // Puedes manejar la respuesta del servidor según tus necesidades.
     } catch (error) {
       console.error('Error al crear la publicación:', error);

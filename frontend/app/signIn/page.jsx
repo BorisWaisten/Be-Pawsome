@@ -1,8 +1,10 @@
 "use client";
 import { signIn } from "next-auth/react";
 import React, { useRef } from "react";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
+  const router = useRouter();
   const mail = useRef("");
   const pass = useRef("");
 
@@ -41,6 +43,13 @@ const LoginPage = () => {
           className="w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
         >
           Login
+        </button>
+        <br />
+        <button
+          onClick={() => router.push('/signIn/recuperarContrasenia')}
+          className="w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+        >
+          Olvidaste la Contraseña?
         </button>
       </div>
     </div>
