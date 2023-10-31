@@ -4,13 +4,16 @@ import React from "react";
 import { useState, useRef } from "react";
 //import { solicitar, obtenerUsuarioLogeado } from "@/app/persistencia/peticiones";
 import { useRouter } from "next/navigation"
+import { useSession } from "next-auth/react";
+import axios from "axios";
+
 
 
 
 function PublicacionCard({ publicacion }) {
+  const { data: session } = useSession();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [mostrarDetalles, setMostrarDetalles] = useState(false);
-  const sliderRef = useRef(null);
   const router = useRouter();
 
 
@@ -31,7 +34,7 @@ function PublicacionCard({ publicacion }) {
   
   async function agregarACasita() {
     try {
-        const userId = session.user?.userLogueado._id;
+        const userId = session?.user?.userLogueado._id;
         if(!userId){
         router.push("/signIn");
       }
@@ -39,8 +42,7 @@ function PublicacionCard({ publicacion }) {
         idAdoptante: userId,
         publicacion: publicacion,
       }
-      const mensajeSolicitud =await solicitar(datos);
-      router.push("/")
+      const mensajeSolicitud = await axios.post("http://localhost:5000/publicacion/solicitar", datos) 
       return mensajeSolicitud
     } catch (error){
       console.log(error);

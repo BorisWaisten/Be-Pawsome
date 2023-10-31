@@ -1,6 +1,7 @@
 
+import axios from "axios";
 import React from "react";
-import { eliminarPublicacion } from "@/app/persistencia/peticiones";
+//import { eliminarPublicacion } from "@/app/persistencia/peticiones";
 
 const PublicacionesDeUsuario = ({ publicaciones }) => {
 
@@ -10,7 +11,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
     );
     if (confirmacion) {
       // Llamar a la función para eliminar la publicación
-      await eliminarPublicacion(publicacionId);
+      await axios.delete(`http://localhost:5000/publicacion/${publicacionId}`);
       window.location.reload();
     }
   };
