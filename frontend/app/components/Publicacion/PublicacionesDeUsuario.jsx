@@ -11,7 +11,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
     );
     if (confirmacion) {
       // Llamar a la función para eliminar la publicación
-      await axios.delete(`http://localhost:5000/publicacion/${publicacionId}`);
+      await axios.delete(`http://localhost:5000/publicacion/eliminar/${publicacionId}`);
       window.location.reload();
     }
   };

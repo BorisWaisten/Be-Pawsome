@@ -20,7 +20,7 @@ class RouterUsuario {
   
     try {
       const decoded = jwt.verify(token, SECRET_KEY);
-      req.userId = decoded.id; // Guardar el ID del usuario en req.userId
+      req.userId = decoded.id; 
       next();
     } catch (error) {
       return res.status(401).json({ mensaje: 'Token no válido.' });
@@ -46,7 +46,7 @@ class RouterUsuario {
     //se recupera la contrasenia via mail y se le genera una nueva contrasenia
     this.router.post('/changePassword', this.controlador.changePassword)
 
-    this.router.delete("/eliminarSolicitud/:token",this.verificarToken, this.controlador.eliminarSolicitud);
+    this.router.delete("/eliminarSolicitud/:id", this.controlador.eliminarSolicitud);
    
    
    

@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 
 
-const SolicitudesDeUsuario = ({ publicaciones,usuarioToken}) => {
+const SolicitudesDeUsuario = ({ publicaciones, idUsuario, actualizarPublicaciones }) => {
 
     const confirmarEliminar = async (publicacionId) => {
         const confirmacion = window.confirm(
@@ -18,13 +18,14 @@ const SolicitudesDeUsuario = ({ publicaciones,usuarioToken}) => {
         try {
           // Hacer una solicitud DELETE para eliminar la solicitud en el backend
           // Implementa esta función usando fetch o axios
-          const solcicitudEliminada = await axios.delete(`http://localhost:5000/usuarios/eliminarSolicitud/${usuarioToken}`, {
+          const solicitudEliminada = await axios.delete(`http://localhost:5000/usuarios/eliminarSolicitud/${idUsuario}`, {
             data: { publicacionId }, // Pasar publicacionId en el cuerpo de la solicitud
           });
-          if(solcicitudEliminada){
-            window.location.reload()
-          }
-          return solcicitudEliminada
+          if (solicitudEliminada) {
+            // Llama a la función actualizarPublicaciones después de eliminar la solicitud
+            actualizarPublicaciones(publicacionId);
+        }
+          return solicitudEliminada
         } catch (error) {
           console.error(error);
           // Manejar errores, mostrar un mensaje al usuario, etc.

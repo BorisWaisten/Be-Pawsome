@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import ImagenUsuario from "@/app/uploadImagen/usuario/page";
 import { useSession } from "next-auth/react";

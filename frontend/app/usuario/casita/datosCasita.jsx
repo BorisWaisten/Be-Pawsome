@@ -1,42 +1,48 @@
-"use client"
-
 import React, { useEffect, useState } from "react";
 import SolicitudesDeUsuario from "@/app/components/Solicitudes/SolicitudesDeUsuario";
 import { useSession } from "next-auth/react";
-
+import axios from "axios";
 
 const Casita = () => {
     const { data: session } = useSession();
     const [usuario, setUsuario] = useState(null);
     const [publicaciones, setPublicaciones] = useState([]);
-    const [usuarioToken, setUsuarioToken] = useState(null);
+
+    const idUsuario = session?.user?.userLogueado._id;
+
 
     const cargarDatos = async () => {
         try {
-            const usuario = session?.user?.userLogueado
-            const token = session?.user?.accessToken
-            if (usuario) {
-                setUsuario(usuario);
-                setUsuarioToken(token)
-                setPublicaciones(usuario.casita.publicaciones)
+            const response = await axios.get(`http://localhost:5000/usuarios/${idUsuario}`);
+            const usuarioData = response.data;
+            
+            if (usuarioData) {
+                setUsuario(usuarioData);
+                setPublicaciones(usuarioData.casita.publicaciones);
             }
         } catch (error) {
             console.error(error);
         }
-    }
+    };
 
     useEffect(() => {
         cargarDatos();
-    }, [] );
+    }, [session]);
+
+    const actualizarPublicaciones = async (publicacionId) => {
+        // Filtrar las publicaciones para quitar la eliminada
+        const nuevasPublicaciones = publicaciones.filter(p => p._id !== publicacionId);
+        setPublicaciones(nuevasPublicaciones);
+    };
 
     return (
         <div>
             {usuario && (
                 <h1>Solicitudes Realizadas</h1>
             )}
-            <SolicitudesDeUsuario publicaciones={publicaciones} usuarioToken={usuarioToken}/>
+            <SolicitudesDeUsuario publicaciones={publicaciones} idUsuario={idUsuario} actualizarPublicaciones={actualizarPublicaciones} />
         </div>
-    )
+    );
+};
 
-}
-export default Casita
+export default Casita;
