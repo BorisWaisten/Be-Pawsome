@@ -46,7 +46,7 @@ class RouterUsuario {
     //se recupera la contrasenia via mail y se le genera una nueva contrasenia
     this.router.post('/changePassword', this.controlador.changePassword)
 
-    this.router.delete("/eliminarSolicitud/:id", this.controlador.eliminarSolicitud);
+    this.router.delete("/eliminarSolicitud/:token",this.verificarToken, this.controlador.eliminarSolicitud);
    
    
    
