@@ -33,7 +33,9 @@ export default function Navbar() {
           />
         </Link>
         <Link href="/aboutUs">About Us</Link>
-        <Link href="/restringida">Retringida</Link>
+        {session && (
+          <Link href="/publicacion">Crear Publicacion</Link>
+          )}
       </div>
 
       <div className="ml-auto flex space-x-2"> {/* Agregado un contenedor flex */}
