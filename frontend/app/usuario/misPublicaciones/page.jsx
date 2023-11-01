@@ -16,7 +16,7 @@ const Page = () => {
 
   const cargarUsuario = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/publicacion/publicacionesUsuario/${idUsuario}`);
+      const response = await axios.get(`http://localhost:5000/publicacion/publicacione  sUsuario/${idUsuario}`);
       console.log(response.data);
       setPublicaciones(response.data);
       setUsuario(session?.user?.userLogueado);
