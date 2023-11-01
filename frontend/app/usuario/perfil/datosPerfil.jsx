@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import ImagenUsuario from "@/app/uploadImagen/usuario/page";
 import { signOut, useSession } from "next-auth/react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 export default function Usuario() {
+	const router = useRouter();
 	const { data: session } = useSession();
 	const [usuario, setUsuario] = useState(null);
 	const [loading, setLoading] = useState(true);
