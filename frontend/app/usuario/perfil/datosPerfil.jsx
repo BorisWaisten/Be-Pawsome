@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ImagenUsuario from "@/app/uploadImagen/usuario/page";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import axios from "axios";
 
 
@@ -25,9 +25,13 @@ export default function Usuario() {
 	
 			// Eliminar el usuario
 			await axios.delete(`http://localhost:5000/usuarios/${usuario._id}`);
-	
+			
+			
 			// Cierra el modal de confirmación después de eliminar el usuario y sus publicaciones
 			setConfirmarEliminacion(false);
+			
+			signOut();
+			router.push("/")
 		} catch (error) {
 			console.error("Error al eliminar el usuario y sus publicaciones:", error);
 			// Manejar errores, mostrar un mensaje al usuario, etc.

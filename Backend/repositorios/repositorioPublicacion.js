@@ -61,11 +61,11 @@ class RepositorioPublicacion {
   }
 
   async eliminarPublicacionesPorUsuario(idUsuario) {
-    console.log(idUsuario);
+    //console.log(idUsuario);
     try {
-      const filtro = new ObjectId(idUsuario);
-      console.log(filtro);
-      const resultado = await this.publicacionesCollection.deleteMany({'usuario._id': filtro });
+      //const filtro = new ObjectId(idUsuario);
+      //console.log(filtro);
+      const resultado = await this.publicacionesCollection.deleteMany({'usuario._id': idUsuario });
       console.log(resultado);
       return resultado;
     } catch (error) {
