@@ -26,7 +26,7 @@ export default function Usuario() {
         `http://localhost:5000/publicacion/publicacionesUsuario/${usuario._id}`
       );
 
-      if (publicacionesUsuario.lenght > 0) {
+      if (publicacionesUsuario.data.lenght > 0) {
         await axios.delete(
           `http://localhost:5000/publicacion/usuario/${usuario._id}`
         );
