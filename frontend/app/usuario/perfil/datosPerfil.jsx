@@ -25,8 +25,8 @@ export default function Usuario() {
       const publicacionesUsuario = await axios.get(
         `http://localhost:5000/publicacion/publicacionesUsuario/${usuario._id}`
       );
-
-      if (publicacionesUsuario.data.lenght > 0) {
+	  
+      if (publicacionesUsuario.data.message !== "Sin publicaciones disponibles") {
         await axios.delete(
           `http://localhost:5000/publicacion/usuario/${usuario._id}`
         );
