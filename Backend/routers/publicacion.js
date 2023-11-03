@@ -17,7 +17,7 @@ class RouterPublicacion {
     this.router.delete("/usuario/:idUsuario", this.controlador.eliminarPublicacionesPorUsuario);
     this.router.get("/publicacionesUsuario/:idUsuario", this.controlador.publicacionesUsuario);
     this.router.get("/publicaciones", this.controlador.publicaciones);
-    this.router.get("/buscar", this.controlador.publicacionesPorString); 
+    this.router.get("/buscar/:query", this.controlador.publicacionesPorString); 
     this.router.post("/solicitar", this.controlador.solicitar);
     return this.router;
   }
