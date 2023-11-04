@@ -18,8 +18,12 @@ export default function BarraBuscadora({getPublicaciones}) {
     return (
         <div className="text-center my-20">
             <form onSubmit={handleSubmit}>
-                <input className="text-black border-2 border-black rounded-full px-3 py-2" type="text" placeholder="Buscar Animal" value={query} onChange={(e) => setQuery(e.target.value)} />
-                <button className="bg-black text-white rounded-full px-3 py-2 hover:bg-black/60" type="submit">Buscar</button>
+                <div>
+                    <input className="text-black border-2 border-black rounded-full px-3 py-2" type="text" placeholder="Buscar Animal" value={query} onChange={(e) => setQuery(e.target.value)} />
+                </div>
+                <div>
+                    <button className="bg-black text-white rounded-full px-3 py-2 hover:bg-black/60" type="submit">Buscar</button>
+                </div>
             </form>
         </div>
     )
