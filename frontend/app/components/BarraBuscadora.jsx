@@ -1,21 +1,18 @@
 "use client"
 
 import axios from "axios";
-import Link from "next/link"
 import { useState } from "react"
 
 
-export default function BarraBuscadora() {
+export default function BarraBuscadora({getPublicaciones}) {
     const [query, setQuery] = useState("");
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // Aqui puedes agregar la lógica para realizar la búsqueda
-        
+
         const response = await axios.get(`http://localhost:5000/publicacion/buscar/${query}`);
     
-        console.log(response.data);
-        return response.data
+        getPublicaciones(response.data);
     };
 
     return (
@@ -25,7 +22,5 @@ export default function BarraBuscadora() {
                 <button className="bg-black text-white rounded-full px-3 py-2 hover:bg-black/60" type="submit">Buscar</button>
             </form>
         </div>
-      )
-    
-
+    )
 }
