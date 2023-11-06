@@ -76,7 +76,7 @@ export default function Usuario() {
 
   useEffect(() => {
     cargarUsuario();
-  }, []);
+  }, [session]);
 
   const handleEditarClick = () => {
     setModalVisible(true); // Mostrar el modal al hacer clic en "Editar"
@@ -165,7 +165,7 @@ export default function Usuario() {
             className=" flex rounded-full m-10 justify-center items-center"
             src={usuario.imagenPerfil}
             alt="Foto de perfil"
-            style={{ width: "150px", height: "150px" }}
+            style={{ width: "200px", height: "150px" }}
           />
         </div>
         <div className="w-full flex items-center">

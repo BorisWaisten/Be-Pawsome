@@ -23,7 +23,7 @@ export default function Navbar() {
  return (
     <nav className="flex items-center justify-between py-4 px-6">
       <div className="flex items-center space-x-4">
-        <Link href="/">
+        <Link href="/"  onClick={() =>{router.push("/");router.reload()}}>
           <Image
             src={Logo}
             alt="Logo BePawsome"

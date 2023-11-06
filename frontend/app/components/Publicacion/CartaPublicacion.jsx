@@ -61,6 +61,7 @@ function PublicacionCard({ publicacion }) {
           {/* Imagen actual */}
           <img
             className="rounded-lg w-full h-72 object-cover "
+            style={{height: 200, width: 300}}
             src={publicacion && publicacion.animal && publicacion.animal.fotos ? publicacion.animal.fotos[currentImageIndex] : ""}
             alt={`Foto ${currentImageIndex + 1}`}
           />
