@@ -3,7 +3,10 @@ import CartaPublicacion from "./CartaPublicacion";
 import React, { useState,useEffect } from "react";
 
 export default function PublicacionesList( publicacionesSearch) {
+  
   const [publicaciones, setPublicaciones] = useState([]);
+
+  console.log(publicacionesSearch.publicaciones);
 
   useEffect(() => {
     setPublicaciones(publicacionesSearch.publicaciones);
