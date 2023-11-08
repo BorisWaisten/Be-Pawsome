@@ -27,7 +27,6 @@ class ControllerPublicacion {
 
   obtenerPublicacion = async (req, res) => {
     const idPublicacion = req.params.id;
-    console.log(idPublicacion);
     try {
       const publicacion = await this.servicioPublicacion.obtenerPublicacionPorId(idPublicacion);
       if (!publicacion) {
