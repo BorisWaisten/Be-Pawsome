@@ -1,10 +1,5 @@
-<<<<<<< HEAD:frontend/app/components/layout/Footer.jsx
 "use client";
 //fixed bottom-0 w-full original
-=======
-
-//fixed bottom-0 w-full original 
->>>>>>> origin/development:frontend/app/components/Layout/Footer.jsx
 //sticky bottom-0 z-50
 
 //sticky top-[100vh]

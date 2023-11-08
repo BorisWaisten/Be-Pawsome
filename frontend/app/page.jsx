@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import { Suspense } from "react";
-import Cargando from "./components/cargando";
-import PublicacionPage from "./components/Publicaciones/PublicacionPage";
-import SessionAuthProvider from "./context/SessionAuthProvider";
-import Navbar from "./components/layout/Navbar";
-=======
 "use client"
 import { Suspense } from "react"
 import Cargando from "./components/cargando.jsx"
@@ -13,7 +6,6 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import PublicacionesList from "./components/Publicacion/PublicacionesList.jsx"
 
->>>>>>> origin/development
 
 export default function page() {
   const { data: session } = useSession();
@@ -89,16 +81,9 @@ export default function page() {
       <SessionAuthProvider>
         <Navbar/>
         <div>
-<<<<<<< HEAD
           <Suspense fallback={<Cargando />}>
             <PublicacionPage />
           </Suspense>
-=======
-          <Suspense fallback={<Cargando/>}>
-          <BarraBuscadora handleSearch={handleSearch} />
-          <PublicacionesList publicaciones={publicaciones}/>
-          </Suspense> 
->>>>>>> origin/development
         </div>
       </SessionAuthProvider>
     </>
