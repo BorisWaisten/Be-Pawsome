@@ -1,25 +1,26 @@
 "use client";
 import CartaPublicacion from "./CartaPublicacion";
-import {getPublicaciones,obtenerUsuarioLogeado} from "../../persistencia/peticiones"
+import {getPublicaciones} from "../../persistencia/peticiones"
 import React,{useState,useEffect} from "react";
+import { useSession } from "next-auth/react";
 
 export default async function PublicacionesList() {
   const [publicaciones, setPublicaciones] = useState([]);
-  const [datosCargados, setDatosCargados] = useState(false);
+  const { data: session } = useSession();
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const publicacionesData = await getPublicaciones();
-        const { usuario } = await obtenerUsuarioLogeado();
+       
+        const publicacionesAMostrar = publicacionesData.filter(publicacion => {
+          return publicacion.usuarioId !== session.user?.userLogueado._id;
+        });
 
-        if (publicacionesData && usuario) {
-          const publicacionesFiltradas = publicacionesData.filter((p) => p.usuario._id !== usuario._id);
-          setPublicaciones(publicacionesFiltradas);
-        }else{
-          setPublicaciones(publicacionesData);
-        }
-        setDatosCargados(true);
+        setPublicaciones(publicacionesAMostrar);
+      
+       
       } catch (error) {
         console.error("Error al obtener datos:", error);
       }
@@ -28,10 +29,7 @@ export default async function PublicacionesList() {
     fetchData();
   }, []); // El segundo argumento del useEffect es un array de dependencias, en este caso, está vacío para que se ejecute solo una vez.
 
-  if (!datosCargados) {
-    // Mostrar un mensaje de carga o un spinner mientras se cargan los datos
-    return <p>Cargando...</p>;
-  }
+  
 
   // var publicaciones = await getPublicaciones();
   // const { usuario } = await obtenerUsuarioLogeado();
