@@ -27,8 +27,12 @@ class ControllerPublicacion {
 
   obtenerPublicacion = async (req, res) => {
     const idPublicacion = req.params.id;
+    console.log(idPublicacion);
     try {
       const publicacion = await this.servicioPublicacion.obtenerPublicacionPorId(idPublicacion);
+      if (!publicacion) {
+        throw new PublicacionRequestError(`Publicacion con ID ${idPublicacion} no encontrada`);
+      }
       res.status(200).json(publicacion);
     } catch (error) {
       res.status(404).json(error.message);

@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSession } from "next-auth/react";
 import axios from "axios";
-import CreatePublicacion from '../components/Publicacion/CreatePublicacion.jsx';
+import CreatePublicacion from '../../components/Publicacion/CreatePublicacion.jsx';
 import { useRouter } from "next/navigation";
-const Publicacion = () => {
+const CrearPublicacion = () => {
   const router = useRouter();
 
   const { data: session } = useSession();
@@ -114,4 +114,4 @@ const Publicacion = () => {
   );
 };
 
-export default Publicacion;
+export default CrearPublicacion;

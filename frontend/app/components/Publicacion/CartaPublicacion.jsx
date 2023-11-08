@@ -2,10 +2,10 @@
 
 import React from "react";
 import { useState, useRef } from "react";
-//import { solicitar, obtenerUsuarioLogeado } from "@/app/persistencia/peticiones";
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react";
-import axios from "axios";
+import Link from "next/link";
+
 
 function PublicacionCard({ publicacion }) {
   const { data: session } = useSession();
@@ -28,23 +28,7 @@ function PublicacionCard({ publicacion }) {
   const handleMostrarDetalles = () => {
     setMostrarDetalles(!mostrarDetalles);
   };
-
-  async function agregarACasita() {
-    try {
-      const userId = session?.user?.userLogueado._id;
-      if (!userId) {
-        router.push("/signIn");
-      }
-      const datos = {
-        idAdoptante: userId,
-        publicacion: publicacion,
-      }
-      const mensajeSolicitud = await axios.post("http://localhost:5000/publicacion/solicitar", datos);
-      return mensajeSolicitud;
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  
 
   return (
     <>
@@ -117,12 +101,12 @@ function PublicacionCard({ publicacion }) {
           )}
         </div>
         <div>
-          <button
-            className="bg-blue-500 hover:bg-violet-500 text-white font-bold py-2 px-4 rounded mx-auto mt-auto"
-            onClick={agregarACasita}
+        <button
+          className="bg-blue-500 hover:bg-violet-500 text-white font-bold py-2 px-4 rounded mx-auto mt-auto"
+          onClick={() => router.push(`/publicacion/perfilPublicacion/${publicacion._id}`)}
           >
-            Me interesa
-          </button>
+          Me interesa
+        </button>
         </div>
       </div>
     </>

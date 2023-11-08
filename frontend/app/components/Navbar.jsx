@@ -35,7 +35,7 @@ export default function Navbar() {
         </Link>
         <Link href="/aboutUs">About Us</Link>
         {session && (
-          <Link href="/publicacion">Crear Publicacion</Link>
+          <Link href="/publicacion/crearPublicacion">Crear Publicacion</Link>
           )}
       </div>
 

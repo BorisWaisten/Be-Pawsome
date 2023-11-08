@@ -5,7 +5,6 @@ import BarraBuscadora from "./components/BarraBuscadora.jsx"
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import PublicacionesList from "./components/Publicacion/PublicacionesList.jsx"
-import { set } from "mongoose";
 
 
 export default function page() {
@@ -82,7 +81,7 @@ export default function page() {
         <div>
           <Suspense fallback={<Cargando/>}>
           <BarraBuscadora handleSearch={handleSearch} />
-            <PublicacionesList publicaciones={publicaciones}/>
+          <PublicacionesList publicaciones={publicaciones}/>
           </Suspense> 
         </div>
       </>

@@ -6,8 +6,6 @@ export default function PublicacionesList( publicacionesSearch) {
   
   const [publicaciones, setPublicaciones] = useState([]);
 
-  console.log(publicacionesSearch.publicaciones);
-
   useEffect(() => {
     setPublicaciones(publicacionesSearch.publicaciones);
   }, [publicacionesSearch]);
