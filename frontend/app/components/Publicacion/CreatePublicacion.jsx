@@ -76,7 +76,7 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
           />
         </label>
         <label className="block mb-2 font-bold text-gray-700">
-          Edad:
+          Edad(años):
           <input
             type="text"
             name="edad"
@@ -171,6 +171,7 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
           >
             Crear publicacion
           </button>
+          
         </div>
       </form>
     </>

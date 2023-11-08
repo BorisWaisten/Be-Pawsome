@@ -1,14 +1,15 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import CreatePublicacion from '../components/Publicaciones/CreatePublicacion.jsx';
-import { crearAnimal, crearPublicacion, obtenerUsuarioLogeado } from '../persistencia/peticiones.jsx';
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import CreatePublicacion from '../../components/Publicacion/CreatePublicacion.jsx';
+import { useRouter } from "next/navigation";
+const CrearPublicacion = () => {
+  const router = useRouter();
 
-const Publicacion = () => {
-  
+  const { data: session } = useSession();
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
 
    // Nuevo estado local para formData
@@ -24,22 +25,21 @@ const Publicacion = () => {
     ubicacion: '',
     historiaClinica: '',
   });
-
+  
+  const user = session?.user?.userLogueado;
+  
   useEffect(() => {
-    const cargarUsuario = async () => {
-      try {
-        const { usuario, error } = await obtenerUsuarioLogeado();
-        if (usuario) {
-          setUsuario(usuario);
-          setError(null);
-        } else {
-          setError(error);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
+      
+      const cargarUsuario = async () => {
+            try {
+            if (user) {
+                setUsuario(user);
+            }
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
     };
   
     cargarUsuario();
@@ -64,20 +64,20 @@ const Publicacion = () => {
           historiaClinica: formData.historiaClinica,
           oferente: usuario,
       }
-      console.log(datosAnimal.fotos);
 
-      const animalResponse = await crearAnimal(datosAnimal);
+      const animalResponse = await axios.post("http://localhost:5000/animal/crear", datosAnimal);
      
       const datosPublicacion = {
           titulo: formData.titulo,
           usuario: usuario,
-          animal: animalResponse,
+          animal: animalResponse.data,
       }
 
       // Luego, utilizar la respuesta del animal para crear la publicación
-      const responsePublicacion = await crearPublicacion(datosPublicacion);
-
+      const responsePublicacion = await axios.post("http://localhost:5000/publicacion/crear", datosPublicacion);
+      
       console.log('Publicación creada:', responsePublicacion);
+      router.push("/");
       // Puedes manejar la respuesta del servidor según tus necesidades.
     } catch (error) {
       console.error('Error al crear la publicación:', error);
@@ -100,11 +100,6 @@ const Publicacion = () => {
     return <div>Cargando usuario...</div>;
   }
 
-  // Si hay un error, muestra un mensaje de error
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   // Si el usuario es nulo, muestra un mensaje de error o redirección a la página de inicio de sesión
   if (!usuario) {
     return <div>No se pudo cargar el usuario. Por favor, inicia sesión.</div>;
@@ -119,4 +114,4 @@ const Publicacion = () => {
   );
 };
 
-export default Publicacion;
+export default CrearPublicacion;

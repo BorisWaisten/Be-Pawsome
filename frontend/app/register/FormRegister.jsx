@@ -33,7 +33,7 @@ function Registrar() {
         }
       );
       console.log(response.data); // Maneja la respuesta del servidor según tus necesidades, por ejemplo, muestra un mensaje de éxito al usuario.
-      router.push("/login"); //.then(() => window.location.reload()); // Si registro correcamtente lo mando a la pagina de home
+      router.push("/signIn"); //.then(() => window.location.reload()); // Si registro correcamtente lo mando a la pagina de home
     } catch (error) {
       setApiError(error.response.data);
       //console.log(apiError);

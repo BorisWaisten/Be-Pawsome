@@ -60,7 +60,16 @@ class ServicioPublicacion {
     }
   }
 
-
+  async eliminarPublicacionesPorUsuario(idUsuario) {
+    console.log(idUsuario);
+    try {
+      const resultado = await this.repository.eliminarPublicacionesPorUsuario(idUsuario);
+      return resultado;
+    } catch (error) {
+      throw new PublicacionRequestError("Error al eliminar publicaciones del usuario: " + error.message);
+    }
+  }
+  
   async publicaciones() {
     try {
       const array = await this.repository.publicaciones(); 

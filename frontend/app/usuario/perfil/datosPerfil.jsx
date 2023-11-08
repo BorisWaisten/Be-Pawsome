@@ -1,19 +1,50 @@
-"use client";
 import React, { useEffect, useState } from "react";
-import {
-  obtenerUsuarioLogeado,
-  editarUsuario,
-  editarImagenUsuario,
-} from "@/app/persistencia/peticiones";
 import ImagenUsuario from "@/app/uploadImagen/usuario/page";
+import { signOut, useSession } from "next-auth/react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Usuario() {
-  //const router = useRouter();
+  const router = useRouter();
+  const { data: session } = useSession();
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false); // Estado para mostrar/ocultar el modal
-  
+  const [confirmarEliminacion, setConfirmarEliminacion] = useState(false);
+
+  const handleEliminarUsuarioClick = () => {
+    setConfirmarEliminacion(true);
+  };
+
+  const handleConfirmarEliminacion = async () => {
+    try {
+      console.log(usuario._id);
+      // Eliminar publicaciones del usuario
+
+      const publicacionesUsuario = await axios.get(
+        `http://localhost:5000/publicacion/publicacionesUsuario/${usuario._id}`
+      );
+	  
+      if (publicacionesUsuario.data.message !== "Sin publicaciones disponibles") {
+        await axios.delete(
+          `http://localhost:5000/publicacion/usuario/${usuario._id}`
+        );
+      }
+
+      // Eliminar el usuario
+      await axios.delete(`http://localhost:5000/usuarios/${usuario._id}`);
+
+      // Cierra el modal de confirmación después de eliminar el usuario y sus publicaciones
+      setConfirmarEliminacion(false);
+      signOut();
+    
+    } catch (error) {
+      console.error("Error al eliminar el usuario y sus publicaciones:", error);
+      // Manejar errores, mostrar un mensaje al usuario, etc.
+    }
+  };
+
   const [nuevosDatos, setNuevosDatos] = useState({
     imagenPerfil: "",
     nombre: "",
@@ -27,12 +58,11 @@ export default function Usuario() {
 
   const cargarUsuario = async () => {
     try {
-      const { usuario, error } = await obtenerUsuarioLogeado();
+      const usuario = session?.user?.userLogueado;
       if (usuario) {
         setUsuario(usuario);
         console.log(usuario);
         // Inicializa los nuevos datos con los valores del usuario
-
         setNuevosDatos(usuario);
       } else {
         setError(error);
@@ -46,7 +76,7 @@ export default function Usuario() {
 
   useEffect(() => {
     cargarUsuario();
-  }, []);
+  }, [session]);
 
   const handleEditarClick = () => {
     setModalVisible(true); // Mostrar el modal al hacer clic en "Editar"
@@ -59,10 +89,13 @@ export default function Usuario() {
       ...prevState,
       imagenPerfil: secureUrl,
     }));
-  
+
     // Guardar la imagen en el backend al mismo tiempo
     try {
-      const usuarioEditado = await editarImagenUsuario(usuario._id, { imagenPerfil: secureUrl });
+      const usuarioEditado = await axios.put(
+        `http://localhost:5000/usuarios/editarImagen/${usuario._id}`,
+        imagenPerfil
+      );
       setUsuario(usuarioEditado);
     } catch (error) {
       console.error("Error al guardar la imagen en el backend:", error);
@@ -84,8 +117,11 @@ export default function Usuario() {
         imagenPerfil,
         ...datosNecesarios
       } = nuevosDatos;
-      console.log(datosNecesarios);
-      const usuarioEditado = await editarUsuario(usuario._id, datosNecesarios);
+
+      const usuarioEditado = await axios.put(
+        `http://localhost:5000/usuarios/${usuario._id}`,
+        nuevosDatos
+      );
 
       setUsuario(usuarioEditado);
 
@@ -119,29 +155,32 @@ export default function Usuario() {
 
   return (
     <main>
-      <div className="flex justify-center items-center" onSubmit={handleGuardarCambios}>
+      <div
+        className="flex justify-center items-center"
+        onSubmit={handleGuardarCambios}
+      >
         <div className="w-full flex">
-        <img
-          className=" flex rounded-full m-10 justify-center items-center"
-          src={usuario.imagenPerfil}
-          alt="Foto de perfil"
-          style={{ width: "150px", height: "150px" }}
-        />
+          <img
+            className=" flex rounded-full m-10 justify-center items-center"
+            src={usuario.imagenPerfil}
+            alt="Foto de perfil"
+            style={{ width: "200px", height: "150px" }}
+          />
         </div>
         <div className="w-full flex items-center">
-        <div>
-          <ImagenUsuario onImageUpload={handleImageUpload} />
+          <div>
+            <ImagenUsuario onImageUpload={handleImageUpload} />
+          </div>
+          <div className="">
+            <button
+              type="button" // Cambiado a type="button" para evitar que el formulario se envíe
+              onClick={(e) => handleImageUpload(e)}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
+            >
+              Subir Imagen
+            </button>
+          </div>
         </div>
-        <div className="">
-          <button
-            type="button"  // Cambiado a type="button" para evitar que el formulario se envíe
-            onClick={(e)=>handleImageUpload(e)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
-          >
-            Subir Imagen
-          </button>
-        </div>
-      </div>
       </div>
       <div className="items-center flex flex-col">
         <div className="w-full flex">
@@ -318,6 +357,25 @@ export default function Usuario() {
             <button type="submit">Guardar Cambios</button>
             <button onClick={() => setModalVisible(false)}>Cancelar</button>
           </form>
+        </div>
+      )}
+
+      <button
+        onClick={handleEliminarUsuarioClick}
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
+      >
+        Eliminar Usuario
+      </button>
+      {confirmarEliminacion && (
+        <div className="modal">
+          <p>
+            ¿Estás seguro de que deseas eliminar este usuario y todas sus
+            publicaciones?
+          </p>
+          <button onClick={handleConfirmarEliminacion}>Sí, Eliminar</button>
+          <button onClick={() => setConfirmarEliminacion(false)}>
+            Cancelar
+          </button>
         </div>
       )}
     </main>

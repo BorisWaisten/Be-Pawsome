@@ -1,9 +1,23 @@
-//"use client";
+"use client";
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+
+const login = async (datos) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/usuarios/login",
+      datos
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error; // Captura y lanza el error para que sea manejado por el componente
+  }
+};
 
 const FormLogin = () => {
   const router = useRouter();
@@ -13,16 +27,35 @@ const FormLogin = () => {
     password: "",
   });
 
-  
+  const mandarANextAuth = async () => {
+    const result = await signIn("credentials", {
+      mail: formData.mail,
+      password: formData.password,
+      redirect: true,
+      callbackUrl: "/",
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
+<<<<<<< HEAD:frontend/app/login/FormLogin.jsx
         const response = await axios.post("/api/auth/login",formData)
         if(response.status == 200){
           console.log(response.data +"hola ")
           router.push("/");
         }
+=======
+      const response = await login(formData);
+      const usuarioValido = response.userLogueado;
+      if (usuarioValido) {
+        mandarANextAuth();
+      } else {
+        console.error("No se pudo obtener el ID del usuario o el token.");
+      }
+      setApiError(null); // Limpia cualquier error existente
+>>>>>>> origin/development:frontend/app/signIn/page.jsx
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response.status === 401) {
@@ -33,13 +66,13 @@ const FormLogin = () => {
           );
         }
       } else {
-        setApiError("Ocurrió un error. Por favor, inténtalo de nuevo más tarde.");
+        setApiError(
+          "Ocurrió un error. Por favor, inténtalo de nuevo más tarde."
+        );
       }
     }
   };
 
-  //className="flex flex-col items-center"
-  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -89,8 +122,10 @@ const FormLogin = () => {
             Iniciar Sesión
           </button>
           <br />
-          <Link href="/login/recuperarContrasenia" 
-            className="bg-blue-500 hover:bg-violet-700 text-center text-white justify-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <Link
+            href="/signIn/recuperarContrasenia"
+            className="bg-blue-500 hover:bg-violet-700 text-center text-white justify-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
             ¿Olvidaste tu contraseña?
           </Link>
         </form>

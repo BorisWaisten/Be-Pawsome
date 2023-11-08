@@ -29,6 +29,9 @@ class ControllerPublicacion {
     const idPublicacion = req.params.id;
     try {
       const publicacion = await this.servicioPublicacion.obtenerPublicacionPorId(idPublicacion);
+      if (!publicacion) {
+        throw new PublicacionRequestError(`Publicacion con ID ${idPublicacion} no encontrada`);
+      }
       res.status(200).json(publicacion);
     } catch (error) {
       res.status(404).json(error.message);
@@ -59,6 +62,21 @@ class ControllerPublicacion {
     }
   };
 
+  eliminarPublicacionesPorUsuario = async (req, res) => {
+    const idUsuario = req.params.idUsuario;
+    console.log(idUsuario)
+    try {
+      const resultado = await this.servicioPublicacion.eliminarPublicacionesPorUsuario(idUsuario);
+      console.log(resultado)
+      if (resultado.deletedCount === 0) {
+        throw new PublicacionNotFoundError(`No se encontraron publicaciones para el usuario con ID ${idUsuario}`);
+      }
+      res.status(200).json({ message: "Publicaciones eliminadas correctamente." });
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
+  };
+
 // va a devolver un array de todas las publicaciones de la base de datos
   publicaciones = async (req, res) => {
     try {
@@ -82,7 +100,8 @@ class ControllerPublicacion {
   //Se buscaran publicaciones por palabras claves (String recibidos por parametros)
   publicacionesPorString = async (req, res) => {
     try {
-      const string = req.query.search;
+      const string = req.params.query;
+      console.log(string)
       const result = await this.servicioPublicacion.publicacionesPorString(string);
       res.status(200).json(result)
     } catch (error) {

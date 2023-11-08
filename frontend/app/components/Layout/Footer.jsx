@@ -1,5 +1,10 @@
+<<<<<<< HEAD:frontend/app/components/layout/Footer.jsx
 "use client";
 //fixed bottom-0 w-full original
+=======
+
+//fixed bottom-0 w-full original 
+>>>>>>> origin/development:frontend/app/components/Layout/Footer.jsx
 //sticky bottom-0 z-50
 
 //sticky top-[100vh]
@@ -21,7 +26,7 @@ export default function Footer() {
           className="text-neutral-800 dark:text-neutral-400"
           href="https://www.argentina.gob.ar/normativa/nacional/ley-14346-153011/texto"
         >
-          <p>Ir a Proteccion de los animales </p>
+          <p className="font-bold m-2">Ir a Proteccion de los animales </p>
         </a>
       </div>
     </footer>
