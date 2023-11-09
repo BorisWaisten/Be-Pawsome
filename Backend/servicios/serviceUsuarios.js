@@ -61,7 +61,7 @@ class ServicioUsuario{
             // Verificar si la cuenta debe bloquearse
             const usuarioActualizado = await this.obtenerUsuario(user._id);
       
-            if (usuarioActualizado.intentosFallidos >= 2) {
+            if (usuarioActualizado.intentosFallidos > 2) {
               await this.model.restablecerIntentosFallidos(user._id);
               await this.model.bloquearCuenta(user._id);
               // Aquí puedes tomar medidas adicionales, como bloquear la cuenta o enviar notificaciones

@@ -36,6 +36,12 @@ const FormLogin = () => {
     });
   };
 
+  const handleError = (error) => {
+    if (axios.isAxiosError(error)) {
+      setApiError(error.response.data); 
+    } 
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -49,19 +55,7 @@ const FormLogin = () => {
       }
       setApiError(null); // Limpia cualquier error existente
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response.status === 401) {
-          setApiError("No autorizado. Por favor, inicia sesión.");
-        } else {
-          setApiError(
-            "Ocurrió un error. Por favor, inténtalo de nuevo más tarde."
-          );
-        }
-      } else {
-        setApiError(
-          "Ocurrió un error. Por favor, inténtalo de nuevo más tarde."
-        );
-      }
+      handleError(error);
     }
   };
 
