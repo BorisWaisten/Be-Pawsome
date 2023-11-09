@@ -61,7 +61,6 @@ export default function Usuario() {
       const usuario = session?.user?.userLogueado;
       if (usuario) {
         setUsuario(usuario);
-        console.log(usuario);
         // Inicializa los nuevos datos con los valores del usuario
         setNuevosDatos(usuario);
       } else {
@@ -93,10 +92,11 @@ export default function Usuario() {
     // Guardar la imagen en el backend al mismo tiempo
     try {
       const usuarioEditado = await axios.put(
-        `http://localhost:5000/usuarios/editarImagen/${usuario._id}`,
-        imagenPerfil
+        `http://localhost:5000/usuarios/editarImagen/${usuario._id}`,{
+          imagenPerfil: nuevosDatos.imagenPerfil
+        }
       );
-      setUsuario(usuarioEditado);
+      setUsuario(usuarioEditado.data);
     } catch (error) {
       console.error("Error al guardar la imagen en el backend:", error);
       // Manejar errores, mostrar un mensaje al usuario, etc.

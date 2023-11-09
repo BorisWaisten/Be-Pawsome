@@ -38,22 +38,43 @@ class ServicioUsuario{
       } 
       }
 
-    login = async (usuario) =>{
-      try{
-        UserRequest.validacionLogin(usuario)
-        const user = await this.model.login(usuario)
-        if(!user){
-          throw new InvalidCredentialsError("El email " + usuario.mail + " no se encuentra registrado!")
+      login = async (usuario) => {
+        try {
+          UserRequest.validacionLogin(usuario);
+      
+          const user = await this.model.login(usuario);
+          
+          if (user.bloqueado ) {
+            throw new InvalidCredentialsError("Cuenta bloqueada. Por favor, restablece tu contraseña.");
+          }
+
+          if (!user) {
+            throw new InvalidCredentialsError("El email " + usuario.mail + " no se encuentra registrado!");
+          }
+      
+          const isPasswordValid = bcrypt.compareSync(usuario.password, user.password);
+      
+          if (!isPasswordValid) {
+            // Incrementar el contador de intentos fallidos
+            await this.model.incrementarIntentosFallidos(user._id);
+            
+            // Verificar si la cuenta debe bloquearse
+            const usuarioActualizado = await this.obtenerUsuario(user._id);
+      
+            if (usuarioActualizado.intentosFallidos >= 2) {
+              await this.model.restablecerIntentosFallidos(user._id);
+              await this.model.bloquearCuenta(user._id);
+              // Aquí puedes tomar medidas adicionales, como bloquear la cuenta o enviar notificaciones
+              throw new InvalidCredentialsError("Cuenta bloqueada. Por favor, restablece tu contraseña.");
+            }
+      
+            throw new InvalidCredentialsError("Contraseña incorrecta");
+          }
+          return user;
+        } catch (error) {
+          throw error;
         }
-        const isPasswordValid = bcrypt.compareSync(usuario.password, user.password)
-        if(!isPasswordValid){
-          throw new InvalidCredentialsError("Contraseña incorrecta")
-        }
-        return user
-      }catch(error){
-        throw error;
       }
-    }
 
     obtenerUsuario = async (idUsuario) =>{
       try{
@@ -125,6 +146,7 @@ class ServicioUsuario{
         if(!user){
           throw new InvalidCredentialsError("El usuario no se encuentra registrado!")
         }
+        await this.model.restablecerIntentosFallidos(user._id);
         const userRecuperado = await this.model.editarUsuario(user._id, nuevoDatos)
         if(!userRecuperado){
           throw new InvalidCredentialsError("No se pudo recuperar la contraseña!")
@@ -145,6 +167,7 @@ class ServicioUsuario{
         //genero la nueva password
         const newPass = await pushEmail(mail);
         //guarda la nueva password
+        await this.model.restablecerIntentosFallidos(validarUser._id);
         await this.savePassword(mail, newPass);
       } catch (error) {
         throw error;

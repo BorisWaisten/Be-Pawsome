@@ -81,7 +81,6 @@ class ControllerUsuario{
     editarImagenPerfil = async(req,res)=>{
       const idUsuario = req.params.id;
       const imagenPerfil = req.body.imagenPerfil;
-      console.log(imagenPerfil);
       try {
         const user = await this.servicioUsuario.editarImagenPerfil(idUsuario ,imagenPerfil);
         res.status(200).json(user);
