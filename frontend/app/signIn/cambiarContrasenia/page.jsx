@@ -10,7 +10,8 @@ const CambiarContraseniaForm = () => {
     password: "",
     password2: "",
   });
-  const [error, setError] = useState("");
+  const [apiError, setApiError] = useState(null);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,16 +21,33 @@ const CambiarContraseniaForm = () => {
       return;
     }
 
+    const data ={
+      mail: nuevosDatos.mail,
+      password: nuevosDatos.password
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:5000/usuarios/cambiarContrasenia",
-        nuevosDatos
+        data
       );
-      console.log(response);
+      
+      setApiError(null); // Limpia cualquier error existente
         router.push("/signIn");
     } catch (error) {
-      console.error(error);
+        handleError(error);
     }
+  };
+
+
+  const handleError = (error) => {
+    if (axios.isAxiosError(error)) {
+      if(error.response.data === "\"password\" failed custom validation because La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número"){
+        setApiError("La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número");
+      }else{
+        setApiError(error.response.data); 
+      }
+    } 
   };
 
   const handleChange = (e) => {
@@ -38,7 +56,6 @@ const CambiarContraseniaForm = () => {
       ...nuevosDatos,
       [name]: value,
     });
-    setError("");
   };
 
   return (
@@ -57,6 +74,7 @@ const CambiarContraseniaForm = () => {
             name="mail"
             value={nuevosDatos.mail}
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             placeholder="Email"
             required
             style={{ width: "100%", padding: "0.5rem", marginBottom: "1rem" }}
@@ -70,6 +88,7 @@ const CambiarContraseniaForm = () => {
             name="password"
             value={nuevosDatos.password}
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             placeholder="Nueva Contraseña"
             required
             style={{ width: "100%", padding: "0.5rem", marginBottom: "1rem" }}
@@ -83,17 +102,22 @@ const CambiarContraseniaForm = () => {
             name="password2"
             value={nuevosDatos.password2}
             onChange={handleChange}
+            onFocus={() => setApiError(null)}
             placeholder="Confirmar Nueva Contraseña"
             required
             style={{ width: "100%", padding: "0.5rem", marginBottom: "1rem" }}
           />
-          {error && <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>}
           <button
             type="submit"
             className="bg-blue-500 hover:bg-violet-700 text-center text-white justify-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Enviar
           </button>
+          {apiError && (
+                <div className="error card my-5">
+                <p>{apiError}</p>
+                </div>
+            )}
         </form>
       </div>
     </>

@@ -1,7 +1,5 @@
 import ServicioUsuario from "../servicios/serviceUsuarios.js";
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
-import pushEmail from '../helpers/emailPassword.js'
 const SECRET_KEY = 'secretkey123';
 
 
@@ -132,7 +130,7 @@ class ControllerUsuario{
       // del request deberan pasarse los datos del usuario: mail y la nueva contrasenia 
       const nuevoDatos = {
         mail: req.body.mail,
-        password: bcrypt.hashSync(req.body.password, 10)
+        password: req.body.password
       }
       try {
         const user = await this.servicioUsuario.recuperarContrasenia(nuevoDatos);

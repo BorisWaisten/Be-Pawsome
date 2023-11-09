@@ -6,7 +6,6 @@ import { ObjectId } from "mongodb";
 
 const saltRounds = 10; // Número de rondas de sal (mayor es más seguro pero más lento)
 import bcrypt from 'bcrypt'
-import { log } from "console";
 
 class ServicioUsuario{
 
@@ -143,18 +142,27 @@ class ServicioUsuario{
 
     recuperarContrasenia = async (nuevoDatos) =>{
       try {
+
+        UserRequest.validacionRecuperar(nuevoDatos);
+
         const user = await this.model.buscarEmail(nuevoDatos.mail)
         if(!user){
           throw new InvalidCredentialsError("El usuario no se encuentra registrado!")
         }
-        await this.model.restablecerIntentosFallidos(user._id);
-        const userRecuperado = await this.model.editarUsuario(user._id, nuevoDatos)
+
+        const data = {
+          password: bcrypt.hashSync(nuevoDatos.password, 10)
+        }  
+
+        const userRecuperado = await this.model.editarUsuario(user._id, data)
+        
         if(!userRecuperado){
           throw new InvalidCredentialsError("No se pudo recuperar la contraseña!")
         }
+        await this.model.restablecerIntentosFallidos(user._id);
         return userRecuperado
       } catch (error) {
-        return error
+        throw error
       }
     }
 
