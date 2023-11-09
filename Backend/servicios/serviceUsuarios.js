@@ -166,10 +166,10 @@ class ServicioUsuario{
         //Validacion de registro del mail
         if (!validarUser) throw new UsuarioNotFoundError("El email " + mail + " no se encuentra registrado!")
         //genero la nueva password
-        const newPass = await pushEmail(mail);
+        const info = await pushEmail(mail);
         //guarda la nueva password
-        await this.model.restablecerIntentosFallidos(validarUser._id);
-        await this.savePassword(mail, newPass);
+        console.log(info);
+        return info
       } catch (error) {
         throw error;
       }

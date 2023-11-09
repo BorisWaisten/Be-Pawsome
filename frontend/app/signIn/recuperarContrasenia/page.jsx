@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 //import { recuperacionContrasenia } from "../../persistencia/peticiones";
 
-export default function FormContrasenia ()  {
+export default function FormEnvioLink ()  {
 
     const [nuevosDatos, setNuevosDatos] = useState({
         mail: "",

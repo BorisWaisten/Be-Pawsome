@@ -42,7 +42,7 @@ class RouterUsuario {
     //rutas de recuperacion de contrasenia
     
     // recupera la contrasenia personalmente el mismo usuario pidiendole que ingrese una nueva contrasenia
-    this.router.post("/recuperarContrasenia", this.controlador.recuperarContrasenia);
+    this.router.post("/cambiarContrasenia", this.controlador.recuperarContrasenia);
     //se recupera la contrasenia via mail y se le genera una nueva contrasenia
     this.router.post('/changePassword', this.controlador.changePassword)
 

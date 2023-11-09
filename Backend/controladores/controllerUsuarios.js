@@ -148,7 +148,7 @@ class ControllerUsuario{
         // Busqueda del mail si existe o no 
         await this.servicioUsuario.changePassword(mail);
 
-        res.status(200).json({'message': `Se envio un mail a ${mail} con una nueva password generada. Te recomendamos cambiarla.`});
+        res.status(200).json({'message': `Se envio un mail a ${mail} con un link para que puedas cambiar tu contrasenia.`});
       } catch (error) {
         res.status(401).json(error.message);
       }
