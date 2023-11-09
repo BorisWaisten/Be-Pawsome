@@ -40,8 +40,9 @@ class ServicioUsuario{
 
       login = async (usuario) => {
         try {
+          
           UserRequest.validacionLogin(usuario);
-      
+
           const user = await this.model.login(usuario);
           
           if (user.bloqueado ) {
@@ -62,14 +63,14 @@ class ServicioUsuario{
             const usuarioActualizado = await this.obtenerUsuario(user._id);
       
             if (usuarioActualizado.intentosFallidos > 2) {
-              await this.model.restablecerIntentosFallidos(user._id);
               await this.model.bloquearCuenta(user._id);
               // Aquí puedes tomar medidas adicionales, como bloquear la cuenta o enviar notificaciones
               throw new InvalidCredentialsError("Cuenta bloqueada. Por favor, restablece tu contraseña.");
             }
-      
+            
             throw new InvalidCredentialsError("Contraseña incorrecta");
           }
+          await this.model.restablecerIntentosFallidos(user._id);
           return user;
         } catch (error) {
           throw error;

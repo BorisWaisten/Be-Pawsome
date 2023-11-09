@@ -38,7 +38,11 @@ const FormLogin = () => {
 
   const handleError = (error) => {
     if (axios.isAxiosError(error)) {
-      setApiError(error.response.data); 
+      if(error.response.data === "\"password\" failed custom validation because La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número"){
+        setApiError("La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número");
+      }else{
+        setApiError(error.response.data); 
+      }
     } 
   };
 
