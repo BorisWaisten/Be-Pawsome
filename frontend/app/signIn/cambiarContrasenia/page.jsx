@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 
 const CambiarContraseniaForm = () => {
@@ -15,6 +16,8 @@ const CambiarContraseniaForm = () => {
   });
   const [apiError, setApiError] = useState(null);
 
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,8 +48,8 @@ const CambiarContraseniaForm = () => {
         }
       );
       
-        setApiError(null); // Limpia cualquier error existente
-        router.push("/signIn");
+      setApiError(null); // Limpia cualquier error existente
+      router.push("/signIn");
     } catch (error) {
         handleError(error);
     }

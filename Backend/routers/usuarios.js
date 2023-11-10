@@ -10,22 +10,19 @@ class RouterUsuario {
 
   // Middleware para verificar el token de acceso
   verificarToken(req, res, next) {
-    const token = req.header('Authorization');
+    const token = req.body.token || req.header('Authorization');
 
-
-  
+    console.log(token + " rutausuario");
     if (!token) {
       return res.status(401).json({ mensaje: 'Acceso denegado. Token no proporcionado.' });
     }
-  
-    try {
-      const decoded = jwt.verify(token, process.env.SECRET_KEY);
-      console.log(decoded);
-      req.userId = decoded.id; 
-      next();
-    } catch (error) {
-      return res.status(401).json({ mensaje: 'Token no válido.' });
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    console.log(decoded);
+    if (!decoded) {
+      return res.status(401).json({ mensaje: 'Token inválido.' });
     }
+    req.userId = decoded.id; 
+    next();
   }
 
   start() {
