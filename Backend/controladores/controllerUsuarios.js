@@ -1,7 +1,6 @@
 import ServicioUsuario from "../servicios/serviceUsuarios.js";
 import jwt from 'jsonwebtoken'
-const SECRET_KEY = 'secretkey123';
-
+const SECRET_KEY = 'secretkey123'
 
 class ControllerUsuario{
 
@@ -27,7 +26,7 @@ class ControllerUsuario{
             const expiresIn = 24 * 60 * 60;
             const accesToken = jwt.sign(
               {id: user._id},
-              SECRET_KEY,
+              process.env.SECRET_KEY,
               {expiresIn : expiresIn}
             );
 
@@ -50,7 +49,7 @@ class ControllerUsuario{
         const user = await this.servicioUsuario.login(usuario);
         
         const expiresIn = 24 * 60 * 60;
-        const accessToken = jwt.sign({ id: user._id }, SECRET_KEY, {
+        const accessToken = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
           expiresIn: expiresIn,
         });
         

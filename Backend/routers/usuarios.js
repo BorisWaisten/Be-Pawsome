@@ -2,8 +2,6 @@ import express from "express";
 import ControladorUsuario from "../controladores/controllerUsuarios.js";
 import jwt from 'jsonwebtoken';
 
-const SECRET_KEY = 'secretkey123';
-
 class RouterUsuario {
   constructor() {
     this.router = express.Router();
@@ -13,13 +11,16 @@ class RouterUsuario {
   // Middleware para verificar el token de acceso
   verificarToken(req, res, next) {
     const token = req.header('Authorization');
+
+
   
     if (!token) {
       return res.status(401).json({ mensaje: 'Acceso denegado. Token no proporcionado.' });
     }
   
     try {
-      const decoded = jwt.verify(token, SECRET_KEY);
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      console.log(decoded);
       req.userId = decoded.id; 
       next();
     } catch (error) {
@@ -42,7 +43,7 @@ class RouterUsuario {
     //rutas de recuperacion de contrasenia
     
     // recupera la contrasenia personalmente el mismo usuario pidiendole que ingrese una nueva contrasenia
-    this.router.post("/cambiarContrasenia", this.controlador.recuperarContrasenia);
+    this.router.post("/cambiarContrasenia", this.verificarToken, this.controlador.recuperarContrasenia);
     //se recupera la contrasenia via mail y se le genera una nueva contrasenia
     this.router.post('/changePassword', this.controlador.changePassword)
 

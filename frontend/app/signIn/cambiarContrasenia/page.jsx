@@ -2,9 +2,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+
 
 const CambiarContraseniaForm = () => {
-    const router = useRouter();
+  const token = useSearchParams().get('token');
+  const router = useRouter();
   const [nuevosDatos, setNuevosDatos] = useState({
     mail: "",
     password: "",
@@ -17,22 +20,32 @@ const CambiarContraseniaForm = () => {
     e.preventDefault();
 
     if (nuevosDatos.password !== nuevosDatos.password2) {
-      setError("Las contraseñas no coinciden. Por favor, inténtelo de nuevo.");
+      setApiError("Las contraseñas no coinciden. Por favor, inténtelo de nuevo.");
       return;
     }
 
-    const data ={
-      mail: nuevosDatos.mail,
-      password: nuevosDatos.password
+    if(!token){
+      setApiError("Permiso no autorizado. Por favor, inténtelo de nuevo.");
+      return;
     }
+    const data = {
+      mail: nuevosDatos.mail,
+      password: nuevosDatos.password,
+      token: token, // Incluye el token en la solicitud
+    };
 
     try {
       const response = await axios.post(
         "http://localhost:5000/usuarios/cambiarContrasenia",
-        data
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Incluye el token en el encabezado
+          },
+        }
       );
       
-      setApiError(null); // Limpia cualquier error existente
+        setApiError(null); // Limpia cualquier error existente
         router.push("/signIn");
     } catch (error) {
         handleError(error);

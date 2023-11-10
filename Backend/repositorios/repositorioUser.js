@@ -179,25 +179,6 @@ class RepositorioUser{
             throw new DatabaseError("Error al eliminar Solicitud: " + error.message);
         }
     }
-
-    async savePassword(mail, newPassword) {
-        try {
-          const usuarioEditado = await this.usuariosCollection.findOneAndUpdate(
-            { mail },
-            { $set: { password: newPassword } },
-            { returnDocument: 'after' } // Devuelve el documento después de la actualización
-          );
-      
-          if (!usuarioEditado.value) {
-            // Manejar el caso en el que no se encontró el usuario
-            throw new DatabaseError("Usuario no encontrado");
-          }
-      
-          return usuarioEditado.value;
-        } catch (error) {
-          throw new DatabaseError("Error al editar contraseña: " + error);
-        }
-      }
 }
 
 export default RepositorioUser

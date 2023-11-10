@@ -3,6 +3,8 @@ import UserRequest from "../validacionRequest/userRequest.js";
 import { InvalidCredentialsError,UsuarioNotFoundError } from "../errores.js";
 import pushEmail from "../helpers/emailPassword.js";
 import { ObjectId } from "mongodb";
+import jwt from 'jsonwebtoken'
+const SECRET_KEY = 'secretkey123'
 
 const saltRounds = 10; // Número de rondas de sal (mayor es más seguro pero más lento)
 import bcrypt from 'bcrypt'
@@ -173,31 +175,17 @@ class ServicioUsuario{
         const validarUser = await this.model.buscarEmail(mail)
         //Validacion de registro del mail
         if (!validarUser) throw new UsuarioNotFoundError("El email " + mail + " no se encuentra registrado!")
-        //genero la nueva password
-        const info = await pushEmail(mail);
-        //guarda la nueva password
+        //mando link de cambio de contrasenia
+        const passToken = jwt.sign({id: validarUser._id}, process.env.SECRET_KEY, {
+          expiresIn: 10 * 60 // 10 minutes
+        })
+        const info = await pushEmail(mail, passToken);
         console.log(info);
         return info
       } catch (error) {
         throw error;
       }
     }
-
-    savePassword = async (mail, newPassword) => {
-      try {
-        //aca deberiamos llamar al modelo para guardar la password
-        const passwordEncrypted = await bcrypt.hash(newPassword, 10);
-        const user = await this.model.savePassword(mail, passwordEncrypted);
-        console.log(user);
-        if(!user){
-          throw new InvalidCredentialsError("No se pudo cambiar la contraseña")
-        }
-        return user;
-      } catch (error) {
-        throw error;
-      }
-    }
-
 
     guardarPublicacion = async (id,publicacion) =>{
       try {

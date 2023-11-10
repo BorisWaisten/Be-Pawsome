@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config();
 
-async function pushEmail(mailDestinatario) {
+async function pushEmail(mailDestinatario,passToken) {
   try {
 
     const transporter = nodemailer.createTransport({
@@ -13,13 +13,13 @@ async function pushEmail(mailDestinatario) {
       },
     });
 
-    const forgetURL = 'http://localhost:3000/signIn/cambiarContrasenia';
+    const forgetURL = 'http://localhost:3000/signIn/cambiarContrasenia?token=' + passToken;
 
     const mailOptions = {
       from: process.env.MAIL,
       to: mailDestinatario,
       subject: 'Recupero de password para iniciar sesión',
-      text: `Ingresa al siguiente link para cambiar tu password: ${forgetURL}`,
+      html:`<a href="${forgetURL}">Cambiar Contrasenia</a>`
     };
 
     const info = await transporter.sendMail(mailOptions);

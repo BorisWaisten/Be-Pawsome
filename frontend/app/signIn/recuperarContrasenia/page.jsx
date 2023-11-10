@@ -4,7 +4,7 @@ import { useState } from "react";
 //import { recuperacionContrasenia } from "../../persistencia/peticiones";
 
 export default function FormEnvioLink ()  {
-
+    
     const [nuevosDatos, setNuevosDatos] = useState({
         mail: "",
     });
