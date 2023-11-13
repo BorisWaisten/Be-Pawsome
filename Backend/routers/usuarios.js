@@ -12,7 +12,7 @@ class RouterUsuario {
   verificarToken(req, res, next) {
     const token = req.body.token || req.header('Authorization');
 
-    console.log(token + " rutausuario");
+    console.log(token + " ruta usuario");
     if (!token) {
       return res.status(401).json({ mensaje: 'Acceso denegado. Token no proporcionado.' });
     }
@@ -30,7 +30,7 @@ class RouterUsuario {
 
     this.router.post("/register",this.controlador.register);
     this.router.post("/login", this.controlador.login);
-    this.router.get("/:id", this.controlador.obtenerUsuario);
+    this.router.post("/loginGoogle", this.controlador.loginGoogle);
    
     this.router.put("/:id", this.controlador.editarUsuario);
     this.router.put('/editarImagen/:id',this.controlador.editarImagenPerfil);

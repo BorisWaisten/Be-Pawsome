@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ImagenUsuario from "@/app/uploadImagen/usuario/page";
+import ImagenUsuario from "../../../app/uploadImagen/usuario/page";
 import { signOut, useSession } from "next-auth/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -55,23 +55,25 @@ export default function Usuario() {
     nacionalidad: "",
     codigoPostal: "",
   });
-
+  
   const cargarUsuario = async () => {
     try {
-      const usuario = session?.user?.userLogueado;
-      if (usuario) {
+      if (session && session.user) {
+        const usuario = session.user;
+        console.log("usuario", usuario);
         setUsuario(usuario);
         // Inicializa los nuevos datos con los valores del usuario
         setNuevosDatos(usuario);
       } else {
-        setError(error);
+        console.log("La sesión o el usuario no están definidos.");
       }
     } catch (error) {
-      console.error(error);
+      setError(error);
     } finally {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     cargarUsuario();
@@ -146,8 +148,10 @@ export default function Usuario() {
   }
 
   if (error) {
-    return <div>{error}</div>;
-  }
+    console.error("Error al cargar el usuario:", error.message); // Utiliza error.message para obtener el mensaje de error
+    return <div>{error.message}</div>; // Renderiza el mensaje de error
+  }  
+  
 
   if (!usuario) {
     return <div>No se pudo cargar el usuario. Por favor, inicia sesión.</div>;
@@ -160,10 +164,10 @@ export default function Usuario() {
         className="flex justify-center items-center"
         onSubmit={handleGuardarCambios}
       >
-        <div className="w-full flex">
+        <div className=" flex">
           <img
             className=" flex rounded-full m-10 justify-center items-center"
-            src={usuario.imagenPerfil}
+            src={usuario.picture || usuario.imagenPerfil}
             alt="Foto de perfil"
             style={{ width: "200px", height: "150px" }}
           />

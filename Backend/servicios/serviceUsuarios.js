@@ -78,6 +78,20 @@ class ServicioUsuario{
         }
       }
 
+      loginGoogle = async (mail) =>{
+        
+        try {
+          const user = await this.model.buscarEmail(mail)
+          if (!user) {
+            throw new InvalidCredentialsError("El email " + usuario.mail + " no se encuentra registrado!");
+          }
+          return user
+        } catch (error) {
+          throw error;
+        }
+
+      }
+
     obtenerUsuario = async (idUsuario) =>{
       try{
         const user = await this.model.buscarId(this.idObjeto(idUsuario))

@@ -12,14 +12,14 @@ const Page = () => {
   const [usuario, setUsuario] = useState(null);
   const [publicaciones, setPublicaciones] = useState([]);
 
-  const idUsuario = session?.user?.userLogueado._id;
+  const idUsuario = session?.user?.id;
 
   const cargarUsuario = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/publicacion/publicacionesUsuario/${idUsuario}`);
       console.log(response.data);
       setPublicaciones(response.data);
-      setUsuario(session?.user?.userLogueado);
+      setUsuario(session.user);
     } catch (error) {
       console.error(error);
     }

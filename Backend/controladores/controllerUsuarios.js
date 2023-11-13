@@ -65,6 +65,29 @@ class ControllerUsuario{
       }
     }
 
+    loginGoogle = async (req, res) => {
+      const mail = req.body.email;
+
+      try {
+        const user = await this.servicioUsuario.loginGoogle(mail);
+        
+        const expiresIn = 24 * 60 * 60;
+        const accessToken = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
+          expiresIn: expiresIn,
+        });
+        
+        const dataUser = {
+          userLogueado:user,
+          accesToken: accessToken,
+          expiresIn: expiresIn
+        }
+        
+        res.status(200).json(dataUser);
+      }catch(error){
+        res.status(401).json(error.message);
+      }
+    }
+
     obtenerUsuario = async (req, res) => {
       const idUsuario = req.params.id;
       try {

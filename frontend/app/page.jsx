@@ -17,6 +17,11 @@ export default function page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+
+        if (session !== null && session !== undefined) {
+          console.log("Session:", session);
+        }
+
         const response = await fetch("http://localhost:5000/publicacion/publicaciones");
         const publicacionesData = await response.json();
 
