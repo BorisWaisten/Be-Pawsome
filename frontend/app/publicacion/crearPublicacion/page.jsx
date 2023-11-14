@@ -25,25 +25,22 @@ const CrearPublicacion = () => {
     ubicacion: '',
     historiaClinica: '',
   });
-  
-  const user = session?.user?.userLogueado;
-  
-  useEffect(() => {
-      
+    
+    useEffect(() => {
       const cargarUsuario = async () => {
-            try {
-            if (user) {
-                setUsuario(user);
-            }
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false);
-            }
-    };
-  
-    cargarUsuario();
-  }, []);
+        try {
+          if (session) {
+            setUsuario(session.user);
+          }
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+    
+      cargarUsuario();
+    }, [session]);
 
   const handlePublicacionSubmit = async (e) => {
     e.preventDefault();

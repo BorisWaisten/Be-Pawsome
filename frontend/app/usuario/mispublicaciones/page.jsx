@@ -1,27 +1,35 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import PublicacionesDeUsuario from "@/app/components/Publicaciones/PublicacionesDeUsuario";
-import {
-  obtenerUsuarioLogeado,
-  obtenerPublicacionesDelUsuario,
-} from "@/app/persistencia/peticiones";
+import PublicacionesDeUsuario from "../../components/Publicacion/PublicacionesDeUsuario";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 const Page = () => {
+  const { data: session } = useSession();
   const [usuario, setUsuario] = useState(null);
   const [publicaciones, setPublicaciones] = useState([]);
+  const [mensajeSinPublicaciones, setMensajeSinPublicaciones] = useState(null);
+
+
+
+  const sinPublicaciones = () => {
+    if(publicaciones.length === 0){
+      setMensajeSinPublicaciones(true);
+    }
+  }
+
 
   const cargarUsuario = async () => {
     try {
-      const { usuario, error } = await obtenerUsuarioLogeado();
-      if (usuario) {
-        setUsuario(usuario);
-        console.log(usuario);
-        // Obtener las publicaciones del usuario
-        const { publicaciones } = await obtenerPublicacionesDelUsuario(
-          usuario._id
-        );
-        setPublicaciones(publicaciones);
-        // Inicializa los nuevos datos con los valores del usuario
+      if (session && session.user) {
+        const response = await axios.get(`http://localhost:5000/publicacion/publicacionesUsuario/${session.user.id}`);
+        console.log(response.data);
+        setPublicaciones(response.data);
+        setUsuario(session.user);
+      }
+
+      if(publicaciones.length === 0){
+        sinPublicaciones();
       }
     } catch (error) {
       console.error(error);
@@ -30,16 +38,22 @@ const Page = () => {
 
   useEffect(() => {
     cargarUsuario();
-  }, []);
+  }, [session]);
 
   return (
-    <div>
+    <div className="text-center">
       {usuario && (
         <h1>
-          Tu perfil, {usuario.nombre} {usuario.apellido}
+          Tus Publicaciones, {usuario.nombre} {usuario.apellido}
         </h1>
       )}
       <PublicacionesDeUsuario publicaciones={publicaciones} />
+    {/* Sin publicaciones */}
+    {mensajeSinPublicaciones && (
+      <div>
+        <p>No tienen ninguna publicacion creada.</p>
+      </div>
+    )}
     </div>
   );
 };

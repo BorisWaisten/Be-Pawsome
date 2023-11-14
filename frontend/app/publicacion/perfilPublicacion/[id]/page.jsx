@@ -1,7 +1,7 @@
 // PerfilPublicacionPage.jsx
 "use client";
 
-import PerfilPublicacion from "@/app/components/Publicacion/PerfilPublicacion";
+import PerfilPublicacion from "../../../components/Publicacion/PerfilPublicacion";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
