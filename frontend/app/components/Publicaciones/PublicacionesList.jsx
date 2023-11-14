@@ -1,15 +1,4 @@
 "use client";
-<<<<<<< HEAD
-import CartaPublicacion from "./CartaPublicacion"
-import {getPublicaciones} from "../../persistencia/peticiones"
-import React,{useState,useEffect} from "react";
-import { useSession } from "next-auth/react";
-
-export default async function PublicacionesList() {
-  const [publicaciones, setPublicaciones] = useState([]);
-  const { data: session } = useSession();
-
-=======
 import CartaPublicacion from "./CartaPublicacion";
 import {getPublicaciones,obtenerUsuarioLogeado} from "../../persistencia/peticiones"
 import React,{useState,useEffect} from "react";
@@ -17,22 +6,11 @@ import React,{useState,useEffect} from "react";
 export default async function PublicacionesList() {
   const [publicaciones, setPublicaciones] = useState([]);
   const [datosCargados, setDatosCargados] = useState(false);
->>>>>>> origin/boris
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const publicacionesData = await getPublicaciones();
-<<<<<<< HEAD
-       
-        const publicacionesAMostrar = publicacionesData.filter(publicacion => {
-          return publicacion.usuarioId !== session.user?.userLogueado._id;
-        });
-
-        setPublicaciones(publicacionesAMostrar);
-      
-       
-=======
         const { usuario } = await obtenerUsuarioLogeado();
 
         if (publicacionesData && usuario) {
@@ -42,7 +20,6 @@ export default async function PublicacionesList() {
           setPublicaciones(publicacionesData);
         }
         setDatosCargados(true);
->>>>>>> origin/boris
       } catch (error) {
         console.error("Error al obtener datos:", error);
       }
@@ -51,14 +28,10 @@ export default async function PublicacionesList() {
     fetchData();
   }, []); // El segundo argumento del useEffect es un array de dependencias, en este caso, está vacío para que se ejecute solo una vez.
 
-<<<<<<< HEAD
-  
-=======
   if (!datosCargados) {
     // Mostrar un mensaje de carga o un spinner mientras se cargan los datos
     return <p>Cargando...</p>;
   }
->>>>>>> origin/boris
 
   // var publicaciones = await getPublicaciones();
   // const { usuario } = await obtenerUsuarioLogeado();
@@ -74,11 +47,7 @@ export default async function PublicacionesList() {
 
   return (
         <>
-<<<<<<< HEAD
-          <ul className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10">
-=======
           <ul className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-10">
->>>>>>> origin/boris
            {publicaciones.map(publicacion => (
              <li key={publicacion._id} className="w-full h-full">
               <CartaPublicacion publicacion={publicacion} />
