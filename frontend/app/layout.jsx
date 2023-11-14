@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
           <NavBar />
           {children}
         </SessionAuthProvider>
-        <Footer />
+        <Footer/>
       </body>
     </html>
   );
