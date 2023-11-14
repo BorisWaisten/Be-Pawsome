@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SolicitudesDeUsuario from "@/app/components/Solicitudes/SolicitudesDeUsuario";
+import SolicitudesDeUsuario from "../../components/Solicitudes/SolicitudesDeUsuario.jsx";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 
@@ -7,25 +7,28 @@ const Casita = () => {
     const { data: session } = useSession();
     const [usuario, setUsuario] = useState(null);
     const [publicaciones, setPublicaciones] = useState([]);
+    const [apiError, setApiError] = useState(null);
 
-    const idUsuario = session?.user?.userLogueado._id;
-
-
-    const cargarDatos = async () => {
-        try {
-            const response = await axios.get(`http://localhost:5000/usuarios/${idUsuario}`);
-            const usuarioData = response.data;
-            
-            if (usuarioData) {
-                setUsuario(usuarioData);
-                setPublicaciones(usuarioData.casita.publicaciones);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     useEffect(() => {
+        const cargarDatos = async () => {
+            try {
+                if (session && session.user) {
+                    const idUsuario = session.user.id;
+                    const response = await axios.get(`http://localhost:5000/usuarios/${idUsuario}`);
+                    const usuarioData = response.data;
+                    
+                    if (usuarioData) {
+                        console.log("Usuario:", usuarioData);
+                        setUsuario(usuarioData);
+                        setPublicaciones(usuarioData.casita.publicaciones);
+                    }
+                }
+            } catch (error) {
+                setApiError(error.response.data);
+            }
+        };
+
         cargarDatos();
     }, [session]);
 
@@ -36,11 +39,16 @@ const Casita = () => {
     };
 
     return (
-        <div>
+        <div className="text-center">
             {usuario && (
                 <h1>Solicitudes Realizadas</h1>
             )}
-            <SolicitudesDeUsuario publicaciones={publicaciones} idUsuario={idUsuario} actualizarPublicaciones={actualizarPublicaciones} />
+            <SolicitudesDeUsuario publicaciones={publicaciones} idUsuario={session?.user?.id} actualizarPublicaciones={actualizarPublicaciones} />
+            {apiError && (
+        <div className="error card my-5">
+          <p>{apiError}</p>
+        </div>
+      )}
         </div>
     );
 };

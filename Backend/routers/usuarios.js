@@ -31,6 +31,8 @@ class RouterUsuario {
     this.router.post("/register",this.controlador.register);
     this.router.post("/login", this.controlador.login);
     this.router.post("/loginGoogle", this.controlador.loginGoogle);
+
+    this.router.get("/:id", this.controlador.obtenerUsuario);
    
     this.router.put("/:id", this.controlador.editarUsuario);
     this.router.put('/editarImagen/:id',this.controlador.editarImagenPerfil);

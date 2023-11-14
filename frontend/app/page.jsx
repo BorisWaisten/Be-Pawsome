@@ -17,26 +17,33 @@ export default function page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-
-        if (session !== null && session !== undefined) {
-          console.log("Session:", session);
-        }
-
         const response = await fetch("http://localhost:5000/publicacion/publicaciones");
         const publicacionesData = await response.json();
 
-        const idUsuario = session?.user?.userLogueado?._id;
-
-        if (idUsuario) {
-          const publicacionesFiltradas = publicacionesData.filter((p) => p.usuario._id !== idUsuario);
-          setPublicaciones(publicacionesFiltradas);
-          setPublicacionesOriginales(publicacionesFiltradas); // Almacena las originales
-        } else {
+        if (session !== null && session !== undefined) {
+          const idUsuario = session.user.id;
+          
+          console.log("idUsuario:", idUsuario);
+          console.log("datos:", publicacionesData);
+          if (idUsuario) {
+            const publicacionesFiltradas = publicacionesData.filter((p) => p.usuario.id !== idUsuario);
+            console.log("publicacionesFiltradas:", publicacionesFiltradas);
+            setPublicaciones(publicacionesFiltradas);
+            setPublicacionesOriginales(publicacionesFiltradas); // Almacena las originales
+          } else {
+            setPublicaciones(publicacionesData);
+            setPublicacionesOriginales(publicacionesData); // Almacena las originales
+          }
+  
+          setDatosCargados(true);
+          console.log("Session:", session);
+        }else{
+          console.log("datos:", publicacionesData);
           setPublicaciones(publicacionesData);
-          setPublicacionesOriginales(publicacionesData); // Almacena las originales
+          setPublicacionesOriginales(publicacionesData);
+          setDatosCargados(true);          // Almacena las originales
         }
-
-        setDatosCargados(true);
+        
       } catch (error) {
         console.error("Error al obtener datos:", error);
       }
@@ -47,14 +54,16 @@ export default function page() {
 
   const handleSearch = async (query) => {
     try {
-      setQuery(query);
-      const response = await fetch(`http://localhost:5000/publicacion/buscar/${query}`);
-      const publicacionesBuscadas = await response.json();
+     if (session !==null  || session !== undefined) {
+    }
+    setQuery(query);
+    const response = await fetch(`http://localhost:5000/publicacion/buscar/${query}`);
+    const publicacionesBuscadas = await response.json();
+    const idUsuario = session.user.id;
 
-      const idUsuario = session?.user?.userLogueado?._id;
 
       if (idUsuario) {
-        const publicacionesFiltradas = publicacionesBuscadas.filter((p) => p.usuario._id !== idUsuario);
+        const publicacionesFiltradas = publicacionesBuscadas.filter((p) => p.usuario.id !== idUsuario);
         setPublicaciones(publicacionesFiltradas);
       } else {
         setPublicaciones(publicacionesBuscadas);
@@ -76,11 +85,6 @@ export default function page() {
     // Mostrar un mensaje de carga o un spinner mientras se cargan los datos
     return <p>Cargando...</p>;
   }
-  if (!datosCargados) {
-    // Mostrar un mensaje de carga o un spinner mientras se cargan los datos
-    return <p>Cargando...</p>;
-  }
-
   return (
       <>
         <div>

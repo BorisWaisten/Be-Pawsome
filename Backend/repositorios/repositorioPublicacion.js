@@ -1,7 +1,6 @@
 import ConexionMongo from "./conexionMongoDb.js";
 import Publicacion from "../modelos/ModeloPublicacion.js";
 import { DatabaseError } from "../errores.js";
-import { ObjectId } from 'mongodb';
 
 class RepositorioPublicacion {
   constructor() {
@@ -65,7 +64,7 @@ class RepositorioPublicacion {
     try {
       //const filtro = new ObjectId(idUsuario);
       //console.log(filtro);
-      const resultado = await this.publicacionesCollection.deleteMany({'usuario._id': idUsuario });
+      const resultado = await this.publicacionesCollection.deleteMany({'usuario.id': idUsuario });
       console.log(resultado);
       return resultado;
     } catch (error) {
@@ -85,7 +84,7 @@ class RepositorioPublicacion {
 
   async publicacionesUsuario(idUsuario) {
     try {
-      const array = await this.publicacionesCollection.find({ 'usuario._id': idUsuario }).toArray();
+      const array = await this.publicacionesCollection.find({ 'usuario.id': idUsuario }).toArray();
       return array;
     } catch (error) {
       throw new DatabaseError("Error al traer las publicaciones del usuario: " + error);

@@ -28,13 +28,18 @@ function PerfilPublicacion({ publicacion }) {
   async function agregarACasita() {
     try {
       const datos = {
-        idAdoptante: session?.user?.userLogueado._id,
+        idAdoptante: session.user.id,
         publicacion: publicacion,
       };
       const mensajeSolicitud = await axios.post(
         "http://localhost:5000/publicacion/solicitar",
         datos
       );
+
+      if(mensajeSolicitud.status === 200) {
+       alert("¡Solicitud enviada! Visita tu perfil para ver el estado de tu solicitud.");
+      }
+
       return mensajeSolicitud;
     } catch (error) {
       console.log(error);

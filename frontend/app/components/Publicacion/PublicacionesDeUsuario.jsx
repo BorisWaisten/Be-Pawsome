@@ -8,6 +8,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
     setConfirmacionEliminar(publicacionId);
   };
 
+
   const eliminarPublicacion = async (publicacionId) => {
     try {
       await axios.delete(`http://localhost:5000/publicacion/eliminar/${publicacionId}`);
@@ -20,9 +21,9 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
     }
   };
 
+
   return (
     <div>
-      <h1 className="mt-3">Publicaciones del usuario</h1>
       <ul className="divide-y divide-violet-200">
         {Array.isArray(publicaciones) &&
           publicaciones.map((publicacion) => (
