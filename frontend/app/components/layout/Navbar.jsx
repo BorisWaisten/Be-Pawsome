@@ -4,10 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Logo from "public/logoBePawsome.png";
-import SessionAuthProvider from "@/app/context/SessionAuthProvider";
+
 import ImgProfile from "./ImgProfile";
-<<<<<<< HEAD
-=======
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
@@ -36,13 +34,11 @@ if (loading) {
     return <div>Cargando...</div>;
   }
 
->>>>>>> origin/boris
 
-export default function Navbar() {
   const { data: session, status } = useSession();
 
   return (
-    <SessionAuthProvider>
+   
       <nav className="flex items-center justify-between px-6 py-4 mx-5 mb-3 max-w-full">
         <div className="flex items-center space-x-4">
           <Link href="/">
@@ -91,6 +87,6 @@ export default function Navbar() {
           )}
         </div>
       </nav>
-    </SessionAuthProvider>
+   
   );
 }
