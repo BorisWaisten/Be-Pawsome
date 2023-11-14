@@ -1,5 +1,5 @@
 "use client";
-import CartaPublicacion from "./CartaPublicacion";
+import CartaPublicacion from "./CartaPublicacion"
 import {getPublicaciones} from "../../persistencia/peticiones"
 import React,{useState,useEffect} from "react";
 import { useSession } from "next-auth/react";

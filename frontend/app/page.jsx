@@ -1,11 +1,9 @@
 "use client"
 import { Suspense } from "react"
 import Cargando from "./components/cargando.jsx"
-import BarraBuscadora from "./components/BarraBuscadora.jsx"
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import PublicacionesList from "./components/Publicacion/PublicacionesList.jsx"
-
+import PublicacionesList from "./components/Publicaciones/PublicacionesList.jsx";
 
 export default function page() {
   const { data: session } = useSession();
@@ -78,14 +76,13 @@ export default function page() {
 
   return (
     <>
-      <SessionAuthProvider>
-        <Navbar/>
+     
         <div>
           <Suspense fallback={<Cargando />}>
-            <PublicacionPage />
+            <PublicacionesList />
           </Suspense>
         </div>
-      </SessionAuthProvider>
+     
     </>
   );
 }
