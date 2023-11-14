@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import ImagenAnimal from "../../uploadImagen/animal/page.jsx";
+import ImagenAnimal from "@/app/uploadImagen/animal/page";
 
 const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
   const [localFormData, setFormData] = useState({
@@ -76,7 +76,7 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
           />
         </label>
         <label className="block mb-2 font-bold text-gray-700">
-          Edad(años):
+          Edad:
           <input
             type="text"
             name="edad"
@@ -171,7 +171,6 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
           >
             Crear publicacion
           </button>
-          
         </div>
       </form>
     </>

@@ -1,10 +1,8 @@
-"use client";
-import axios from "axios";
 import { useState } from "react";
-//import { recuperacionContrasenia } from "../../persistencia/peticiones";
+import { recuperacionContrasenia } from "../../persistencia/peticiones";
 
-export default function FormEnvioLink ()  {
-    
+export default function FormContrasenia ()  {
+
     const [nuevosDatos, setNuevosDatos] = useState({
         mail: "",
     });
@@ -12,7 +10,7 @@ export default function FormEnvioLink ()  {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:5000/usuarios/changePassword", nuevosDatos);
+            const response = await recuperacionContrasenia(nuevosDatos);
             console.log(response);
         }catch (error) {
             console.error(error);

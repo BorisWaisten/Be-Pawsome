@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+
 
 const login = async (datos) => {
   try {
@@ -21,25 +22,16 @@ const login = async (datos) => {
 
 const FormLogin = () => {
   const router = useRouter();
+  const { data: session } = useSession();
   const [apiError, setApiError] = useState(null);
   const [formData, setFormData] = useState({
     mail: "",
     password: "",
   });
 
-  const mandarANextAuth = async () => {
-    const result = await signIn("credentials", {
-      mail: formData.mail,
-      password: formData.password,
-      redirect: true,
-      callbackUrl: "/",
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const loginWithCredentials = async () => {
     try {
+<<<<<<< HEAD
 <<<<<<< HEAD:frontend/app/login/FormLogin.jsx
         const response = await axios.post("/api/auth/login",formData)
         if(response.status == 200){
@@ -47,6 +39,8 @@ const FormLogin = () => {
           router.push("/");
         }
 =======
+=======
+>>>>>>> origin/boris
       const response = await login(formData);
       const usuarioValido = response.userLogueado;
       if (usuarioValido) {
@@ -55,21 +49,46 @@ const FormLogin = () => {
         console.error("No se pudo obtener el ID del usuario o el token.");
       }
       setApiError(null); // Limpia cualquier error existente
+<<<<<<< HEAD
 >>>>>>> origin/development:frontend/app/signIn/page.jsx
+=======
+>>>>>>> origin/boris
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response.status === 401) {
-          setApiError("No autorizado. Por favor, inicia sesión.");
-        } else {
-          setApiError(
-            "Ocurrió un error. Por favor, inténtalo de nuevo más tarde."
-          );
-        }
-      } else {
-        setApiError(
-          "Ocurrió un error. Por favor, inténtalo de nuevo más tarde."
-        );
-      }
+      handleError(error);
+    }
+  };
+
+  const mandarANextAuth = async () => {
+    try {
+      await signIn("credentials", {
+        mail: formData.mail,
+        password: formData.password,
+        redirect: false, // No redirigir, manejarlo manualmente después de la autenticación con Google
+      });
+
+      router.push("/"); // Redirige a la página principal después de la autenticación
+    } catch (error) {
+      console.error("Error al autenticarse con NextAuth:", error);
+    }
+  };
+
+  const loginWithGoogle = async () => {
+    try {
+      await signIn("google", { callbackUrl: "/" });
+    } catch (error) {
+      console.error("Error al autenticarse con Google:", error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.mail && formData.password) {
+      // Si hay correo y contraseña, intenta iniciar sesión con credenciales
+      loginWithCredentials();
+    } else {
+      // Si no, intenta iniciar sesión con Google
+      loginWithGoogle();
     }
   };
 
@@ -81,12 +100,22 @@ const FormLogin = () => {
     });
   };
 
+  const handleError = (error) => {
+    if (axios.isAxiosError(error)) {
+      if(error.response.data === "\"password\" failed custom validation because La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número"){
+        setApiError("La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número");
+      }else{
+        setApiError(error.response.data); 
+      }
+    } 
+  };
+
   return (
     <>
       <h2 className="text-2xl font-bold mb-4">Loguearse</h2>
       <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
         <form onSubmit={handleSubmit} className="flex flex-col">
-          <label htmlFor="mail" className="block text-gray-700 font-bold mb-2">
+        <label htmlFor="mail" className="block text-gray-700 font-bold mb-2">
             Email:
           </label>
           <input
@@ -117,9 +146,18 @@ const FormLogin = () => {
           />
           <button
             type="submit"
+            onClick={loginWithCredentials}
             className="bg-blue-500 hover:bg-violet-700 text-center text-white justify-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Iniciar Sesión
+          </button>
+          <br />
+          <button
+            type="button"
+            onClick={loginWithGoogle}
+            className="bg-red-500 hover:bg-red-700 text-center text-white justify-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
+          >
+            Iniciar Sesión con Google
           </button>
           <br />
           <Link

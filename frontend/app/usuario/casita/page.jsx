@@ -1,10 +1,9 @@
-"use client"
-import DatosCasita from "./datosCasita"
+import Logica from "./logica.jsx"
 export default function Casita() {
     return (
       <main>
         <div> 
-          <DatosCasita /> 
+          <Logica /> 
         </div>
       </main>
     )

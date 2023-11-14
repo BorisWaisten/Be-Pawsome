@@ -6,6 +6,37 @@ import React from "react";
 import Logo from "public/logoBePawsome.png";
 import SessionAuthProvider from "@/app/context/SessionAuthProvider";
 import ImgProfile from "./ImgProfile";
+<<<<<<< HEAD
+=======
+import { useRouter } from "next/navigation";
+import axios from "axios";
+
+export default function NavBar(token) {
+  const [usuario, setUsuario] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+
+  useEffect(() => {
+    const cargarUsuario = async () => {
+      try {
+        const profile = await axios.get("/api/profile");
+        console.log(profile.data);
+        setUsuario(profile.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    cargarUsuario();
+  }, [])
+  
+if (loading) {
+    return <div>Cargando...</div>;
+  }
+
+>>>>>>> origin/boris
 
 export default function Navbar() {
   const { data: session, status } = useSession();

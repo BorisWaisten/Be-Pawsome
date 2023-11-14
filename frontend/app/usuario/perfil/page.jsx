@@ -1,5 +1,4 @@
-"use client";
-import DatosPerfil from "./datosPerfil"
+import DatosPerfil from "./DatosPerfil"
 export default function Perfil() {
     return (
       <main>

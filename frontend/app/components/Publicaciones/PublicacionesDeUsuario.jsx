@@ -1,32 +1,19 @@
-import { eliminarSolicitudDeUsuario } from "@/app/persistencia/peticiones";
+
 import React from "react";
+import { eliminarPublicacion } from "@/app/persistencia/peticiones";
 
-const SolicitudesDeUsuario = ({ publicaciones,usuario}) => {
-    const confirmarEliminar = async (publicacionId) => {
-        const confirmacion = window.confirm(
-          "¿Estás seguro de que deseas eliminar esta solicitud?"
-        );
-        if (confirmacion) {
-          // Llamar a la función para eliminar la solicitud
-          eliminarSolicitud( publicacionId);
-        }
-      };
-    
-      const eliminarSolicitud = async (publicacionId) => {
-        try {
-          // Hacer una solicitud DELETE para eliminar la solicitud en el backend
-          // Implementa esta función usando fetch o axios
-          const solcicitudEliminada = await eliminarSolicitudDeUsuario(usuario._id,publicacionId);
-          if(solcicitudEliminada){
-            window.location.reload()
-          }
-          return solcicitudEliminada
-        } catch (error) {
-          console.error(error);
-          // Manejar errores, mostrar un mensaje al usuario, etc.
-        }   
-      };
+const PublicacionesDeUsuario = ({ publicaciones }) => {
 
+  const confirmarEliminar = async (publicacionId) => {
+    const confirmacion = window.confirm(
+      "¿Estás seguro de que deseas eliminar esta publicación?"
+    );
+    if (confirmacion) {
+      // Llamar a la función para eliminar la publicación
+      await eliminarPublicacion(publicacionId);
+      window.location.reload();
+    }
+  };
 
 
   return (
@@ -65,4 +52,4 @@ const SolicitudesDeUsuario = ({ publicaciones,usuario}) => {
   );
 };
 
-export default SolicitudesDeUsuario;
+export default PublicacionesDeUsuario;

@@ -1,7 +1,6 @@
 import ConexionMongo from "./conexionMongoDb.js";
 import Publicacion from "../modelos/ModeloPublicacion.js";
 import { DatabaseError } from "../errores.js";
-import { ObjectId } from 'mongodb';
 
 class RepositorioPublicacion {
   constructor() {
@@ -57,19 +56,6 @@ class RepositorioPublicacion {
       return publicacionEliminada;
     } catch (error) {
       throw new DatabaseError("Error al eliminar publicación: " + error);
-    }
-  }
-
-  async eliminarPublicacionesPorUsuario(idUsuario) {
-    //console.log(idUsuario);
-    try {
-      //const filtro = new ObjectId(idUsuario);
-      //console.log(filtro);
-      const resultado = await this.publicacionesCollection.deleteMany({'usuario._id': idUsuario });
-      console.log(resultado);
-      return resultado;
-    } catch (error) {
-      throw new DatabaseError("Error al eliminar publicaciones del usuario: " + error.message);
     }
   }
 
