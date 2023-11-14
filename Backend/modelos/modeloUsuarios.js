@@ -14,8 +14,6 @@ class Usuario {
       this.imagenPerfil = "https://img2.freepng.es/20180331/khw/kisspng-computer-icons-user-clip-art-user-5abf13d4b67e20.4808850915224718927475.jpg";
       this.esAdmin = false;
       this.casita = new Casita();
-      this.intentosFallidos = 0;
-      this.bloqueado = false;
     }
   }
 export default Usuario;

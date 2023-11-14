@@ -1,6 +1,7 @@
 import ConexionMongo from "./conexionMongoDb.js";
 import Usuario from "../modelos/modeloUsuarios.js"; 
 import {DatabaseError} from "../errores.js";
+import { ObjectId } from "mongoose";
 
 class RepositorioUser{
 
@@ -47,65 +48,6 @@ class RepositorioUser{
             throw new DatabaseError("Error al loguear usuario: " + error);
         }
     }
-
-    async incrementarIntentosFallidos(idUsuario) {
-        try {
-          const usuarioEditado = await this.usuariosCollection.findOneAndUpdate(
-            { _id: idUsuario },
-            { $inc: { intentosFallidos: 1 } },
-            { returnDocument: 'after' } // Devuelve el documento después de la actualización
-          );
-      
-          if (!usuarioEditado.value) {
-            // Manejar el caso en el que no se encontró el usuario
-            throw new DatabaseError("Usuario no encontrado");
-          }
-      
-          return usuarioEditado.value;
-        } catch (error) {
-          throw new DatabaseError("Error al incrementar intentos fallidos: " + error);
-        }
-      }
-      
-      async restablecerIntentosFallidos(idUsuario) {
-        try {
-          const usuarioEditado = await this.usuariosCollection.findOneAndUpdate(
-            { _id: idUsuario },
-            { $set: { bloqueado: false, intentosFallidos: 0 } },
-            { returnDocument: 'after' } // Devuelve el documento después de la actualización
-          );
-      
-          if (!usuarioEditado.value) {
-            // Manejar el caso en el que no se encontró el usuario
-            throw new DatabaseError("Usuario no encontrado");
-          }
-      
-          return usuarioEditado.value;
-        } catch (error) {
-          throw new DatabaseError("Error al restablecer intentos fallidos: " + error);
-        }
-      }
-
-      async bloquearCuenta(idUsuario) {
-        try {
-          const usuarioEditado = await this.usuariosCollection.findOneAndUpdate(
-            { _id: idUsuario },
-            { $set: { bloqueado: true, intentosFallidos: 0 } },
-            { returnDocument: 'after' } // Devuelve el documento después de la actualización
-          );
-      
-          if (!usuarioEditado.value) {
-            // Manejar el caso en el que no se encontró el usuario
-            throw new DatabaseError("Usuario no encontrado");
-          }
-      
-          return usuarioEditado.value;
-        } catch (error) {
-          throw new DatabaseError("Error al bloquear cuenta: " + error);
-        }
-      }
-      
-      
 
     async buscarEmail(mail){
         return await this.usuariosCollection.findOne({ mail: mail });
@@ -179,6 +121,25 @@ class RepositorioUser{
             throw new DatabaseError("Error al eliminar Solicitud: " + error.message);
         }
     }
+
+    async savePassword(mail, newPassword) {
+        try {
+          const usuarioEditado = await this.usuariosCollection.findOneAndUpdate(
+            { mail },
+            { $set: { password: newPassword } },
+            { returnDocument: 'after' } // Devuelve el documento después de la actualización
+          );
+      
+          if (!usuarioEditado.value) {
+            // Manejar el caso en el que no se encontró el usuario
+            throw new DatabaseError("Usuario no encontrado");
+          }
+      
+          return usuarioEditado.value;
+        } catch (error) {
+          throw new DatabaseError("Error al editar contraseña: " + error);
+        }
+      }
 }
 
 export default RepositorioUser

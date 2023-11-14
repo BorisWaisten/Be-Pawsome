@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 function ImagenAnimal({ onImageUpload }) {
-  const [uploadData, setUploadData] = useState([]);
+  const [uploadData, setUploadData] = useState(null);
   const [error, setError] = useState(null);
 
   const onDrop = async (acceptedFiles) => {
@@ -12,21 +12,19 @@ function ImagenAnimal({ onImageUpload }) {
         const dataImagen = new FormData();
         dataImagen.append('file', file);
         dataImagen.append('upload_preset', 'animales');
-
+  
         const response = await fetch('https://api.cloudinary.com/v1_1/bepawsome/image/upload', {
           method: 'POST',
           body: dataImagen,
         });
-
+  
         if (!response.ok) {
           throw new Error('Error en la carga de la imagen');
         }
-
+  
         const data = await response.json();
-
-        // Agrega los datos de la nueva imagen al arreglo uploadData
-        setUploadData((prevData) => [...prevData, data]);
-
+        setUploadData(data);
+  
         // Llama a la función onImageUpload con el secure_url como argumento
         onImageUpload(data.secure_url);
       }
@@ -35,6 +33,7 @@ function ImagenAnimal({ onImageUpload }) {
       setError('Error en la carga de la imagen. Por favor, inténtalo de nuevo.');
     }
   };
+  
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -65,22 +64,17 @@ function ImagenAnimal({ onImageUpload }) {
             <p>Haz clic o arrastra una imagen aquí.</p>
           )}
         </div>
-        
-        {uploadData.length > 0 && (
+
+        {uploadData && (
           <div>
-            <h2>Imágenes cargadas:</h2>
-            {uploadData.map((data, index) => (
-              <div key={index}>
-                <img
-                  src={data.secure_url}
-                  alt={`Imagen cargada ${index + 1}`}
-                  style={{ maxWidth: '100%', maxHeight: '400px' }}
-                />
-              </div>
-            ))}
+            <h2>Imagen cargada:</h2>
+            <img
+              src={uploadData.secure_url}
+              alt="Imagen cargada"
+              style={{ maxWidth: '100%', maxHeight: '400px' }}
+            />
           </div>
         )}
-        
       </main>
     </div>
   );

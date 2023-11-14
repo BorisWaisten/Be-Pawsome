@@ -1,11 +1,6 @@
-"use client"
 import { Suspense } from "react"
-import Cargando from "./components/cargando.jsx"
-import BarraBuscadora from "./components/BarraBuscadora.jsx"
-import React, { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
-import PublicacionesList from "./components/Publicacion/PublicacionesList.jsx"
-
+import Cargando from "./components/cargando"
+import PublicacionPage from "./components/Publicaciones/PublicacionPage"
 
 export default function page() {
   const { data: session } = useSession();
@@ -89,8 +84,7 @@ export default function page() {
       <>
         <div>
           <Suspense fallback={<Cargando/>}>
-          <BarraBuscadora handleSearch={handleSearch} />
-          <PublicacionesList publicaciones={publicaciones}/>
+            <PublicacionPage/>
           </Suspense> 
         </div>
       </>

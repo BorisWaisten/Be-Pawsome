@@ -1,6 +1,9 @@
 import ServicioUsuario from "../servicios/serviceUsuarios.js";
 import jwt from 'jsonwebtoken'
-const SECRET_KEY = 'secretkey123'
+import bcrypt from 'bcrypt'
+import pushEmail from '../helpers/emailPassword.js'
+const SECRET_KEY = 'secretkey123';
+
 
 class ControllerUsuario{
 
@@ -26,7 +29,7 @@ class ControllerUsuario{
             const expiresIn = 24 * 60 * 60;
             const accesToken = jwt.sign(
               {id: user._id},
-              process.env.SECRET_KEY,
+              SECRET_KEY,
               {expiresIn : expiresIn}
             );
 
@@ -49,30 +52,7 @@ class ControllerUsuario{
         const user = await this.servicioUsuario.login(usuario);
         
         const expiresIn = 24 * 60 * 60;
-        const accessToken = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
-          expiresIn: expiresIn,
-        });
-        
-        const dataUser = {
-          userLogueado:user,
-          accesToken: accessToken,
-          expiresIn: expiresIn
-        }
-        
-        res.status(200).json(dataUser);
-      }catch(error){
-        res.status(401).json(error.message);
-      }
-    }
-
-    loginGoogle = async (req, res) => {
-      const mail = req.body.email;
-
-      try {
-        const user = await this.servicioUsuario.loginGoogle(mail);
-        
-        const expiresIn = 24 * 60 * 60;
-        const accessToken = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
+        const accessToken = jwt.sign({ id: user._id }, SECRET_KEY, {
           expiresIn: expiresIn,
         });
         
@@ -101,6 +81,7 @@ class ControllerUsuario{
     editarImagenPerfil = async(req,res)=>{
       const idUsuario = req.params.id;
       const imagenPerfil = req.body.imagenPerfil;
+      console.log(imagenPerfil);
       try {
         const user = await this.servicioUsuario.editarImagenPerfil(idUsuario ,imagenPerfil);
         res.status(200).json(user);
@@ -152,7 +133,7 @@ class ControllerUsuario{
       // del request deberan pasarse los datos del usuario: mail y la nueva contrasenia 
       const nuevoDatos = {
         mail: req.body.mail,
-        password: req.body.password
+        password: bcrypt.hashSync(req.body.password, 10)
       }
       try {
         const user = await this.servicioUsuario.recuperarContrasenia(nuevoDatos);
@@ -168,7 +149,7 @@ class ControllerUsuario{
         // Busqueda del mail si existe o no 
         await this.servicioUsuario.changePassword(mail);
 
-        res.status(200).json({'message': `Se envio un mail a ${mail} con un link para que puedas cambiar tu contrasenia.`});
+        res.status(200).json({'message': `Se envio un mail a ${mail} con una nueva password generada. Te recomendamos cambiarla.`});
       } catch (error) {
         res.status(401).json(error.message);
       }

@@ -1,9 +1,19 @@
 import nodemailer from 'nodemailer';
+import passwordGenerator from 'generate-password';
 import dotenv from 'dotenv';
 dotenv.config();
 
-async function pushEmail(mailDestinatario,passToken) {
+async function pushEmail(mailDestinatario) {
+  console.log(mailDestinatario);
   try {
+    const valores = {
+      length: 12,
+      numbers: true,
+      symbols: true,
+      uppercase: true,
+    };
+
+    const newPass = passwordGenerator.generate(valores);
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -13,19 +23,17 @@ async function pushEmail(mailDestinatario,passToken) {
       },
     });
 
-    const forgetURL = 'http://localhost:3000/signIn/cambiarContrasenia?token=' + passToken;
-
     const mailOptions = {
       from: process.env.MAIL,
       to: mailDestinatario,
       subject: 'Recupero de password para iniciar sesión',
-      html:`<a href="${forgetURL}">Cambiar Contrasenia</a>`
+      text: `Tu nueva password es: ${newPass}`,
     };
 
     const info = await transporter.sendMail(mailOptions);
     console.log('Correo electrónico enviado:', info);
 
-    return info.accepted;
+    return newPass;
   } catch (error) {
     console.error('Error al enviar el correo electrónico:', error);
     throw error;
