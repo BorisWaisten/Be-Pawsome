@@ -167,7 +167,7 @@ export default function Usuario() {
         <div className=" flex">
           <img
             className=" flex rounded-full m-10 justify-center items-center"
-            src={usuario.picture || usuario.imagenPerfil}
+            src={usuario.picture || usuario.image}
             alt="Foto de perfil"
             style={{ width: "200px", height: "150px" }}
           />
