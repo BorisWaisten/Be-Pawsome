@@ -31,13 +31,16 @@ const FormLogin = () => {
 
   const loginWithCredentials = async () => {
     try {
+      /*
       const response = await login(formData);
       const usuarioValido = response.userLogueado;
       if (usuarioValido) {
         mandarANextAuth();
       } else {
         console.error("No se pudo obtener el ID del usuario o el token.");
-      }
+      }*/
+
+      mandarANextAuth();
       setApiError(null); // Limpia cualquier error existente
     } catch (error) {
       handleError(error);

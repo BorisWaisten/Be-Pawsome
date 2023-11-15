@@ -32,8 +32,8 @@ const handler = NextAuth({
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              mail: credentials?.mail,
-              password: credentials?.password,
+              mail: credentials.mail,
+              password: credentials.password,
             }),
           });
           const user = await res.json();
@@ -108,7 +108,7 @@ const handler = NextAuth({
     
       async session({ session, token, user }) {
         session.user = token;
-        console.log("callback session " + session.user );
+        console.log("callback session " + session.user); 
         return session;
       },
     
@@ -116,6 +116,9 @@ const handler = NextAuth({
         // Lógica adicional después de la autenticación exitosa con Google
         try {
           // Realiza una petición al backend
+          if (!credentials){
+            
+          
           const response = await axios.post("http://localhost:5000/usuarios/loginGoogle", {
             // Puedes enviar cualquier dato adicional que necesites al backend
             email: user.email,
@@ -133,6 +136,11 @@ const handler = NextAuth({
             };
     
             return { ...sessionUser, token: response.data.accesToken };
+          } 
+
+          }
+          else{
+            return user
           }
         } catch (error) {
           console.error("Error al realizar la petición al backend:", error);

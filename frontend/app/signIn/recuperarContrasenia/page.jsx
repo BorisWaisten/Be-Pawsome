@@ -14,6 +14,7 @@ export default function FormEnvioLink ()  {
         try {
             const response = await axios.post("http://localhost:5000/usuarios/changePassword", nuevosDatos);
             console.log(response);
+            alert("Un enlace ha sido enviado a su correo");
         }catch (error) {
             console.error(error);
         }
