@@ -15,9 +15,14 @@ class ServicioUsuario{
         this.model = new ModelUsuario()
     }
 
-    idObjeto = (id) =>{
-      return new ObjectId(id)
-    }
+    idObjeto = (id) => {
+      try {
+        return new ObjectId(id);
+      } catch (error) {
+        console.error("Error al convertir ID a ObjectId:", error);
+        throw error; // Re-lanzar el error para manejarlo en la capa superior si es necesario
+      }
+    };
 
     register = async (usuario) =>{
       try{
@@ -120,6 +125,7 @@ class ServicioUsuario{
       try {
         UserRequest.validacionEdit(usuario);
     
+
         const userEditado = await this.model.editarUsuario(this.idObjeto(idUsuario), usuario);
     
         if (!userEditado) {

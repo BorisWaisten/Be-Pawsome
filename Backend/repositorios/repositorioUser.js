@@ -122,20 +122,44 @@ class RepositorioUser{
 
     async editarImagenPerfil(idUsuario, imagenPerfil) {
         try {
-            const userEditado = await this.usuariosCollection.updateOne(
+            const response = await this.usuariosCollection.findOneAndUpdate(
                 { _id: idUsuario },
-                { $set: { imagenPerfil:imagenPerfil } }
+                { $set: { imagenPerfil: imagenPerfil } },
+                { returnDocument: 'after' }
             );
-            return userEditado;
+            console.log(response);
+    
+            if (response.lastErrorObject.updatedExisting) {
+                // Si se modificó un documento, obtén el usuario actualizado
+                return response.value;
+            }
         } catch (error) {
             throw new DatabaseError("Error al editar imagen de perfil: " + error);
         }
     }
-    async editarUsuario(id, usuario){
-        try{
-            const userEditado = await this.usuariosCollection.updateOne({ _id: id }, { $set: usuario });
-            return userEditado 
-        }catch(error){
+    async editarUsuario(id, campos) {
+        try {
+            const updateQuery = { $set: {} };
+    
+            // Agrega dinámicamente cada campo al objeto de actualización
+            for (const campo in campos) {
+                updateQuery.$set[campo] = campos[campo];
+            }
+    
+            const response = await this.usuariosCollection.findOneAndUpdate(
+                { _id: id },
+                updateQuery,
+                { returnDocument: 'after' }
+            );
+    
+
+            if (response.lastErrorObject.updatedExisting) {
+                // Si se modificó un documento, obtén el usuario actualizado
+                return response.value;
+            }
+    
+            return null;
+        } catch (error) {
             throw new DatabaseError("Error al editar usuario: " + error);
         }
     }

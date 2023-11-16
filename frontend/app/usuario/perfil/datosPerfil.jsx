@@ -1,39 +1,42 @@
 import React, { useEffect, useState } from "react";
-import ImagenUsuario from "../../../app/uploadImagen/usuario/page";
-import { signOut, useSession } from "next-auth/react";
+import ImagenUsuario from "@/app/uploadImagen/usuario/page";
+import { signOut, useSession, getCsrfToken } from "next-auth/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+
 export default function Usuario() {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session , update} = useSession();
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false); // Estado para mostrar/ocultar el modal
   const [confirmarEliminacion, setConfirmarEliminacion] = useState(false);
+  
+  const idUsuario=session?.user?.userLogueado._id
 
   const handleEliminarUsuarioClick = () => {
     setConfirmarEliminacion(true);
   };
 
+
   const handleConfirmarEliminacion = async () => {
     try {
-      console.log(usuario._id);
       // Eliminar publicaciones del usuario
 
       const publicacionesUsuario = await axios.get(
-        `http://localhost:5000/publicacion/publicacionesUsuario/${usuario._id}`
+        `http://localhost:5000/publicacion/publicacionesUsuario/${idUsuario}`
       );
 	  
       if (publicacionesUsuario.data.message !== "Sin publicaciones disponibles") {
         await axios.delete(
-          `http://localhost:5000/publicacion/usuario/${usuario._id}`
+          `http://localhost:5000/publicacion/usuario/${idUsuario}`
         );
       }
 
       // Eliminar el usuario
-      await axios.delete(`http://localhost:5000/usuarios/${usuario._id}`);
+      await axios.delete(`http://localhost:5000/usuarios/${idUsuario}`);
 
       // Cierra el modal de confirmación después de eliminar el usuario y sus publicaciones
       setConfirmarEliminacion(false);
@@ -58,9 +61,9 @@ export default function Usuario() {
   
   const cargarUsuario = async () => {
     try {
-      if (session && session.user) {
-        const usuario = session.user;
-        console.log("usuario", usuario);
+      const usuario = session?.user?.userLogueado;
+      console.log("session:", session);
+      if (usuario) {
         setUsuario(usuario);
         // Inicializa los nuevos datos con los valores del usuario
         setNuevosDatos(usuario);
@@ -86,6 +89,7 @@ export default function Usuario() {
   const handleImageUpload = async (secureUrl) => {
     // Puedes hacer lo que necesites con secureUrl
     // Actualizar el estado solo para la imagenPerfil
+
     setNuevosDatos((prevState) => ({
       ...prevState,
       imagenPerfil: secureUrl,
@@ -93,12 +97,18 @@ export default function Usuario() {
 
     // Guardar la imagen en el backend al mismo tiempo
     try {
+
       const usuarioEditado = await axios.put(
-        `http://localhost:5000/usuarios/editarImagen/${usuario._id}`,{
-          imagenPerfil: nuevosDatos.imagenPerfil
+        `http://localhost:5000/usuarios/editarImagen/${idUsuario}`,{
+          imagenPerfil: secureUrl, 
         }
       );
+
       setUsuario(usuarioEditado.data);
+      
+      await update({userLogueado: usuarioEditado.data})
+
+      return usuario;
     } catch (error) {
       console.error("Error al guardar la imagen en el backend:", error);
       // Manejar errores, mostrar un mensaje al usuario, etc.
@@ -117,17 +127,23 @@ export default function Usuario() {
         esAdmin,
         casita,
         imagenPerfil,
+        intentosFallidos,
+        bloqueado,
         ...datosNecesarios
       } = nuevosDatos;
 
       const usuarioEditado = await axios.put(
-        `http://localhost:5000/usuarios/${usuario._id}`,
-        nuevosDatos
+        `http://localhost:5000/usuarios/${idUsuario}`,
+        datosNecesarios
       );
+       // Esta ruta depende de tu configuración en next-auth
+       setUsuario(usuarioEditado.data);
+       // Esta ruta depende de tu configuración en next-auth
+       await update({userLogueado: usuarioEditado.data});
 
-      setUsuario(usuarioEditado);
 
-      setModalVisible(false); // Cerrar el modal después de guardar los cambios
+      setModalVisible(false);
+      router.refresh(); // Cerrar el modal después de guardar los cambios
     } catch (error) {
       console.error(error);
       // Manejar errores, mostrar un mensaje al usuario, etc.
