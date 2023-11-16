@@ -51,7 +51,7 @@ const handler = NextAuth({
     async jwt({ token, user, session , trigger }) {
       console.log("token callback :",{ session, token, user });
 
-      if (session) {
+      if (session && trigger === "update") {
         token.userLogueado = session.userLogueado
         console.log("token modificado");
       }
@@ -65,7 +65,7 @@ const handler = NextAuth({
       return token
     },
     async session({ session, token, user }) {
-      //console.log("session callback :"+<br />, { session, token, user });
+      console.log("session callback :", { session, token, user });
       return {...session,user:{
         ...session.user,
         ...token
