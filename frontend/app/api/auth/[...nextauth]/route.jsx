@@ -48,12 +48,28 @@ const handler = NextAuth({
       }),
     ],
   callbacks: {
-    async jwt({ token, user }) {
-      return { ...token, ...user };
+    async jwt({ token, user, session , trigger }) {
+      console.log("token callback :",{ session, token, user });
+
+      if (session) {
+        token.userLogueado = session.userLogueado
+        console.log("token modificado");
+      }
+
+      if(user){
+        return {
+          ...token,
+          ...user
+        }
+      }
+      return token
     },
     async session({ session, token, user }) {
-      session.user = token;
-      return session;
+      //console.log("session callback :"+<br />, { session, token, user });
+      return {...session,user:{
+        ...session.user,
+        ...token
+      }}
     },
     secret: process.env.NEXTAUTH_SECRET,
   },

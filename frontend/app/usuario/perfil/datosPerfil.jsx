@@ -62,6 +62,7 @@ export default function Usuario() {
   const cargarUsuario = async () => {
     try {
       const usuario = session?.user?.userLogueado;
+      console.log("session:", session);
       if (usuario) {
         setUsuario(usuario);
         // Inicializa los nuevos datos con los valores del usuario
@@ -84,23 +85,6 @@ export default function Usuario() {
     setModalVisible(true); // Mostrar el modal al hacer clic en "Editar"
   };
 
-  const updateSession = async (newSession) => {
-    try {
-      await fetch(`http://localhost:3000/api/auth/session`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          csrfToken: await getCsrfToken(),
-          data: newSession,
-        }),
-      });
-    } catch (error) {
-      console.error('Error updating session:', error);
-    }
-  };
-
   const handleImageUpload = async (secureUrl) => {
     // Puedes hacer lo que necesites con secureUrl
     // Actualizar el estado solo para la imagenPerfil
@@ -121,7 +105,7 @@ export default function Usuario() {
 
       setUsuario(usuarioEditado.data);
       
-      await updateSession(usuarioEditado.data);
+      await update({userLogueado: usuarioEditado.data})
 
       return usuario;
     } catch (error) {
@@ -154,7 +138,7 @@ export default function Usuario() {
        // Esta ruta depende de tu configuración en next-auth
        setUsuario(usuarioEditado.data);
        // Esta ruta depende de tu configuración en next-auth
-       await updateSession(usuarioEditado.data);
+       await update({userLogueado: usuarioEditado.data});
 
 
       setModalVisible(false);
