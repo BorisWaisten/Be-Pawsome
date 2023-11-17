@@ -1,4 +1,5 @@
 import ServicioUsuario from "../servicios/serviceUsuarios.js";
+import ServicioPublicacion from "../servicios/servicePublicacion.js";
 import jwt from 'jsonwebtoken'
 const SECRET_KEY = 'secretkey123'
 
@@ -6,6 +7,7 @@ class ControllerUsuario{
 
     constructor(){
         this.servicioUsuario = new ServicioUsuario()
+        this.servicioPublicacion = new ServicioPublicacion()
     }
 
     register = async (req, res) => {
@@ -103,6 +105,7 @@ class ControllerUsuario{
       const imagenPerfil = req.body.imagenPerfil;
       try {
         const user = await this.servicioUsuario.editarImagenPerfil(idUsuario ,imagenPerfil);
+
         res.status(200).json(user);
       }catch(error){
         res.status(400).json(error.message);
@@ -115,6 +118,7 @@ class ControllerUsuario{
       try {
       
       const user = await this.servicioUsuario.editarUsuario(idUsuario, usuario); 
+
       
       res.status(200).json(user);
       }catch(error){

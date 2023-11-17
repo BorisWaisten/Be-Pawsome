@@ -174,16 +174,14 @@ export default function Usuario() {
   }
 
   // Muestra los detalles del usuario y el botón para abrir el modal de edición
+
   return (
     <main>
-      <div
-        className="flex justify-center items-center"
-        onSubmit={handleGuardarCambios}
-      >
-        <div className=" flex">
+      <div className="flex justify-center items-center">
+        <div className="w-full flex">
           <img
-            className=" flex rounded-full m-10 justify-center items-center"
-            src={usuario.picture || usuario.imagenPerfil}
+            className="flex rounded-full m-10 justify-center items-center"
+            src={usuario.imagenPerfil}
             alt="Foto de perfil"
             style={{ width: "200px", height: "150px" }}
           />
@@ -194,7 +192,7 @@ export default function Usuario() {
           </div>
           <div className="">
             <button
-              type="button" // Cambiado a type="button" para evitar que el formulario se envíe
+              type="button"
               onClick={(e) => handleImageUpload(e)}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
             >
@@ -203,202 +201,149 @@ export default function Usuario() {
           </div>
         </div>
       </div>
-      <div className="items-center flex flex-col">
-        <div className="w-full flex">
-          <input
-            type="text"
-            value={usuario.nombre}
-            disabled
-            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
-          />
-          <button
-            onClick={handleEditarClick}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
-          >
-            Editar
-          </button>
-        </div>
-        <div className="w-full flex">
-          <input
-            type="text"
-            value={usuario.apellido}
-            disabled
-            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
-          />
-          <button
-            onClick={handleEditarClick}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
-          >
-            Editar
-          </button>
-        </div>
-        <div className="w-full flex">
-          <input
-            type="text"
-            value={usuario.celular}
-            disabled
-            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
-          />
-          <button
-            onClick={handleEditarClick}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
-          >
-            Editar
-          </button>
-        </div>
-        <div className="w-full flex">
-          <input
-            type="text"
-            value={usuario.localidad}
-            disabled
-            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
-          />
-          <button
-            onClick={handleEditarClick}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
-          >
-            Editar
-          </button>
-        </div>
-        <div className="w-full flex">
-          <input
-            type="text"
-            value={usuario.provincia}
-            disabled
-            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
-          />
-          <button
-            onClick={handleEditarClick}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
-          >
-            Editar
-          </button>
-        </div>
-        <div className="w-full flex">
-          <input
-            type="text"
-            value={usuario.nacionalidad}
-            disabled
-            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
-          />
-          <button
-            onClick={handleEditarClick}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
-          >
-            Editar
-          </button>
-        </div>
-        <div className="w-full flex">
-          <input
-            type="text"
-            value={usuario.codigoPostal}
-            disabled
-            className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
-          />
-          <button
-            onClick={handleEditarClick}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
-          >
-            Editar
-          </button>
-        </div>
-      </div>
 
-      {/* Modal para editar los datos del usuario */}
-      {modalVisible && (
-        <div className="modal">
-          <form onSubmit={handleGuardarCambios}>
-            {/* <label>
-              Imagen de Perfil:
-              <input type="file" accept="image/*" onChange={handleFileChange} />
-            </label> */}
-            <label>
-              Nombre:
+      <div className="items-center flex flex-col">
+        {/* Formulario para editar los campos */}
+        <div className="items-center flex flex-col">
+  {/* Formulario para editar los campos */}
+        <form onSubmit={handleGuardarCambios}>
+          {/* Primera fila */}
+          <div className="w-full flex mb-4">
+            <div className="flex-1">
+              <label htmlFor="nombre">1. Nombre:</label>
               <input
                 type="text"
+                id="nombre"
                 name="nombre"
                 value={nuevosDatos.nombre}
                 onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
               />
-            </label>
-            <label>
-              Apellido:
+            </div>
+            <div className="flex-1 ml-4">
+              <label htmlFor="apellido">2. Apellido:</label>
               <input
                 type="text"
+                id="apellido"
                 name="apellido"
                 value={nuevosDatos.apellido}
                 onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
               />
-            </label>
-            <label>
-              Celular:
+            </div>
+          </div>
+
+          {/* Segunda fila */}
+          <div className="w-full flex mb-4">
+            <div className="flex-1">
+              <label htmlFor="celular">3. Celular:</label>
               <input
                 type="text"
+                id="celular"
                 name="celular"
                 value={nuevosDatos.celular}
                 onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
               />
-            </label>
-            <label>
-              Localidad:
+            </div>
+            <div className="flex-1 ml-4">
+              <label htmlFor="localidad">4. Localidad:</label>
               <input
                 type="text"
+                id="localidad"
                 name="localidad"
                 value={nuevosDatos.localidad}
                 onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
               />
-            </label>
-            <label>
-              Provincia:
+            </div>
+          </div>
+
+          {/* Tercera fila */}
+          <div className="w-full flex mb-4">
+            <div className="flex-1">
+              <label htmlFor="provincia">5. Provincia:</label>
               <input
                 type="text"
+                id="provincia"
                 name="provincia"
                 value={nuevosDatos.provincia}
                 onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
               />
-            </label>
-            <label>
-              Nacionalidad:
+            </div>
+            <div className="flex-1 ml-4">
+              <label htmlFor="nacionalidad">6. Nacionalidad:</label>
               <input
                 type="text"
+                id="nacionalidad"
                 name="nacionalidad"
                 value={nuevosDatos.nacionalidad}
                 onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
               />
-            </label>
-            <label>
-              Código Postal:
+            </div>
+            <div className="flex-1 ml-4">
+              <label htmlFor="codigoPostal">7. Código Postal:</label>
               <input
                 type="text"
+                id="codigoPostal"
                 name="codigoPostal"
                 value={nuevosDatos.codigoPostal}
                 onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
               />
-            </label>
-            <button type="submit">Guardar Cambios</button>
-            <button onClick={() => setModalVisible(false)}>Cancelar</button>
-          </form>
-        </div>
-      )}
+            </div>
+          </div>
 
-      <button
-        onClick={handleEliminarUsuarioClick}
-        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
-      >
-        Eliminar Usuario
-      </button>
-      {confirmarEliminacion && (
-        <div className="modal">
-          <p>
-            ¿Estás seguro de que deseas eliminar este usuario y todas sus
-            publicaciones?
-          </p>
-          <button onClick={handleConfirmarEliminacion}>Sí, Eliminar</button>
-          <button onClick={() => setConfirmarEliminacion(false)}>
-            Cancelar
+          {/* ... (repetir para otros campos) */}
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
+            style={{ display: modalVisible ? "block" : "none" }}
+          >
+            Guardar Cambios
           </button>
-        </div>
-      )}
+        </form>
+      </div>
+
+        {/* Botón de editar */}
+        <button
+          onClick={handleEditarClick}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
+        >
+          Editar
+        </button>
+
+        {/* Botón de eliminar usuario */}
+        <button
+          onClick={handleEliminarUsuarioClick}
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
+        >
+          Eliminar Usuario
+        </button>
+
+        {/* Modal de confirmación de eliminación */}
+        {confirmarEliminacion && (
+          <div className="modal">
+            <p>
+              ¿Estás seguro de que deseas eliminar este usuario y todas sus
+              publicaciones?
+            </p>
+            <button onClick={handleConfirmarEliminacion}>Sí, Eliminar</button>
+            <button onClick={() => setConfirmarEliminacion(false)}>
+              Cancelar
+            </button>
+          </div>
+        )}
+      </div>
     </main>
   );
 }
