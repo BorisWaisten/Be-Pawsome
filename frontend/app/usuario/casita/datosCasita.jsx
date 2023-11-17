@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SolicitudesDeUsuario from "@/app/components/Solicitudes/SolicitudesDeUsuario";
+import SolicitudesDeUsuario from "../../components/Solicitudes/SolicitudesDeUsuario";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 

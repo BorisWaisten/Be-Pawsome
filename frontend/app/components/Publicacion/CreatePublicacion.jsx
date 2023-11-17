@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import ImagenAnimal from "@/app/uploadImagen/animal/page";
+import ImagenAnimal from "../../uploadImagen/animal/page";
 
 const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
   const [localFormData, setFormData] = useState({
