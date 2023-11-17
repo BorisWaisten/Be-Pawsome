@@ -83,6 +83,15 @@ class RepositorioPublicacion {
     }
   }
 
+  async publicaciones() {
+    try {
+      const array = await this.publicacionesCollection.find({}).toArray();
+      return array;
+    } catch (error) {
+      throw new DatabaseError("Error al traer todas las publicaciones: " + error);
+    }
+  }
+
   async publicacionesUsuario(idUsuario) {
     try {
       const array = await this.publicacionesCollection.find({ 'usuario._id': idUsuario }).toArray();

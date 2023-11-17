@@ -79,9 +79,28 @@ class ServicioPublicacion {
     }
   }
 
-  async publicacionesUsuario(idUsuario) {
+  async actualizarPublicacionesDelUsuario(user) {
     try {
-      const array = await this.repository.publicacionesUsuario(idUsuario);
+      const array = await this.publicacionesUsuario(user._id);
+      if(array.length > 0) {
+        for (let i = 0; i < array.length; i++) {
+          const publicacion = array[i];
+          await this.actualizarPublicacion(publicacion._id, user);
+        }
+      }
+    } catch (error) {
+      throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);
+    }
+  }
+
+
+  async publicacionesUsuario(idUsuario) {
+    const id = ""
+    if(typeof idUsuario === "string") {
+      id = new ObjectId(idUsuario);
+    }
+    try {
+      const array = await this.repository.publicacionesUsuario(id);
       return array.length > 0 ? array : { "message": "Sin publicaciones disponibles" };
     } catch (error) {
       throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);

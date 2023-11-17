@@ -94,7 +94,11 @@ class ControllerUsuario{
       const usuario = req.body;
       try {
       
-      const user = await this.servicioUsuario.editarUsuario(idUsuario, usuario); 
+      const user = await this.servicioUsuario.editarUsuario(idUsuario, usuario);
+
+      if(user){
+        await this.servicioPublicacion.actualizarPublicacionesDelUsuario(user);
+      }
 
       
       res.status(200).json(user);
