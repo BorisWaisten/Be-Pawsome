@@ -201,34 +201,115 @@ export default function Usuario() {
 
       <div className="items-center flex flex-col">
         {/* Formulario para editar los campos */}
+        <div className="items-center flex flex-col">
+  {/* Formulario para editar los campos */}
         <form onSubmit={handleGuardarCambios}>
-          <div className="w-full flex">
-            <input
-              type="text"
-              name="nombre"
-              value={nuevosDatos.nombre}
-              onChange={handleInputChange}
-              className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
-              disabled={!modalVisible}
-            />
-            <input
-              type="text"
-              name="apellido"
-              value={nuevosDatos.apellido}
-              onChange={handleInputChange}
-              className="w-1/2 bg-gray-200 h-8 rounded mb-4 px-4 text-2xl text-center flex-2"
-              disabled={!modalVisible}
-            />
-            {/* ... (repetir para otros campos) */}
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
-              style={{ display: modalVisible ? "block" : "none" }}
-            >
-              Guardar Cambios
-            </button>
+          {/* Primera fila */}
+          <div className="w-full flex mb-4">
+            <div className="flex-1">
+              <label htmlFor="nombre">1. Nombre:</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                value={nuevosDatos.nombre}
+                onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
+              />
+            </div>
+            <div className="flex-1 ml-4">
+              <label htmlFor="apellido">2. Apellido:</label>
+              <input
+                type="text"
+                id="apellido"
+                name="apellido"
+                value={nuevosDatos.apellido}
+                onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
+              />
+            </div>
           </div>
+
+          {/* Segunda fila */}
+          <div className="w-full flex mb-4">
+            <div className="flex-1">
+              <label htmlFor="celular">3. Celular:</label>
+              <input
+                type="text"
+                id="celular"
+                name="celular"
+                value={nuevosDatos.celular}
+                onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
+              />
+            </div>
+            <div className="flex-1 ml-4">
+              <label htmlFor="localidad">4. Localidad:</label>
+              <input
+                type="text"
+                id="localidad"
+                name="localidad"
+                value={nuevosDatos.localidad}
+                onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
+              />
+            </div>
+          </div>
+
+          {/* Tercera fila */}
+          <div className="w-full flex mb-4">
+            <div className="flex-1">
+              <label htmlFor="provincia">5. Provincia:</label>
+              <input
+                type="text"
+                id="provincia"
+                name="provincia"
+                value={nuevosDatos.provincia}
+                onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
+              />
+            </div>
+            <div className="flex-1 ml-4">
+              <label htmlFor="nacionalidad">6. Nacionalidad:</label>
+              <input
+                type="text"
+                id="nacionalidad"
+                name="nacionalidad"
+                value={nuevosDatos.nacionalidad}
+                onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
+              />
+            </div>
+            <div className="flex-1 ml-4">
+              <label htmlFor="codigoPostal">7. Código Postal:</label>
+              <input
+                type="text"
+                id="codigoPostal"
+                name="codigoPostal"
+                value={nuevosDatos.codigoPostal}
+                onChange={handleInputChange}
+                className="w-full bg-gray-200 h-8 rounded px-4 text-2xl text-center"
+                disabled={!modalVisible}
+              />
+            </div>
+          </div>
+
+          {/* ... (repetir para otros campos) */}
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-10 h-8"
+            style={{ display: modalVisible ? "block" : "none" }}
+          >
+            Guardar Cambios
+          </button>
         </form>
+      </div>
 
         {/* Botón de editar */}
         <button
