@@ -81,13 +81,17 @@ class ServicioPublicacion {
 
   async actualizarPublicacionesDelUsuario(user) {
     try {
-      const array = await this.publicacionesUsuario(user._id);
-      if(array.length > 0) {
+      const array1 = await this.publicacionesUsuario(user._id);
+      console.log(array1 +" publicaciones usuario a modificar1");
+      if(array1.length > 0) {
         for (let i = 0; i < array.length; i++) {
-          const publicacion = array[i];
+          const publicacion = array1[i];
           await this.actualizarPublicacion(publicacion._id, user);
         }
       }
+      const array2 = await this.publicacionesUsuario(user._id);
+      console.log(array1 +" publicaciones usuario a modificar2");
+
     } catch (error) {
       throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);
     }
@@ -95,11 +99,15 @@ class ServicioPublicacion {
 
 
   async publicacionesUsuario(idUsuario) {
-    const id = ""
+    let id = ""
     if(typeof idUsuario === "string") {
       id = new ObjectId(idUsuario);
+    }else{
+      id = idUsuario
     }
+    console.log(id + " id usuario");
     try {
+
       const array = await this.repository.publicacionesUsuario(id);
       return array.length > 0 ? array : { "message": "Sin publicaciones disponibles" };
     } catch (error) {
