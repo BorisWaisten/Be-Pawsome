@@ -97,7 +97,7 @@ const FormLogin = () => {
                 onChange={handleChange}
                 onFocus={() => setApiError(null)}
                 required
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4"
+                className=" border-purple-400 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4"
               />
               <label
                 htmlFor="password"
@@ -113,7 +113,7 @@ const FormLogin = () => {
                 onChange={handleChange}
                 onFocus={() => setApiError(null)}
                 required
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4"
+                className=" border-purple-400 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4"
               />
               <button
                 type="submit"
