@@ -30,7 +30,8 @@ function PublicacionCard({ publicacion }) {
 
   return (
     <>
-      <div className="bg-white rounded-lg shadow-lg p-6 my-5 w-full h-full border border-purple-200">
+      <div className="bg-white rounded-lg shadow-lg p-6 my-5 w-full h-full border border-purple-200 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 hover:shadow-2xl">
+        {" "}
         <h3 className="text-xl font-bold mb-4">{publicacion.titulo}</h3>
         <div className="slider-container relative ">
           {/* Flecha izquierda */}
