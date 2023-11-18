@@ -2,10 +2,9 @@
 
 import React from "react";
 import { useState, useRef } from "react";
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-
 
 function PublicacionCard({ publicacion }) {
   const { data: session } = useSession();
@@ -28,13 +27,12 @@ function PublicacionCard({ publicacion }) {
   const handleMostrarDetalles = () => {
     setMostrarDetalles(!mostrarDetalles);
   };
-  
 
   return (
     <>
       <div className="bg-white rounded-lg shadow-lg p-6 my-5 w-full h-full">
         <h3 className="text-xl font-bold mb-4">{publicacion.titulo}</h3>
-        <div className="slider-container relative">
+        <div className="slider-container relative ">
           {/* Flecha izquierda */}
           <span
             className="slider-arrow left absolute top-1/2 transform -translate-y-1/2 cursor-pointer"
@@ -44,9 +42,12 @@ function PublicacionCard({ publicacion }) {
           </span>
           {/* Imagen actual */}
           <img
-            className="rounded-lg w-full h-72 object-cover "
-            style={{height: 200, width: 300}}
-            src={publicacion && publicacion.animal && publicacion.animal.fotos ? publicacion.animal.fotos[currentImageIndex] : ""}
+            className="rounded-lg w-full h-72 object-cover"
+            src={
+              publicacion && publicacion.animal && publicacion.animal.fotos
+                ? publicacion.animal.fotos[currentImageIndex]
+                : ""
+            }
             alt={`Foto ${currentImageIndex + 1}`}
           />
           {/* Flecha derecha */}
@@ -64,15 +65,15 @@ function PublicacionCard({ publicacion }) {
           </p>
           {mostrarDetalles ? (
             <>
-              <p className="mb-2 text-m">Edad: {publicacion.animal.edad} años</p>
+              <p className="mb-2 text-m">
+                Edad: {publicacion.animal.edad} años
+              </p>
               <p className="mb-2">Peso: {publicacion.animal.pesoEnKg} kg</p>
               {/* Agrega más detalles según la estructura de tus datos */}
               <p className="mb-2">
-                Descripcion: {publicacion.animal.descripcion}{' '}
+                Descripcion: {publicacion.animal.descripcion}{" "}
               </p>
-              <p className="mb-2">
-                Ubicacion: {publicacion.animal.ubicacion}
-              </p>
+              <p className="mb-2">Ubicacion: {publicacion.animal.ubicacion}</p>
               <p className="mb-2">
                 Historia Clinica: {publicacion.animal.historiaClinica}
               </p>
@@ -89,7 +90,7 @@ function PublicacionCard({ publicacion }) {
           ) : (
             <>
               <p className="mb-2 text-m">
-                Edad: {publicacion.animal.edad} años{' '}
+                Edad: {publicacion.animal.edad} años{" "}
                 <button
                   className="text-blue-500 hover:underline hover:text-violet-500"
                   onClick={handleMostrarDetalles}
@@ -101,12 +102,14 @@ function PublicacionCard({ publicacion }) {
           )}
         </div>
         <div>
-        <button
-          className="bg-blue-500 hover:bg-violet-500 text-white font-bold py-2 px-4 rounded mx-auto mt-auto"
-          onClick={() => router.push(`/publicacion/perfilPublicacion/${publicacion._id}`)}
+          <button
+            className="bg-blue-500 hover:bg-violet-500 text-white font-bold py-2 px-4 rounded mx-auto mt-auto"
+            onClick={() =>
+              router.push(`/publicacion/perfilPublicacion/${publicacion._id}`)
+            }
           >
-          Me interesa
-        </button>
+            Me interesa
+          </button>
         </div>
       </div>
     </>
