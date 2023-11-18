@@ -31,11 +31,7 @@ const Page = () => {
 
   return (
     <div>
-      {usuario && (
-        <h1>
-          Tu perfil, {usuario.nombre} {usuario.apellido}
-        </h1>
-      )}
+
       <PublicacionesDeUsuario publicaciones={publicaciones} />
     </div>
   );

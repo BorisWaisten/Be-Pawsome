@@ -22,7 +22,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
 
   return (
     <div>
-      <h1 className="mt-3">Publicaciones del usuario</h1>
+      <h1 className="mt-3 items-center justify-center flex">Mis publicaciones</h1>
       <ul className="divide-y divide-violet-200">
         {Array.isArray(publicaciones) &&
           publicaciones.map((publicacion) => (

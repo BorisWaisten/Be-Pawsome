@@ -37,9 +37,7 @@ const Casita = () => {
 
     return (
         <div>
-            {usuario && (
-                <h1>Solicitudes Realizadas</h1>
-            )}
+           
             <SolicitudesDeUsuario publicaciones={publicaciones} idUsuario={idUsuario} actualizarPublicaciones={actualizarPublicaciones} />
         </div>
     );

@@ -36,7 +36,7 @@ const SolicitudesDeUsuario = ({ publicaciones, idUsuario, actualizarPublicacione
 
   return (
     <div>
-      <h1 className="mt-3">Publicaciones del usuario</h1>
+      <h1 className="mt-3 text-center justify-center">Mis solicitudes</h1>
       <ul className="divide-y divide-violet-200">
         {Array.isArray(publicaciones) &&
           publicaciones.map((publicacion) => (
