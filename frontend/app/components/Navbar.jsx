@@ -60,7 +60,7 @@ export default function Navbar() {
         {session ? (
           <button
             onClick={toggleMenu}
-            className="cursor-pointer focus:outline-none"
+            className="cursor-pointer focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
           >
             <Image
               src={session.user?.userLogueado.imagenPerfil}
@@ -68,7 +68,7 @@ export default function Navbar() {
               width={50}
               height={50}
               quality={100}
-              className="rounded-full"
+              className="rounded-full hover:shadow-lg"
             />
           </button>
         ) : (
