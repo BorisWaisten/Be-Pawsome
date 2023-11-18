@@ -4,11 +4,17 @@
 
 /* base styles */
 body {
+  font-family: monospace;
   background: #ebf0fa;
   @apply text-gray-500 m-8;
 }
 h1, h2 {
   @apply font-bold text-primary text-lg;
+  
+}
+link{
+  @apply text-primary text-5xl;
+  font-family: monospace
 }
 main {
   @apply max-w-5xl my-12 mx-auto px-8;
