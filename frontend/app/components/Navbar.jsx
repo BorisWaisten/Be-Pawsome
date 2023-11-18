@@ -16,14 +16,16 @@ export default function Navbar() {
     setMenuVisible(!menuVisible);
   };
 
-  if (status === "loading") {
-    return <p>Loading...</p>;
-  }
-
- return (
+  return (
     <nav className="flex items-center justify-between py-4 px-6">
       <div className="flex items-center space-x-4">
-        <Link href="/"  onClick={() =>{router.push("/");router.reload()}}>
+        <Link
+          href="/"
+          onClick={() => {
+            router.push("/");
+            router.reload();
+          }}
+        >
           <Image
             src={Logo}
             alt="Logo BePawsome"
@@ -33,15 +35,27 @@ export default function Navbar() {
             placeholder="blur"
           />
         </Link>
-        <Link href="/aboutUs">About Us</Link>
+        <Link
+          className=" text-violet-500 hover:bg-violet-400 hover:text-white hover:-translate-y-1"
+          href="/aboutUs"
+        >
+          About Us
+        </Link>
         {session && (
-          <Link href="/publicacion/crearPublicacion">Crear Publicacion</Link>
-          )}
+          <Link
+            className=" text-violet-500 hover:bg-violet-400 hover:text-white hover:-translate-y-1 hover:rounded"
+            href="/publicacion/crearPublicacion"
+          >
+            Crear Publicacion
+          </Link>
+        )}
       </div>
-
-      <div className="ml-auto flex space-x-2"> {/* Agregado un contenedor flex */}
+      <div className="ml-auto flex space-x-2 p-2 m-2 ">
         {session ? (
-          <button onClick={toggleMenu} className="cursor-pointer focus:outline-none">
+          <button
+            onClick={toggleMenu}
+            className="cursor-pointer focus:outline-none"
+          >
             <Image
               src={session.user?.userLogueado.imagenPerfil}
               alt="Imagen Usuario"
@@ -52,24 +66,68 @@ export default function Navbar() {
             />
           </button>
         ) : (
-          <div className="flex space-x-2 " > {/* Agregado un contenedor flex */}
-            <button onClick={() => router.push('/register')} className="btn btn-primary">
+          <div className="flex space-x-2">
+            <button
+              onClick={() => router.push("/register")}
+              className="btn bg-purple-500 hover:bg-purple-700 text-white"
+            >
               Registrarse
             </button>
-            <button onClick={() => signIn()} className="btn btn-primary">
-              Loguearse
+            <button
+              onClick={() => signIn()}
+              className="btn bg-purple-500 hover:bg-purple-700 text-white"
+            >
+              Iniciar Sesion
             </button>
           </div>
         )}
       </div>
       {menuVisible && session && (
-      <div className="absolute top-16 right-6 bg-white p-4 rounded shadow flex flex-col" style={{ position: "absolute", marginTop: "60px" }}>
-        <Link href="/usuario/casita">Casita</Link>
-        <Link href="/usuario/misPublicaciones">Mis Publicaciones</Link>
-        <Link href="/usuario/perfil">Perfil</Link>
-        <button onClick={() => signOut()}>Cerrar Sesión</button>
-      </div>
-    )}
+        <div
+          className="absolute top-16 right-6 bg-white p-4 rounded shadow flex flex-col"
+          style={{ position: "absolute", marginTop: "60px" }}
+        >
+          <Link href="/usuario/casita">
+            <div className="flex items-center p-2 m-2">
+              <Image
+                src="/home.png"
+                alt="React Logo"
+                width={30}
+                height={30}
+              />
+              <span className="ml-2">Casita</span>
+            </div>
+          </Link>
+          <Link href="/usuario/misPublicaciones">
+            <div  className="flex items-center p-2 m-2">
+              <Image
+                src="/publicaciones.png"
+                alt="React Logo"
+                width={30}
+                height={30}
+              />
+              <span className="ml-2">Mis Publicaciones</span>
+            </div>
+          </Link>
+          <Link href="/usuario/perfil">
+            <div className="flex items-center p-2 m-2">
+              <Image
+                src="/perfil.png"
+                alt="React Logo"
+                width={30}
+                height={30}
+              />
+              <span className="ml-2">Perfil</span>
+            </div>
+          </Link>
+          <button
+            onClick={() => signOut()}
+            className="bg-purple-500 hover:bg-purple-700 text-white"
+          >
+            Cerrar Sesión
+          </button>
+        </div>
+      )}
     </nav>
   );
 }
