@@ -36,17 +36,23 @@ export default function Navbar() {
           />
         </Link>
         <Link
-          className=" text-violet-500 hover:bg-violet-400 hover:text-white hover:-translate-y-1"
+          className="text-violet-500 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+          style={{ textDecoration: "none" }}
           href="/aboutUs"
         >
-          About Us
+          <div className="p-2 rounded hover:bg-violet-400 hover:text-white hover:shadow-lg">
+            About Us
+          </div>
         </Link>
         {session && (
           <Link
-            className=" text-violet-500 hover:bg-violet-400 hover:text-white hover:-translate-y-1 hover:rounded"
+            className="text-violet-500 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+            style={{ textDecoration: "none" }}
             href="/publicacion/crearPublicacion"
           >
-            Crear Publicacion
+            <div className="p-2 rounded hover:bg-violet-400 hover:text-white hover:shadow-lg">
+              Crear Publicacion
+            </div>
           </Link>
         )}
       </div>
@@ -89,17 +95,12 @@ export default function Navbar() {
         >
           <Link href="/usuario/casita">
             <div className="flex items-center p-2 m-2">
-              <Image
-                src="/home.png"
-                alt="React Logo"
-                width={30}
-                height={30}
-              />
+              <Image src="/home.png" alt="React Logo" width={30} height={30} />
               <span className="ml-2">Casita</span>
             </div>
           </Link>
           <Link href="/usuario/misPublicaciones">
-            <div  className="flex items-center p-2 m-2">
+            <div className="flex items-center p-2 m-2">
               <Image
                 src="/publicaciones.png"
                 alt="React Logo"
