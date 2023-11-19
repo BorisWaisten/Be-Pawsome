@@ -24,6 +24,7 @@ class ControllerPublicacion {
       res.status(400).json(error.message);
     }
   };
+  
 
   obtenerPublicacion = async (req, res) => {
     const idPublicacion = req.params.id;
@@ -101,11 +102,12 @@ class ControllerPublicacion {
   publicacionesPorString = async (req, res) => {
     try {
       const string = req.params.query;
-      console.log(string)
+      console.log(string);
       const result = await this.servicioPublicacion.publicacionesPorString(string);
-      res.status(200).json(result)
+      res.status(200).json(result);
     } catch (error) {
-      res.status(404).json(error.message);
+      console.error("Error en la API:", error);
+      res.status(500).json({ error: "Error interno del servidor" });
     }
   };
 

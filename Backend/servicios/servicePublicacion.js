@@ -11,15 +11,38 @@ class ServicioPublicacion {
     this.servicioUsuario = new ServicioUsuario();
   }
 
-  async crearPublicacion(publicacion) {
+  async crearPublicacion(req, res) {
+    const nuevaPublicacion = {
+      titulo: req.body.titulo,
+      usuario: req.body.usuario,
+      animal: req.body.animal,
+    };
+  
     try {
-      PublicRequest.validacionPublicacion(publicacion);      
-
-      const publicacionCreada = await this.repository.crearPublicacion(publicacion);
-
-      return publicacionCreada
+      // Contar las publicaciones del usuario
+      const countPublicaciones = await this.servicioPublicacion.contarPublicacionesPorUsuario(nuevaPublicacion.usuario);
+  
+      // Verificar si el usuario tiene más de 10 publicaciones
+      if (countPublicaciones > 10) {
+        return res.status(403).json({ message: 'El usuario ha alcanzado el límite de 10 publicaciones.' });
+      }
+  
+      // Crear la publicación si el usuario no ha alcanzado el límite
+      const publicacionCreada = await this.repository.crearPublicacion(nuevaPublicacion);
+  
+      // Devolver la respuesta
+      return res.status(201).json(publicacionCreada);
     } catch (error) {
-      throw new PublicacionRequestError("Error al crear publicación: " + error.message);
+      return res.status(400).json(error.message);
+    }
+  }
+
+  async contarPublicacionesPorUsuario(usuarioId) {
+    try {
+      const count = await this.publicacionesCollection.countDocuments({ 'usuario._id': usuarioId });
+      return count;
+    } catch (error) {
+      throw new DatabaseError("Error al contar las publicaciones del usuario: " + error);
     }
   }
 
@@ -33,6 +56,15 @@ class ServicioPublicacion {
       return publicacion;
     } catch (error) {
       return error
+    }
+  }
+
+  async eliminarPublicacionesDeUsuarioEliminado(idUsuario) {
+    try {
+      const resultado = await this.repository.eliminarPublicacionesPorUsuario(idUsuario);
+      return resultado;
+    } catch (error) {
+      throw new PublicacionRequestError("Error al eliminar publicaciones del usuario: " + error.message);
     }
   }
 
@@ -110,18 +142,6 @@ class ServicioPublicacion {
 
       const array = await this.repository.publicacionesUsuario(id);
       return array.length > 0 ? array : { "message": "Sin publicaciones disponibles" };
-    } catch (error) {
-      throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);
-    }
-  }
-
-  async publicacionesPorString(string) {
-    try {
-      if (!string) {
-        return res.status(400).json({ message: 'Falta el parámetro de consulta "search".' });
-      }
-      const result = await this.repository.publicacionesPorString(string);
-      return result.length > 0 ? result : {"message": "Sin publicaciones disponibles"};  
     } catch (error) {
       throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);
     }

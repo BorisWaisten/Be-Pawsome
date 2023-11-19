@@ -37,6 +37,7 @@ class RepositorioPublicacion {
       throw new DatabaseError("Error al crear publicación: " + error);
     }
   }
+  
 
   async obtenerPublicacionPorId(id) {
     return await this.publicacionesCollection.findOne({ _id: id });
@@ -106,15 +107,15 @@ class RepositorioPublicacion {
       const regex = new RegExp(string, 'i');
       const array = await this.publicacionesCollection.find(
         {$or: [
-          { titulo: regex },
+          { titulo: regex },  
           { 'animal.nombre': regex },
           { 'animal.tipoAnimal': regex },
           { 'animal.descripcion': regex },
           { 'animal.sexo': regex },
           { 'animal.ubicacion': regex },
           { 'animal.historiaClinica': regex },
-          { 'animal.edad': parseInt(string)},
-          { 'animal.pesoEnKg': parseInt(string) },
+          { 'animal.edad': regex},
+          { 'animal.pesoEnKg': regex },
         ]}).toArray();
       return array;
     } catch (error) {
