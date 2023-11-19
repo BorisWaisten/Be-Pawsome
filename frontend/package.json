@@ -25,6 +25,7 @@
     "next-auth": "^4.23.2",
     "next-cloudinary": "^4.27.0",
     "postcss": "8.4.31",
+    "rc-slider": "^10.4.0",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
