@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-purple-100 text-neutral-800 dark:text-neutral-300 p-6 mt-96">
+    <footer className="bg-purple-100 text-neutral-800 dark:text-neutral-300 p-6 mt-40">
       <div className="container mx-auto flex flex-wrap items-center justify-between">
         <div className="w-full md:w-1/3 md:order-2 text-center md:text-right">
           <a
