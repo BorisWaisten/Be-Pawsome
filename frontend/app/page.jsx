@@ -5,7 +5,6 @@ import BarraBuscadora from "./components/BarraBuscadora.jsx"
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import PublicacionesList from "./components/Publicacion/PublicacionesList.jsx"
-import BarraFiltros from "./components/BarraFiltros.jsx";
 
 
 export default function page() {
