@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import ImagenAnimal from "@/app/uploadImagen/animal/page";
+import ImagenAnimal from "../../uploadImagen/animal/page";
 
 const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
   const [localFormData, setFormData] = useState({
@@ -50,7 +50,7 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
   return (
     <>
       {" "}
-      <h1 className="text-2xl font-bold mb-4">Crear publicacion</h1>
+      <h1 className="text-2xl font-bold mb-4 flex items-center flex-1 justify-center">Crear publicacion</h1>
       <form
         onSubmit={(e) => handleSubmit(e, localStorage.getItem("jwtToken"))}
         className=" rounded-lg shadow-md p-6"
@@ -76,7 +76,7 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
           />
         </label>
         <label className="block mb-2 font-bold text-gray-700">
-          Edad:
+          Edad(años):
           <input
             type="text"
             name="edad"
@@ -171,6 +171,7 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
           >
             Crear publicacion
           </button>
+          
         </div>
       </form>
     </>

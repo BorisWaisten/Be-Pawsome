@@ -1,14 +1,13 @@
 import ServicioUsuario from "../servicios/serviceUsuarios.js";
+import ServicioPublicacion from "../servicios/servicePublicacion.js";
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
-import pushEmail from '../helpers/emailPassword.js'
-const SECRET_KEY = 'secretkey123';
-
+const SECRET_KEY = 'secretkey123'
 
 class ControllerUsuario{
 
     constructor(){
         this.servicioUsuario = new ServicioUsuario()
+        this.servicioPublicacion = new ServicioPublicacion()
     }
 
     register = async (req, res) => {
@@ -29,7 +28,7 @@ class ControllerUsuario{
             const expiresIn = 24 * 60 * 60;
             const accesToken = jwt.sign(
               {id: user._id},
-              SECRET_KEY,
+              process.env.SECRET_KEY,
               {expiresIn : expiresIn}
             );
 
@@ -52,7 +51,7 @@ class ControllerUsuario{
         const user = await this.servicioUsuario.login(usuario);
         
         const expiresIn = 24 * 60 * 60;
-        const accessToken = jwt.sign({ id: user._id }, SECRET_KEY, {
+        const accessToken = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
           expiresIn: expiresIn,
         });
         
@@ -81,9 +80,9 @@ class ControllerUsuario{
     editarImagenPerfil = async(req,res)=>{
       const idUsuario = req.params.id;
       const imagenPerfil = req.body.imagenPerfil;
-      console.log(imagenPerfil);
       try {
         const user = await this.servicioUsuario.editarImagenPerfil(idUsuario ,imagenPerfil);
+
         res.status(200).json(user);
       }catch(error){
         res.status(400).json(error.message);
@@ -92,16 +91,17 @@ class ControllerUsuario{
     
     editarUsuario = async (req, res) => {
       const idUsuario = req.params.id;
-      console.log(idUsuario);
-      console.log(req.body);
-      if(req.body.imagenPerfil){
-        const usuario = {
-          imagenPerfil: req.body.imagenPerfil
-        }
-      }
+      const usuario = req.body;
       try {
-        const user = await this.servicioUsuario.editarUsuario(idUsuario, usuario);
-        res.status(200).json(user);
+      
+      const user = await this.servicioUsuario.editarUsuario(idUsuario, usuario);
+
+      if(user){
+        await this.servicioPublicacion.actualizarPublicacionesDelUsuario(user);
+      }
+
+      
+      res.status(200).json(user);
       }catch(error){
         res.status(400).json(error.message);
       }
@@ -133,7 +133,7 @@ class ControllerUsuario{
       // del request deberan pasarse los datos del usuario: mail y la nueva contrasenia 
       const nuevoDatos = {
         mail: req.body.mail,
-        password: bcrypt.hashSync(req.body.password, 10)
+        password: req.body.password
       }
       try {
         const user = await this.servicioUsuario.recuperarContrasenia(nuevoDatos);
@@ -149,7 +149,7 @@ class ControllerUsuario{
         // Busqueda del mail si existe o no 
         await this.servicioUsuario.changePassword(mail);
 
-        res.status(200).json({'message': `Se envio un mail a ${mail} con una nueva password generada. Te recomendamos cambiarla.`});
+        res.status(200).json({'message': `Se envio un mail a ${mail} con un link para que puedas cambiar tu contrasenia.`});
       } catch (error) {
         res.status(401).json(error.message);
       }

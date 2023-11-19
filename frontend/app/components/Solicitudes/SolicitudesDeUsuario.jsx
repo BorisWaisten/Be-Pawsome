@@ -1,7 +1,9 @@
-import { eliminarSolicitudDeUsuario } from "@/app/persistencia/peticiones";
 import React from "react";
+import axios from "axios";
 
-const SolicitudesDeUsuario = ({ publicaciones,usuario}) => {
+
+const SolicitudesDeUsuario = ({ publicaciones, idUsuario, actualizarPublicaciones }) => {
+
     const confirmarEliminar = async (publicacionId) => {
         const confirmacion = window.confirm(
           "¿Estás seguro de que deseas eliminar esta solicitud?"
@@ -16,11 +18,14 @@ const SolicitudesDeUsuario = ({ publicaciones,usuario}) => {
         try {
           // Hacer una solicitud DELETE para eliminar la solicitud en el backend
           // Implementa esta función usando fetch o axios
-          const solcicitudEliminada = await eliminarSolicitudDeUsuario(usuario._id,publicacionId);
-          if(solcicitudEliminada){
-            window.location.reload()
-          }
-          return solcicitudEliminada
+          const solicitudEliminada = await axios.delete(`http://localhost:5000/usuarios/eliminarSolicitud/${idUsuario}`, {
+            data: { publicacionId }, // Pasar publicacionId en el cuerpo de la solicitud
+          });
+          if (solicitudEliminada) {
+            // Llama a la función actualizarPublicaciones después de eliminar la solicitud
+            actualizarPublicaciones(publicacionId);
+        }
+          return solicitudEliminada
         } catch (error) {
           console.error(error);
           // Manejar errores, mostrar un mensaje al usuario, etc.
@@ -31,7 +36,7 @@ const SolicitudesDeUsuario = ({ publicaciones,usuario}) => {
 
   return (
     <div>
-      <h1 className="mt-3">Publicaciones del usuario</h1>
+      <h1 className="mt-3 text-center justify-center">Mis solicitudes</h1>
       <ul className="divide-y divide-violet-200">
         {Array.isArray(publicaciones) &&
           publicaciones.map((publicacion) => (

@@ -1,6 +1,7 @@
 import ConexionMongo from "./conexionMongoDb.js";
 import Publicacion from "../modelos/ModeloPublicacion.js";
 import { DatabaseError } from "../errores.js";
+import { ObjectId } from 'mongodb';
 
 class RepositorioPublicacion {
   constructor() {
@@ -36,6 +37,7 @@ class RepositorioPublicacion {
       throw new DatabaseError("Error al crear publicación: " + error);
     }
   }
+  
 
   async obtenerPublicacionPorId(id) {
     return await this.publicacionesCollection.findOne({ _id: id });
@@ -59,7 +61,29 @@ class RepositorioPublicacion {
     }
   }
 
+  async eliminarPublicacionesPorUsuario(idUsuario) {
+    //console.log(idUsuario);
+    try {
+      //const filtro = new ObjectId(idUsuario);
+      //console.log(filtro);
+      const resultado = await this.publicacionesCollection.deleteMany({'usuario._id': idUsuario });
+      console.log(resultado);
+      return resultado;
+    } catch (error) {
+      throw new DatabaseError("Error al eliminar publicaciones del usuario: " + error.message);
+    }
+  }
+
   //trae todas las publicaciones
+  async publicaciones() {
+    try {
+      const array = await this.publicacionesCollection.find({}).toArray();
+      return array;
+    } catch (error) {
+      throw new DatabaseError("Error al traer todas las publicaciones: " + error);
+    }
+  }
+
   async publicaciones() {
     try {
       const array = await this.publicacionesCollection.find({}).toArray();
@@ -83,15 +107,15 @@ class RepositorioPublicacion {
       const regex = new RegExp(string, 'i');
       const array = await this.publicacionesCollection.find(
         {$or: [
-          { titulo: regex },
+          { titulo: regex },  
           { 'animal.nombre': regex },
           { 'animal.tipoAnimal': regex },
           { 'animal.descripcion': regex },
           { 'animal.sexo': regex },
           { 'animal.ubicacion': regex },
           { 'animal.historiaClinica': regex },
-          { 'animal.edad': parseInt(string)},
-          { 'animal.pesoEnKg': parseInt(string) },
+          { 'animal.edad': regex},
+          { 'animal.pesoEnKg': regex },
         ]}).toArray();
       return array;
     } catch (error) {

@@ -42,6 +42,20 @@ const validacionLogin = (usuario) => {
   if (error) throw new ValidateError(error.details[0].message);
 };
 
+
+const validacionRecuperar = (usuario) => {
+  try {
+    const usuarioSchema = Joi.object({
+      mail: Joi.string().email().required(),
+      password: Joi.string().required().custom(validatePassword),
+    });
+    const { error } = usuarioSchema.validate(usuario);
+    if (error) throw new ValidateError(error.details[0].message);
+  } catch (error) {
+    throw error
+  }
+};
+
 const validacionEdit = (usuario) => {
   const usuarioSchema = Joi.object({
     imagenPerfil: Joi.string().allow(''),
@@ -58,4 +72,4 @@ const validacionEdit = (usuario) => {
   if (error) throw new ValidateError(error.details[0].message);
 };
 
-export default { validacionRegister, validacionLogin, validacionEdit };
+export default { validacionRegister, validacionLogin, validacionEdit,validacionRecuperar };

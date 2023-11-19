@@ -24,7 +24,6 @@ export default function ImagenUsuario({ onImageUpload }) {
 
             const data = await response.json();
             setUploadData(data);
-
             onImageUpload(data.secure_url);
 
 
@@ -78,4 +77,3 @@ export default function ImagenUsuario({ onImageUpload }) {
         </div>
       );
 }
-
