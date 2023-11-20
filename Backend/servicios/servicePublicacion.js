@@ -71,7 +71,7 @@ class ServicioPublicacion {
   async actualizarPublicacion(idPublicacion, nuevosDatos) {
     const id = new ObjectId(idPublicacion);
     try {
-      PublicRequest.validacionPublicacion(nuevosDatos);
+      //PublicRequest.validacionPublicacion(nuevosDatos);
       const publicacionActualizada = await this.repository.actualizarPublicacion(id, nuevosDatos);
       return publicacionActualizada;
     } catch (error) {
@@ -114,15 +114,15 @@ class ServicioPublicacion {
   async actualizarPublicacionesDelUsuario(user) {
     try {
       const array1 = await this.publicacionesUsuario(user._id);
-      console.log(array1 +" publicaciones usuario a modificar1");
+      console.log(array1.length +" publicaciones usuario a modificar1");
       if(array1.length > 0) {
-        for (let i = 0; i < array.length; i++) {
+        for (let i = 0; i < array1.length; i++) {
           const publicacion = array1[i];
           await this.actualizarPublicacion(publicacion._id, user);
         }
       }
       const array2 = await this.publicacionesUsuario(user._id);
-      console.log(array1 +" publicaciones usuario a modificar2");
+      console.log(array2.length +" publicaciones usuario a modificar2");
 
     } catch (error) {
       throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);
@@ -131,16 +131,10 @@ class ServicioPublicacion {
 
 
   async publicacionesUsuario(idUsuario) {
-    let id = ""
-    if(typeof idUsuario === "string") {
-      id = new ObjectId(idUsuario);
-    }else{
-      id = idUsuario
-    }
-    console.log(id + " id usuario");
     try {
 
-      const array = await this.repository.publicacionesUsuario(id);
+      const array = await this.repository.publicacionesUsuario(idUsuario);
+      console.log(array + " servico usuario metodo publicacionesusuario");
       return array.length > 0 ? array : { "message": "Sin publicaciones disponibles" };
     } catch (error) {
       throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);
