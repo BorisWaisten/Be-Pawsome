@@ -47,13 +47,13 @@ export default function PublicacionesList(publicacionesSearch) {
         ))}
       </ul>
 
-      <div className="flex justify-center p-20 m-4">
+      <div className="flex justify-center p-20 m-4 items-center">
         <label htmlFor="postsPerPage">Publicaciones por página: </label>
         <select
           id="postsPerPage"
           value={postsPerPage}
           onChange={handlePostsPerPageChange}
-          className="mx-2 border border-purple-500 text-purple-500 rounded-md"
+          className="mx-2 border border-purple-500 text-purple-500 rounded-md items-center justify-center"
         >
           <option value="9">9</option>
           <option value="12">12</option>
