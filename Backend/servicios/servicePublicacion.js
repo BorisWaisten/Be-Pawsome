@@ -11,29 +11,25 @@ class ServicioPublicacion {
     this.servicioUsuario = new ServicioUsuario();
   }
 
-  async crearPublicacion(req, res) {
-    const nuevaPublicacion = {
-      titulo: req.body.titulo,
-      usuario: req.body.usuario,
-      animal: req.body.animal,
-    };
-  
+  async crearPublicacion(nuevaPublicacion) {
     try {
+      console.log("hola 2");
+      console.log(nuevaPublicacion);
       // Contar las publicaciones del usuario
-      const countPublicaciones = await this.servicioPublicacion.contarPublicacionesPorUsuario(nuevaPublicacion.usuario);
+      // const countPublicaciones = await this.servicioPublicacion.contarPublicacionesPorUsuario(nuevaPublicacion.usuario);
   
-      // Verificar si el usuario tiene más de 10 publicaciones
-      if (countPublicaciones > 10) {
-        return res.status(403).json({ message: 'El usuario ha alcanzado el límite de 10 publicaciones.' });
-      }
+      // // Verificar si el usuario tiene más de 10 publicaciones
+      // if (countPublicaciones > 10) {
+      //   return { message: 'El usuario ha alcanzado el límite de 10 publicaciones.' };
+      // }
   
       // Crear la publicación si el usuario no ha alcanzado el límite
       const publicacionCreada = await this.repository.crearPublicacion(nuevaPublicacion);
   
       // Devolver la respuesta
-      return res.status(201).json(publicacionCreada);
+      return publicacionCreada;
     } catch (error) {
-      return res.status(400).json(error.message);
+      throw new PublicacionRequestError(`No se pudo crear la publicacion: ${nuevaPublicacion} ${error}`);
     }
   }
 
@@ -69,10 +65,10 @@ class ServicioPublicacion {
   }
 
   async actualizarPublicacion(idPublicacion, nuevosDatos) {
-    const id = new ObjectId(idPublicacion);
+    // const id = new ObjectId(idPublicacion);
     try {
       //PublicRequest.validacionPublicacion(nuevosDatos);
-      const publicacionActualizada = await this.repository.actualizarPublicacion(id, nuevosDatos);
+      const publicacionActualizada = await this.repository.actualizarPublicacion(idPublicacion.toString(), nuevosDatos);
       return publicacionActualizada;
     } catch (error) {
       throw new PublicacionRequestError("Error al actualizar publicación: " + error.message);
@@ -113,16 +109,19 @@ class ServicioPublicacion {
 
   async actualizarPublicacionesDelUsuario(user) {
     try {
-      const array1 = await this.publicacionesUsuario(user._id);
-      console.log(array1.length +" publicaciones usuario a modificar1");
-      if(array1.length > 0) {
-        for (let i = 0; i < array1.length; i++) {
-          const publicacion = array1[i];
+      //const array1 = await this.publicacionesUsuario(user._id);
+      console.log(user._id);
+      console.log(typeof user._id);
+      const array = await this.repository.publicacionesUsuario(user._id.toString()); 
+      console.log(array.length +" publicaciones usuario a modificar1");
+      if(array.length > 0) {
+        for (let i = 0; i < array.length; i++) {
+          const publicacion = array[i];
           await this.actualizarPublicacion(publicacion._id, user);
         }
       }
-      const array2 = await this.publicacionesUsuario(user._id);
-      console.log(array2.length +" publicaciones usuario a modificar2");
+      // const array2 = await this.publicacionesUsuario(user._id);
+      // console.log(array2.length +" publicaciones usuario a modificar2");
 
     } catch (error) {
       throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);
@@ -133,9 +132,8 @@ class ServicioPublicacion {
   async publicacionesUsuario(idUsuario) {
     try {
 
-      const array = await this.repository.publicacionesUsuario(idUsuario);
-      console.log(array + " servico usuario metodo publicacionesusuario");
-      return array.length > 0 ? array : { "message": "Sin publicaciones disponibles" };
+      const array = await this.repository.publicacionesUsuario(idUsuario); 
+      return array;
     } catch (error) {
       throw new PublicacionRequestError("No se encontraron publicaciones: " + error.message);
     }
