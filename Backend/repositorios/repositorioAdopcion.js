@@ -25,18 +25,15 @@ class RepositorioAdopcion {
 
   async crearAdopcion(adopcion) {
     try {
-      const nuevaAdopcion = new Adopcion(
-        adopcion.idUsuario,
-        adopcion.idAnimal,
-        adopcion.fechaAdopcion,
-        adopcion.estado
-      );
-
-      await this.adopcionesCollection.insertOne(nuevaAdopcion);
+      nuevaAdopcion= await this.adopcionesCollection.insertOne(adopcion);
       return nuevaAdopcion;
     } catch (error) {
       throw new DatabaseError("Error al crear adopción: " + error);
     }
+  }
+
+  async obtenerAdopciones() {
+    return await this.adopcionesCollection.find().toArray();
   }
 
   async obtenerAdopcionPorIdUsuario(idUsuario) {

@@ -56,6 +56,13 @@ export default function Navbar() {
           </Link>
         )}
       </div>
+      <div className=" items-center justify-center mx-60">
+        <Link href="/adopciones">
+          <button className="bg-gradient-to-r from-pink-500 to-blue-500 hover:from-blue-500 hover:to-pink-500 transition-all duration-500 ease-in-out text-white font-bold py-2 px-4 rounded transform hover:scale-110 w-full h-full">
+            Vidas salvadas
+          </button>
+        </Link>
+      </div>
       <div className="ml-auto flex space-x-2 p-2 m-2 ">
         {session ? (
           <button

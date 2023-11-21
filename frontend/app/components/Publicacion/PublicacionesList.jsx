@@ -26,25 +26,27 @@ export default function PublicacionesList(publicacionesSearch) {
     <>
       {publicaciones.length > 0 && (
         <div className="flex justify-center my-4">
-          {[...Array(Math.ceil(publicaciones.length / postsPerPage)).keys()].map(
-            (number) => (
-              <button
-                key={number}
-                onClick={() => paginate(number + 1)}
-                className={`mx-1 px-3 py-2 border border-purple-500 text-purple-500 rounded-md hover:bg-purple-500 hover:text-white transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110`}
-              >
-                {number + 1}
-              </button>
-            )
-          )}
+          {[
+            ...Array(Math.ceil(publicaciones.length / postsPerPage)).keys(),
+          ].map((number) => (
+            <button
+              key={number}
+              onClick={() => paginate(number + 1)}
+              className={`mx-1 px-3 py-2 border border-purple-500 text-purple-500 rounded-md hover:bg-purple-500 hover:text-white transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110`}
+            >
+              {number + 1}
+            </button>
+          ))}
         </div>
       )}
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10">
-        {currentPosts.map((publicacion) => (
-          <li key={publicacion._id} className="w-full h-full">
-            <CartaPublicacion publicacion={publicacion} />
-          </li>
-        ))}
+        {currentPosts.map((publicacion) =>
+          publicacion.estadoPublicacion === "ACTIVA" ? (
+            <li key={publicacion._id} className="w-full h-full">
+              <CartaPublicacion publicacion={publicacion} />
+            </li>
+          ) : null
+        )}
       </ul>
 
       <div className="flex justify-center p-20 m-4 items-center">

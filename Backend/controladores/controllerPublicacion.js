@@ -10,15 +10,18 @@ class ControllerPublicacion {
   }
 
   crearPublicacion = async (req, res) => {
+    try {
+    console.log(req.body.titulo);
     // crear publicacion recibiria del request un titulo y dos objetos a guardar, el usuario y el animal
     const nuevaPublicacion = {
       titulo: req.body.titulo,
       usuario: req.body.usuario,
       animal: req.body.animal,
     };
-    try {
+      console.log("hola");
       const publicacionCreada = await this.servicioPublicacion.crearPublicacion(nuevaPublicacion);
       // devolvemos el objeto publicacionCreada como respuesta
+      console.log("hola 3");
       res.status(201).json(publicacionCreada);
     } catch (error) {
       res.status(400).json(error.message);
@@ -121,6 +124,8 @@ class ControllerPublicacion {
       const dataAnimal = req.body.publicacion.animal;
       //guardo la publicacion en la casita del adoptante
       const publicacionGuardad = await this.servicioUsuario.guardarPublicacion(idAdoptante, req.body.publicacion);
+      const agregarInteresado= await this.servicioPublicacion.agregarInteresado(req.body.publicacion._id, idAdoptante);
+      console.log(agregarInteresado)
       if (!publicacionGuardad) {
         throw new PublicacionNotFoundError(`No se pudo guardar la publicacion en casita`);
       }
@@ -128,6 +133,8 @@ class ControllerPublicacion {
       const users = await this.servicioPublicacion.solicitar(idAdoptante, idOferente);
       emailAdoption(users, dataAnimal, fechaCreacion);
       res.status(200).json({"message:" : `Solicitud enviada a ${users[1].mail}`})
+      
+
     } catch (error) {
       res.status(404).json(error.message);
     }
