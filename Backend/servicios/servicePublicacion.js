@@ -12,8 +12,9 @@ class ServicioPublicacion {
   }
 
 
-  async agregarInteresado(idPublicacion, idUsuario) {
+  async agregarInteresado(idUsuario, idPublicacion) {
     try{
+      console.log(idPublicacion);
       const publicacionActualizada = await this.repository.agregarInteresado(idPublicacion, idUsuario);
       return publicacionActualizada;
     }catch{

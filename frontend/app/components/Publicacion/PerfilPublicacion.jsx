@@ -27,10 +27,15 @@ function PerfilPublicacion({ publicacion }) {
 
   async function agregarACasita() {
     try {
+      const validarAgregar=false;
       const datos = {
         idAdoptante: session?.user?.userLogueado._id,
         publicacion: publicacion,
       };
+      const casita = await axios.get(
+        "http://localhost:5000/casita/obtenerPublicaciones"
+      );
+      
       const mensajeSolicitud = await axios.post(
         "http://localhost:5000/publicacion/solicitar",
         datos

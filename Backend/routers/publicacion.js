@@ -18,7 +18,7 @@ class RouterPublicacion {
     this.router.get("/publicacionesUsuario/:idUsuario", this.controlador.publicacionesUsuario);
     this.router.get("/publicaciones", this.controlador.publicaciones);
     this.router.get("/buscar/:query", this.controlador.publicacionesPorString); 
-    this.router.post("/solicitar", this.controlador.solicitar);
+    this.router.post("/solicitar/", this.controlador.solicitar);
     return this.router;
   }
 }
