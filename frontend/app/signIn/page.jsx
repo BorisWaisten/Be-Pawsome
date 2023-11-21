@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import API_BASE_URL from "./config.jsx"
+import API_BASE_URL from "../config";
 
 const login = async (datos) => {
   try {
