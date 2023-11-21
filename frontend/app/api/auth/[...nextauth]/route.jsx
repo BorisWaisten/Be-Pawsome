@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import API_BASE_URL from "../../../config"
 
 const handler = NextAuth({
   providers:

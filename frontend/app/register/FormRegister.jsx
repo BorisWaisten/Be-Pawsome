@@ -2,6 +2,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import API_BASE_URL from "./config.jsx"
 //Ojo recordar que estoy usando el Router de Next/navigation por ser app/router
 
 function Registrar() {

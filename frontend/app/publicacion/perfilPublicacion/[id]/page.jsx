@@ -5,6 +5,7 @@ import PerfilPublicacion from "../../../components/Publicacion/PerfilPublicacion
 import { useParams } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import API_BASE_URL from "./config.jsx"
 
 export default function PerfilPublicacionPage() {
     const { id } = useParams();
