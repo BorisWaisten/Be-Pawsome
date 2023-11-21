@@ -25,8 +25,8 @@ class RepositorioAdopcion {
 
   async crearAdopcion(adopcion) {
     try {
-      nuevaAdopcion= await this.adopcionesCollection.insertOne(adopcion);
-      return nuevaAdopcion;
+      await this.adopcionesCollection.insertOne(adopcion);
+      return adopcion;
     } catch (error) {
       throw new DatabaseError("Error al crear adopción: " + error);
     }

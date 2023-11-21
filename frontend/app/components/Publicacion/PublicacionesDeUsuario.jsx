@@ -125,7 +125,6 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
                                 finalizarAdopcion(
                                   interesado._id,
                                   publicacion._id,
-                                  publicacion.animal._id
                                 )
                               }
                             >

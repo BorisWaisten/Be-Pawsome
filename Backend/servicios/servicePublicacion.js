@@ -13,8 +13,9 @@ class ServicioPublicacion {
 
 
   async agregarInteresado(idPublicacion, idUsuario) {
+    const objectId = new ObjectId(idPublicacion);
     try{
-      const publicacionActualizada = await this.repository.agregarInteresado(idPublicacion, idUsuario);
+      const publicacionActualizada = await this.repository.agregarInteresado(objectId, idUsuario);
       return publicacionActualizada;
     }catch{
       throw new PublicacionRequestError("Error al agregar interesado: No fue posible agregarlo ");

@@ -8,8 +8,8 @@ class ControllerAdopcion {
 
   crearAdopcion = async (req, res) => {
     
-    const idPublicacion=req.publicacion
-    const idAdoptante=req.idInteresado
+    const idPublicacion=req.body.idPublicacion
+    const idAdoptante=req.body.idInteresado
 
     console.log("datos para adopcion")
     console.log(idPublicacion + "id publicacion")
