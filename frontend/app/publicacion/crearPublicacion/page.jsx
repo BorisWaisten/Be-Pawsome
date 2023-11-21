@@ -80,7 +80,7 @@ const CrearPublicacion = () => {
       router.push("/");
       // Puedes manejar la respuesta del servidor según tus necesidades.
     } catch (error) {
-      console.error('Error al crear la publicación:', error);
+      console.error('Error al crear la publicación');
       // Puedes manejar los errores de la solicitud aquí.
     }
   };

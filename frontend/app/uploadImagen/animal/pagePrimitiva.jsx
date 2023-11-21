@@ -29,7 +29,7 @@ function ImagenAnimal({ onImageUpload }) {
         onImageUpload(data.secure_url);
       }
     } catch (error) {
-      console.error('Error en la carga de la imagen:', error);
+      console.error('Error en la carga de la imagen');
       setError('Error en la carga de la imagen. Por favor, inténtalo de nuevo.');
     }
   };

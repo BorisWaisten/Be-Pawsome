@@ -13,7 +13,6 @@ class ServicioPublicacion {
 
   async crearPublicacion(nuevaPublicacion) {
     try {
-      console.log("hola 2");
       console.log(nuevaPublicacion);
       // Contar las publicaciones del usuario
       // const countPublicaciones = await this.servicioPublicacion.contarPublicacionesPorUsuario(nuevaPublicacion.usuario);

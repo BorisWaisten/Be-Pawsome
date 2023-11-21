@@ -18,10 +18,8 @@ class ControllerPublicacion {
       usuario: req.body.usuario,
       animal: req.body.animal,
     };
-      console.log("hola");
       const publicacionCreada = await this.servicioPublicacion.crearPublicacion(nuevaPublicacion);
       // devolvemos el objeto publicacionCreada como respuesta
-      console.log("hola 3");
       res.status(201).json(publicacionCreada);
     } catch (error) {
       res.status(400).json(error.message);
@@ -117,9 +115,11 @@ class ControllerPublicacion {
   // endpoint que responde al boton de 'Solicita Adopcion' 
   solicitar = async (req, res) => {
     try {
+      console.log(req.body);
       const idAdoptante = req.body.idAdoptante;
       const idOferente = req.body.publicacion.usuario._id;
       const fechaCreacion = req.body.publicacion.fechaCreacion;
+      const publicacion = req.body.publicacion
       //dataAnimal es el objeto completo del animal, se envia asi para sacar sus propiedades para enviarselas al oferente por mail
       const dataAnimal = req.body.publicacion.animal;
       //guardo la publicacion en la casita del adoptante
@@ -130,6 +130,8 @@ class ControllerPublicacion {
       // se guardara un array con dos users, en la posicion 0 sera el de la persona interesada en solicitar y en la posicion 1 el del oferente
       const users = await this.servicioPublicacion.solicitar(idAdoptante, idOferente);
       emailAdoption(users, dataAnimal, fechaCreacion);
+      //Aca guardo al usuario interesado en la lista de interesados de la publicacion
+      publicacion.interesados.push(users[0]);
       res.status(200).json({"message:" : `Solicitud enviada a ${users[1].mail}`})
     } catch (error) {
       res.status(404).json(error.message);

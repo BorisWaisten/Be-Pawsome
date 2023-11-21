@@ -12,8 +12,12 @@ const ESTADOPUBLICACION = {
       this.titulo = titulo;
       this.usuario = usuario;
       this.animal = animal;
+      this.interesados = [];
     }
 
+    nuevoInteresado(usuario){
+      this.interesados.push(usuario);
+    }
     
     calcularFechaCaducidad() {
       const fechaCreacion = new Date(this.fechaCreacion);

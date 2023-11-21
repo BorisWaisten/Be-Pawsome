@@ -28,7 +28,7 @@ export default function ImagenUsuario({ onImageUpload }) {
 
 
         } catch (error) {
-            console.error('Error en la carga de la imagen:', error);
+            console.error('Error en la carga de la imagen');
             setError('Error en la carga de la imagen. Por favor, reintenta de nuevo.');
         }        
     }

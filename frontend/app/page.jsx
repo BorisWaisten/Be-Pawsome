@@ -33,7 +33,7 @@ export default function page() {
 
         setDatosCargados(true);
       } catch (error) {
-        console.error("Error al obtener datos:", error);
+        console.error("Error al obtener datos");
       }
     };
 
@@ -55,7 +55,7 @@ export default function page() {
         setPublicaciones(publicacionesBuscadas);
       }
     } catch (error) {
-      console.error("Error al obtener datos de búsqueda:", error);
+      console.error("Error al obtener datos de búsqueda");
     }
   };
 
