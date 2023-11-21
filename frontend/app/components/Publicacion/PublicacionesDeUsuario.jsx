@@ -38,7 +38,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
         "http://localhost:5000/adopcion/crear",
         datos
       );
-      window.location.reload();
+      
     } catch (error) {
       console.error(error);
     } finally {
@@ -56,7 +56,6 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
       await axios.delete(
         `http://localhost:5000/publicacion/eliminar/${publicacionId}`
       );
-      window.location.reload();
     } catch (error) {
       console.error(error);
     } finally {
