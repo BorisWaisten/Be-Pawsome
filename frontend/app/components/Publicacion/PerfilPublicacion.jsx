@@ -84,7 +84,6 @@ function PerfilPublicacion({ publicacion }) {
         >
           Quiero adoptarlo
         </button>
-
         {modalVisible && (
           <div className="modal fixed top-0 left-0 w-full h-full flex items-center justify-center">
             <p>¡Adopción solicitada!</p>
