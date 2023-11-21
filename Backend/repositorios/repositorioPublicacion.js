@@ -24,6 +24,19 @@ class RepositorioPublicacion {
     }
   }
 
+  async agregarInteresado(idPublicacion, idUsuario) {
+    try {
+      const publicacionActualizada = await this.publicacionesCollection.findOneAndUpdate(
+        { _id: idPublicacion },
+        { $push: { interesados: idUsuario } },
+        { returnOriginal: false }
+      );
+      return publicacionActualizada;
+    } catch (error) {
+      throw new DatabaseError("Error al agregar interesado: " + error);
+    }
+  }
+
   async crearPublicacion(publicacion) {
     try {
       const nuevaPublicacion = new Publicacion(

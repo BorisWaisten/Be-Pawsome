@@ -11,6 +11,16 @@ class ServicioPublicacion {
     this.servicioUsuario = new ServicioUsuario();
   }
 
+
+  async agregarInteresado(idPublicacion, idUsuario) {
+    try{
+      const publicacionActualizada = await this.repository.agregarInteresado(idPublicacion, idUsuario);
+      return publicacionActualizada;
+    }catch{
+      throw new PublicacionRequestError("Error al agregar interesado: No fue posible agregarlo ");
+    }
+
+  }
   async crearPublicacion(nuevaPublicacion) {
     try {
       console.log("hola 2");
