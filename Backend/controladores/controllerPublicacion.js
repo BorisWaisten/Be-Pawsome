@@ -127,8 +127,15 @@ class ControllerPublicacion {
       if (!publicacionGuardad) {
         throw new PublicacionNotFoundError(`No se pudo guardar la publicacion en casita`);
       }
+      const agregarInteresado= await this.servicioPublicacion.agregarInteresado(req.body.publicacion._id, idAdoptante);
+      if (!agregarInteresado) {
+        throw new PublicacionRequestError(`No se pudo agregar el interesado en publicacion`);  
+      }  
       // se guardara un array con dos users, en la posicion 0 sera el de la persona interesada en solicitar y en la posicion 1 el del oferente
       const users = await this.servicioPublicacion.solicitar(idAdoptante, idOferente);
+      if (!users) {
+        throw new PublicacionRequestError(`No se pudo solicitar la publicacion`);
+      }
       emailAdoption(users, dataAnimal, fechaCreacion);
       //Aca guardo al usuario interesado en la lista de interesados de la publicacion
       publicacion.interesados.push(users[0]);
