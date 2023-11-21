@@ -1,12 +1,21 @@
 import AdopcionRepository from "../repositorios/repositorioAdopcion.js";
 import { AdopcionRequestError } from "../errores.js";
+import Adopcion from "../modelos/modeloAdopcion.js";
 
 class ServicioAdopcion {
   constructor() {
     this.repository = new AdopcionRepository();
   }
 
-  async crearAdopcion(adopcion) {
+  async crearAdopcion(idPublicacion,idAdoptante) {
+
+    const publicacion = await this.repository.obtenerPublicacionPorId(idPublicacion);
+    const adoptante = await this.repository.obtenerUsuarioPorId(idAdoptante);
+    const oferente = await this.repository.obtenerUsuarioPorId(publicacion.animal.oferete._id);
+
+    const adopcion = new Adopcion(oferente, adoptante, publicacion);
+    
+
     try {
       const nuevaAdopcion = await this.repository.crearAdopcion(adopcion);
       return nuevaAdopcion;
@@ -15,6 +24,14 @@ class ServicioAdopcion {
     }
   }
 
+  async obtenerAdopciones() {
+    try {
+      const adopciones = await this.repository.obtenerAdopciones();
+      return adopciones;
+    } catch (error) {
+      throw new AdopcionRequestError("Error al obtener adopciones: " + error.message);
+    }
+  }
   async obtenerAdopcionPorUsuario(idUsuario) {
     try {
       const adopcion = await this.repository.obtenerAdopcionPorIdUsuario(idUsuario);

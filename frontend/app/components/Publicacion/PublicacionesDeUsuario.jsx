@@ -28,6 +28,25 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
     }
   };
 
+  const finalizarAdopcion = async (interesadoId,publicacionId) => {
+    try {
+      const datos = {
+        idInteresado: interesadoId,
+        idPublicacion: publicacionId,
+      };
+      await axios.post(
+        "http://localhost:5000/adopcion/crear",
+        datos
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      // Limpiar la confirmación después de eliminar o cancelar
+      setConfirmacionEliminar(null);
+    }
+  }
+
   const confirmarEliminar = (publicacionId) => {
     setConfirmacionEliminar(publicacionId);
   };
@@ -97,7 +116,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
                           {interesado.localidad}
                           <button
                             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
-                            onClick={() => finalizarAdopcion(interesado._id)}
+                            onClick={() => finalizarAdopcion(interesado._id,publicacion._id,publicacion.animal._id)}
                           >
                             Concretar adopción
                           </button>
