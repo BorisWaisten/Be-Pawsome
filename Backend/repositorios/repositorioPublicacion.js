@@ -2,8 +2,6 @@ import ConexionMongo from "./conexionMongoDb.js";
 import Publicacion from "../modelos/ModeloPublicacion.js";
 import { DatabaseError } from "../errores.js";
 import { ObjectId } from 'mongodb';
-import RepositorioUser from "./repositorioUser.js";
-
 
 class RepositorioPublicacion {
   constructor() {
@@ -28,16 +26,11 @@ class RepositorioPublicacion {
 
   async agregarInteresado(idPublicacion, idUsuario) {
     try {
-      console.log(idUsuario)
-      console.log("corte");
-      
       const publicacionActualizada = await this.publicacionesCollection.findOneAndUpdate(
-        { _id: new ObjectId(idPublicacion) },
-        { $addToSet: { interesados: idUsuario } },
+        { _id: idPublicacion },
+        { $push: { interesados: idUsuario } },
         { returnOriginal: false }
       );
-      console.log(publicacionActualizada)
-
       return publicacionActualizada;
     } catch (error) {
       throw new DatabaseError("Error al agregar interesado: " + error);
