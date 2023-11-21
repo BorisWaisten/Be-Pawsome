@@ -28,24 +28,20 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
     }
   };
 
-  const finalizarAdopcion = async (interesadoId,publicacionId) => {
+  const finalizarAdopcion = async (interesadoId, publicacionId) => {
     try {
       const datos = {
         idInteresado: interesadoId,
         idPublicacion: publicacionId,
       };
-      await axios.post(
-        "http://localhost:5000/adopcion/crear",
-        datos
-      );
-      
+      await axios.post("http://localhost:5000/adopcion/crear", datos);
     } catch (error) {
       console.error(error);
     } finally {
       // Limpiar la confirmación después de eliminar o cancelar
       setConfirmacionEliminar(null);
     }
-  }
+  };
 
   const confirmarEliminar = (publicacionId) => {
     setConfirmacionEliminar(publicacionId);
@@ -100,26 +96,38 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
                   interesadosDetails.map(() => (
                     <div className="w-full lg:w-1/5 mx-auto">
                       {interesadosDetails.map((interesado) => (
-                        <div className="bg-white shadow rounded-lg p-6 my-4">
-                          <p className="text-gray-700 font-semibold">Nombre:</p>
-                          {interesado.nombre}
-                          <p className="text-gray-700 font-semibold">
-                            Teléfono:
-                          </p>
-                          {interesado.celular}
-                          <p className="text-gray-700 font-semibold">Email: </p>
-                          {interesado.mail}
-                          <p className="text-gray-700 font-semibold">
-                            Ubicación:
-                          </p>
-                          {interesado.localidad}
-                          <button
-                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
-                            onClick={() => finalizarAdopcion(interesado._id,publicacion._id,publicacion.animal._id)}
-                          >
-                            Concretar adopción
-                          </button>
-                        </div>
+                        <li key={interesado._id}>
+                          <div className="bg-white shadow rounded-lg p-6 my-4">
+                            <p className="text-gray-700 font-semibold">
+                              Nombre:
+                            </p>
+                            {interesado.nombre}
+                            <p className="text-gray-700 font-semibold">
+                              Teléfono:
+                            </p>
+                            {interesado.celular}
+                            <p className="text-gray-700 font-semibold">
+                              Email:{" "}
+                            </p>
+                            {interesado.mail}
+                            <p className="text-gray-700 font-semibold">
+                              Ubicación:
+                            </p>
+                            {interesado.localidad}
+                            <button
+                              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
+                              onClick={() =>
+                                finalizarAdopcion(
+                                  interesado._id,
+                                  publicacion._id,
+                                  publicacion.animal._id
+                                )
+                              }
+                            >
+                              Concretar adopción
+                            </button>
+                          </div>
+                        </li>
                       ))}
                     </div>
                   ))}

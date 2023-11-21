@@ -11,6 +11,9 @@ class ControllerAdopcion {
     const idPublicacion=req.publicacion
     const idAdoptante=req.idInteresado
 
+    console.log("datos para adopcion")
+    console.log(idPublicacion + "id publicacion")
+    console.log(idAdoptante + "id adoptante")
     try {
       const adopcionCreada = await this.servicioAdopcion.crearAdopcion(idPublicacion,idAdoptante);
       res.status(201).json(adopcionCreada);
