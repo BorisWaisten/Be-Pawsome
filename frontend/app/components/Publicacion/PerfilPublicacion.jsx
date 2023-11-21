@@ -32,7 +32,7 @@ function PerfilPublicacion({ publicacion }) {
         publicacion: publicacion,
       };
       const mensajeSolicitud = await axios.post(
-        "http://localhost:5000/publicacion/solicitar",
+        `${API_BASE_URL}/publicacion/solicitar`,
         datos
       );
       return mensajeSolicitud;

@@ -12,7 +12,7 @@ export default function FormEnvioLink() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/usuarios/changePassword",
+        `${API_BASE_URL}usuarios/changePassword`,
         nuevosDatos
       );
       console.log(response);

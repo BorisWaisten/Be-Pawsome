@@ -13,7 +13,7 @@ const Casita = () => {
 
     const cargarDatos = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/usuarios/${idUsuario}`);
+            const response = await axios.get(`${API_BASE_URL}/usuarios/${idUsuario}`);
             const usuarioData = response.data;
             
             if (usuarioData) {
