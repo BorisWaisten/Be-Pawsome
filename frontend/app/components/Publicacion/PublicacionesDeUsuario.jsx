@@ -3,6 +3,30 @@ import axios from "axios";
 
 const PublicacionesDeUsuario = ({ publicaciones }) => {
   const [confirmacionEliminar, setConfirmacionEliminar] = useState(null);
+  const [interesadosDetails, setInteresadosDetails] = useState([]);
+  const [showInteresados, setShowInteresados] = useState(false);
+
+  const getInteresadosDetails = async (interesadosIds) => {
+    const details = await Promise.all(
+      interesadosIds.map(async (id) => {
+        const response = await axios.get(
+          `http://localhost:5000/usuarios/${id}`
+        );
+        return response.data;
+      })
+    );
+    setInteresadosDetails(details);
+    console.log("mis interesados ", interesadosDetails);
+  };
+
+  const handleVerInteresadosClick = (interesadosIds) => {
+    if (showInteresados) {
+      setShowInteresados(false);
+    } else {
+      getInteresadosDetails(interesadosIds);
+      setShowInteresados(true);
+    }
+  };
 
   const confirmarEliminar = (publicacionId) => {
     setConfirmacionEliminar(publicacionId);
@@ -48,35 +72,65 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
                 </div>
                 <button
                   className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={() => confirmarEliminar(publicacion._id)}
+                  onClick={() =>
+                    handleVerInteresadosClick(publicacion.interesados)
+                  }
                 >
-                  Ver interesados + (publicacion.id.interesados.length)
+                  Ver interesados ( {publicacion.interesados.length} )
                 </button>
+                {showInteresados &&
+                  interesadosDetails.map(() => (
+                    <div className="w-full lg:w-1/5 mx-auto">
+                      {interesadosDetails.map((interesado) => (
+                        <div className="bg-white shadow rounded-lg p-6 my-4">
+                          <p className="text-gray-700 font-semibold">Nombre:</p>
+                          {interesado.nombre}
+                          <p className="text-gray-700 font-semibold">
+                            Teléfono:
+                          </p>
+                          {interesado.celular}
+                          <p className="text-gray-700 font-semibold">Email: </p>
+                          {interesado.mail}
+                          <p className="text-gray-700 font-semibold">
+                            Ubicación:
+                          </p>
+                          {interesado.localidad}
+                          <button
+                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
+                            onClick={() => finalizarAdopcion(interesado._id)}
+                          >
+                            Concretar adopción
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
                 <button
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded relative"
                   onClick={() => confirmarEliminar(publicacion._id)}
                 >
                   Eliminar
                 </button>
-                  {/* Confirmación de eliminación */}
-                  {confirmacionEliminar === publicacion._id && (
-                    <div className=" p-4 rounded shadow-lg">
-                      <p className=" font-extrabold text-justify p-1 mb-2">
-                        ¿Estás seguro de que deseas eliminar esta publicación?
-                      </p>
-                      <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
-                        onClick={() =>
-                          eliminarPublicacion(confirmacionEliminar)
-                        }
-                      >
-                        Sí
-                      </button>
-                      <button className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mb-2" onClick={() => setConfirmacionEliminar(null)}>
-                        No
-                      </button>
-                    </div>
-                  )}
-               
+                {/* Confirmación de eliminación */}
+                {confirmacionEliminar === publicacion._id && (
+                  <div className=" p-4 rounded shadow-lg">
+                    <p className=" font-extrabold text-justify p-1 mb-2">
+                      ¿Estás seguro de que deseas eliminar esta publicación?
+                    </p>
+                    <button
+                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+                      onClick={() => eliminarPublicacion(confirmacionEliminar)}
+                    >
+                      Sí
+                    </button>
+                    <button
+                      className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mb-2"
+                      onClick={() => setConfirmacionEliminar(null)}
+                    >
+                      No
+                    </button>
+                  </div>
+                )}
               </div>
             </li>
           ))}
