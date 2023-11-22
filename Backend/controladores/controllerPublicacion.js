@@ -118,16 +118,15 @@ class ControllerPublicacion {
   solicitar = async (req, res) => {
     try {
       const idAdoptante = req.body.idAdoptante;
-      const idOferente = req.body.publicacion.usuario._id;
+      const idOferente = req.body.publicacion.idUsuario;
       const fechaCreacion = req.body.publicacion.fechaCreacion;
-      //dataAnimal es el objeto completo del animal, se envia asi para sacar sus propiedades para enviarselas al oferente por mail
-      const dataAnimal = req.body.publicacion.animal;
-      //guardo la publicacion en la casita del adoptante
-      const publicacionGuardad = await this.servicioUsuario.guardarPublicacion(idAdoptante, req.body.publicacion);
-      if (!publicacionGuardad) {
+      const idAnimal = req.body.publicacion.idAnimal;
+      const publicacionGuardada = await this.servicioUsuario.guardarPublicacion(idAdoptante, req.body.publicacion);
+      if (!publicacionGuardada) {
         throw new PublicacionNotFoundError(`No se pudo guardar la publicacion en casita`);
       }
-      const agregarInteresado= await this.servicioPublicacion.agregarInteresado(req.body.publicacion._id, idAdoptante);
+      const agregarInteresado= await this.servicioPublicacion.agregarInteresado(publicacionGuardada._id, idAdoptante);
+      console.log(agregarInteresado);
       if (!agregarInteresado) {
         throw new PublicacionRequestError(`No se pudo agregar el interesado en publicacion`);  
       }  
@@ -136,7 +135,7 @@ class ControllerPublicacion {
       if (!users) {
         throw new PublicacionRequestError(`No se pudo solicitar la publicacion`);
       }
-      emailAdoption(users, dataAnimal, fechaCreacion);
+      emailAdoption(users, idAnimal, fechaCreacion);
       res.status(200).json({"message:" : `Solicitud enviada a ${users[1].mail}`})
     } catch (error) {
       res.status(404).json(error.message);
