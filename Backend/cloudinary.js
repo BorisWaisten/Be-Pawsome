@@ -14,6 +14,7 @@ const uploadImages = async (images) => {
     if (!Array.isArray(images)) {
         images = [images]; // Convierte a un array si no es un array
       }
+      
     const uploadPromises = images.map(async (image) => {
       const result = await cloudinary.uploader.upload(image);
       return result;
