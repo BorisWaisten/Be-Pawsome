@@ -17,7 +17,7 @@ export default function page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/publicacion/publicaciones");
+        const response = await fetch(`${API_BASE_URL}/publicacion/publicaciones`);
         const publicacionesData = await response.json();
 
         const idUsuario = session?.user?.userLogueado?._id;
@@ -43,7 +43,7 @@ export default function page() {
   const handleSearch = async (query) => {
     try {
       setQuery(query);
-      const response = await fetch(`http://localhost:5000/publicacion/buscar/${query}`);
+      const response = await fetch(`${API_BASE_URL}/publicacion/buscar/${query}`);
       const publicacionesBuscadas = await response.json();
 
       const idUsuario = session?.user?.userLogueado?._id;

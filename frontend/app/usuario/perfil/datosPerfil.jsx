@@ -24,19 +24,19 @@ export default function Usuario() {
       // Eliminar publicaciones del usuario
 
       const publicacionesUsuario = await axios.get(
-        `http://localhost:5000/publicacion/publicacionesUsuario/${idUsuario}`
+        `${API_BASE_URL}/publicacion/publicacionesUsuario/${idUsuario}`
       );
 
       if (
         publicacionesUsuario.data.message !== "Sin publicaciones disponibles"
       ) {
         await axios.delete(
-          `http://localhost:5000/publicacion/usuario/${idUsuario}`
+          `${API_BASE_URL}publicacion/usuario/${idUsuario}`
         );
       }
 
       // Eliminar el usuario
-      await axios.delete(`http://localhost:5000/usuarios/${idUsuario}`);
+      await axios.delete(`${API_BASE_URL}/usuarios/${idUsuario}`);
 
       // Cierra el modal de confirmación después de eliminar el usuario y sus publicaciones
       setConfirmarEliminacion(false);
@@ -96,7 +96,7 @@ export default function Usuario() {
     // Guardar la imagen en el backend al mismo tiempo
     try {
       const usuarioEditado = await axios.put(
-        `http://localhost:5000/usuarios/editarImagen/${idUsuario}`,
+        `${API_BASE_URL}/usuarios/editarImagen/${idUsuario}`,
         {
           imagenPerfil: secureUrl,
         }
@@ -131,7 +131,7 @@ export default function Usuario() {
       } = nuevosDatos;
 
       const usuarioEditado = await axios.put(
-        `http://localhost:5000/usuarios/${idUsuario}`,
+        `${API_BASE_URL}/usuarios/${idUsuario}`,
         datosNecesarios
       );
       // Esta ruta depende de tu configuración en next-auth

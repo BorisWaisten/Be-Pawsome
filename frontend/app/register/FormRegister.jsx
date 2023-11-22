@@ -24,7 +24,7 @@ function Registrar() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/usuarios/register",
+        `${API_BASE_URL}/usuarios/register`,
         formData,
         {
           headers: {

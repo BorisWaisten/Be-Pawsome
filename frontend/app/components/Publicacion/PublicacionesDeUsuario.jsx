@@ -14,7 +14,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
     const details = await Promise.all(
       interesadosIds.map(async (id) => {
         const response = await axios.get(
-          `http://localhost:5000/usuarios/${id}`
+          `${API_BASE_URL}/usuarios/${id}`
         );
         return response.data;
       })
@@ -38,7 +38,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
         idInteresado: interesadoId,
         idPublicacion: publicacionId,
       };
-      await axios.post("http://localhost:5000/adopcion/crear", datos);
+      await axios.post(`${API_BASE_URL}/adopcion/crear`, datos);
     } catch (error) {
       console.error(error);
     } finally {
@@ -58,7 +58,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
   const eliminarPublicacion = async (publicacionId) => {
     try {
       await axios.delete(
-        `http://localhost:5000/publicacion/eliminar/${publicacionId}`
+        `${API_BASE_URL}/publicacion/eliminar/${publicacionId}`
       );
 <<<<<<< HEAD
 =======
