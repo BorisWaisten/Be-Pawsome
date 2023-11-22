@@ -10,7 +10,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
     const details = await Promise.all(
       interesadosIds.map(async (id) => {
         const response = await axios.get(
-          `http://localhost:5000/usuarios/${id}`
+          `https://bepawsome-e858795261d3.herokuapp.com/usuarios/${id}`
         );
         return response.data;
       })
@@ -34,7 +34,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
         idInteresado: interesadoId,
         idPublicacion: publicacionId,
       };
-      await axios.post("http://localhost:5000/adopcion/crear", datos);
+      await axios.post("https://bepawsome-e858795261d3.herokuapp.com/adopcion/crear", datos);
     } catch (error) {
       console.error(error);
     } finally {
@@ -49,7 +49,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
 
   const eliminarPublicacion = async (publicacionId) => {
     try {
-      await axios.delete(`http://localhost:5000/publicacion/eliminar/${publicacionId}`);
+      await axios.delete(`https://bepawsome-e858795261d3.herokuapp.com/publicacion/eliminar/${publicacionId}`);
     } catch (error) {
       console.error(error);
     } finally {

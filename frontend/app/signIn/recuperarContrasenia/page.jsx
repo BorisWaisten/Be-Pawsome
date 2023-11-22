@@ -13,7 +13,7 @@ export default function FormEnvioLink() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/usuarios/changePassword",
+        "https://bepawsome-e858795261d3.herokuapp.com/usuarios/changePassword",
         nuevosDatos
       );
       console.log(response);

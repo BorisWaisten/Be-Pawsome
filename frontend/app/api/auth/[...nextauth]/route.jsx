@@ -23,7 +23,7 @@ const handler = NextAuth({
         async authorize(credentials, req) {
           // Add logic here to look up the user from the credentials supplied
 
-          const res = await fetch("http://localhost:5000/usuarios/login", {
+          const res = await fetch("https://bepawsome-e858795261d3.herokuapp.com/usuarios/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

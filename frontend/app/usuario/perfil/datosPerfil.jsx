@@ -24,19 +24,19 @@ export default function Usuario() {
       // Eliminar publicaciones del usuario
 
       const publicacionesUsuario = await axios.get(
-        `http://localhost:5000/publicacion/publicacionesUsuario/${idUsuario}`
+        `https://bepawsome-e858795261d3.herokuapp.com/publicacion/publicacionesUsuario/${idUsuario}`
       );
 
       if (
         publicacionesUsuario.data.message !== "Sin publicaciones disponibles"
       ) {
         await axios.delete(
-          `http://localhost:5000/publicacion/usuario/${idUsuario}`
+          `https://bepawsome-e858795261d3.herokuapp.com/publicacion/usuario/${idUsuario}`
         );
       }
 
       // Eliminar el usuario
-      await axios.delete(`http://localhost:5000/usuarios/${idUsuario}`);
+      await axios.delete(`https://bepawsome-e858795261d3.herokuapp.com/usuarios/${idUsuario}`);
 
       // Cierra el modal de confirmación después de eliminar el usuario y sus publicaciones
       setConfirmarEliminacion(false);
@@ -96,7 +96,7 @@ export default function Usuario() {
     // Guardar la imagen en el backend al mismo tiempo
     try {
       const usuarioEditado = await axios.put(
-        `http://localhost:5000/usuarios/editarImagen/${idUsuario}`,
+        `https://bepawsome-e858795261d3.herokuapp.com/usuarios/editarImagen/${idUsuario}`,
         {
           imagenPerfil: secureUrl,
         }
@@ -131,7 +131,7 @@ export default function Usuario() {
       } = nuevosDatos;
 
       const usuarioEditado = await axios.put(
-        `http://localhost:5000/usuarios/${idUsuario}`,
+        `https://bepawsome-e858795261d3.herokuapp.com/usuarios/${idUsuario}`,
         datosNecesarios
       );
       // Esta ruta depende de tu configuración en next-auth

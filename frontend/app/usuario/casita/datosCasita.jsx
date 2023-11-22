@@ -14,8 +14,8 @@ const Casita = () => {
 
     const cargarDatos = async () => {
         try {
-            const responseUsuario = await axios.get(`http://localhost:5000/usuarios/${idUsuario}`);
-            const responsePublicacion = await axios.get(`http://localhost:5000/publicacion/publicaciones`);
+            const responseUsuario = await axios.get(`https://bepawsome-e858795261d3.herokuapp.com/usuarios/${idUsuario}`);
+            const responsePublicacion = await axios.get(`https://bepawsome-e858795261d3.herokuapp.com/publicacion/publicaciones`);
             const usuarioData = responseUsuario.data;
             const publicacionesData= responsePublicacion.data;
             

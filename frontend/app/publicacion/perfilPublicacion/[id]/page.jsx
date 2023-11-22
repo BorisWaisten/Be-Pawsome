@@ -14,7 +14,7 @@ export default function PerfilPublicacionPage() {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`http://localhost:5000/publicacion/obtener/${id}`);
+          const response = await axios.get(`https://bepawsome-e858795261d3.herokuapp.com/publicacion/obtener/${id}`);
           setPublicacion(response.data);
         } catch (error) {
           console.error('Error fetching publicacion:', error);

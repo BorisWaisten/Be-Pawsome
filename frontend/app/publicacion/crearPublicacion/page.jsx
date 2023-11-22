@@ -66,7 +66,7 @@ const CrearPublicacion = () => {
           oferente: usuario,
       }
 
-      const animalResponse = await axios.post("http://localhost:5000/animal/crear", datosAnimal);
+      const animalResponse = await axios.post("https://bepawsome-e858795261d3.herokuapp.com/animal/crear", datosAnimal);
      
       const datosPublicacion = {
           titulo: formData.titulo,
@@ -75,7 +75,7 @@ const CrearPublicacion = () => {
       }
 
       // Luego, utilizar la respuesta del animal para crear la publicación
-      const responsePublicacion = await axios.post("http://localhost:5000/publicacion/crear", datosPublicacion);
+      const responsePublicacion = await axios.post("https://bepawsome-e858795261d3.herokuapp.com/publicacion/crear", datosPublicacion);
       
       console.log('Publicación creada:', responsePublicacion);
       router.push("/");

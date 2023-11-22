@@ -8,7 +8,7 @@ function AdopcionesList() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/adopcion/obtener")
+      .get("https://bepawsome-e858795261d3.herokuapp.com/adopcion/obtener")
       .then((response) => setAdopciones(response.data))
       .catch((error) => console.error(error));
   }, []);

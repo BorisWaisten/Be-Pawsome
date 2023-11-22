@@ -26,7 +26,7 @@ function Registrar() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/usuarios/register",
+        "https://bepawsome-e858795261d3.herokuapp.com/usuarios/register",
         formData,
         {
           headers: {

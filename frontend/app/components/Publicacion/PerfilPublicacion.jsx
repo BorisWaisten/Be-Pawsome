@@ -37,7 +37,7 @@ function PerfilPublicacion({ publicacion }) {
         publicacion: publicacion,
       };
       const respuesta = await axios.post(
-        "http://localhost:5000/publicacion/solicitar",
+        "https://bepawsome-e858795261d3.herokuapp.com/publicacion/solicitar",
         datos
       );
       setCargando(true);
