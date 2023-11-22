@@ -26,6 +26,7 @@ const FormLogin = () => {
     mail: "",
     password: "",
   });
+  const [contError,setContError] = useState(0);
 
   const mandarANextAuth = async () => {
     const result = await signIn("credentials", {
@@ -37,6 +38,9 @@ const FormLogin = () => {
   };
 
   const handleError = (error) => {
+    if(contError < 3){
+      setContError(contError+1);
+    }
     if (axios.isAxiosError(error)) {
       if (
         error.response.data ===
@@ -45,7 +49,10 @@ const FormLogin = () => {
         setApiError(
           "La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número"
         );
-      } else {
+      }else if(contError === 3){
+        setApiError("Tu cuenta se encuentra bloqueada, por favor cambia tu contrasenia");
+        setContError(3);
+      }else{
         setApiError(error.response.data);
       }
     }
@@ -53,7 +60,6 @@ const FormLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await login(formData);
       const usuarioValido = response.userLogueado;
@@ -62,6 +68,7 @@ const FormLogin = () => {
       } else {
         console.error("No se pudo obtener el ID del usuario o el token.");
       }
+      setContError(0);
       setApiError(null); // Limpia cualquier error existente
     } catch (error) {
       handleError(error);
@@ -130,14 +137,14 @@ const FormLogin = () => {
               </Link>
             </form>
           </div>
-          {apiError && (
+          {apiError &&(
             <div className="error card my-5">
+              <p>Intento Fallido Nro {contError}/3</p>
               <p>{apiError}</p>
             </div>
           )}
         </div>
       </div>
-      )
     </>
   );
 };
