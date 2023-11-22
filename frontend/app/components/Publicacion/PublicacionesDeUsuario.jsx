@@ -1,8 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+
+
 
 const PublicacionesDeUsuario = ({ publicaciones }) => {
   const [confirmacionEliminar, setConfirmacionEliminar] = useState(null);
+<<<<<<< HEAD
   const [interesadosDetails, setInteresadosDetails] = useState([]);
   const [showInteresados, setShowInteresados] = useState(false);
 
@@ -42,9 +46,13 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
       setConfirmacionEliminar(null);
     }
   };
+=======
+  const router = useRouter();
+>>>>>>> 98fafe4 (favicon y arreglos menores)
 
   const confirmarEliminar = (publicacionId) => {
     setConfirmacionEliminar(publicacionId);
+   
   };
 
   const eliminarPublicacion = async (publicacionId) => {
@@ -52,11 +60,16 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
       await axios.delete(
         `http://localhost:5000/publicacion/eliminar/${publicacionId}`
       );
+<<<<<<< HEAD
+=======
+     
+>>>>>>> 98fafe4 (favicon y arreglos menores)
     } catch (error) {
       console.error(error);
     } finally {
       // Limpiar la confirmación después de eliminar o cancelar
       setConfirmacionEliminar(null);
+      
     }
   };
 
@@ -86,6 +99,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
                 </div>
                 <button
                   className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+<<<<<<< HEAD
                   onClick={() =>
                     handleVerInteresadosClick(publicacion.interesados)
                   }
@@ -154,6 +168,35 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
                     >
                       No
                     </button>
+=======
+                  onClick={() => setConfirmacionEliminar(publicacion._id)}
+                >
+                  Eliminar
+                </button>
+
+                {/* Confirmación de eliminación */}
+                {confirmacionEliminar === publicacion._id && (
+                  <div className=" p-4 rounded ">
+                    <p className="text-gray-700">
+                      ¿Estás seguro de que deseas eliminar esta publicación?
+                    </p>
+                    <div className="flex justify-end mt-2">
+                      <button
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 mr-2"
+                        onClick={() =>
+                          eliminarPublicacion(confirmacionEliminar)
+                        }
+                      >
+                        Sí
+                      </button>
+                      <button
+                        className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700"
+                        onClick={() => setConfirmacionEliminar(null)}
+                      >
+                        No
+                      </button>
+                    </div>
+>>>>>>> 98fafe4 (favicon y arreglos menores)
                   </div>
                 )}
               </div>
