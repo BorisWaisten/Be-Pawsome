@@ -5,6 +5,7 @@ import BarraBuscadora from "./components/BarraBuscadora.jsx"
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import PublicacionesList from "./components/Publicacion/PublicacionesList.jsx"
+import API_BASE_URL from "./config.jsx"
 
 
 export default function page() {

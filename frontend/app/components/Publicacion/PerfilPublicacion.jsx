@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import API_BASE_URL from "./config.jsx"
 
 function PerfilPublicacion({ publicacion }) {
   const { data: session } = useSession();

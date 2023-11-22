@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-
+import API_BASE_URL from "./config.jsx"
 
 
 const PublicacionesDeUsuario = ({ publicaciones }) => {

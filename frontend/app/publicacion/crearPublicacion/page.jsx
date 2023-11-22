@@ -4,6 +4,8 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import CreatePublicacion from '../../components/Publicacion/CreatePublicacion.jsx';
 import { useRouter } from "next/navigation";
+import API_BASE_URL from "./config.jsx"
+
 const CrearPublicacion = () => {
   const router = useRouter();
 

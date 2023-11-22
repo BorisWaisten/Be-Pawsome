@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import PublicacionesDeUsuario from "../../components/Publicacion/PublicacionesDeUsuario";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-
+import API_BASE_URL from "./config.jsx"
 
 
 const Page = () => {

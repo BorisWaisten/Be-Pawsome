@@ -4,7 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
-
+import API_BASE_URL from "./config.jsx"
 
 const CambiarContraseniaForm = () => {
   const token = useSearchParams().get('token');

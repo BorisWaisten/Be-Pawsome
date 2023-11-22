@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SolicitudesDeUsuario from "../../components/Solicitudes/SolicitudesDeUsuario";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import API_BASE_URL from "./config.jsx"
 
 const Casita = () => {
     const { data: session } = useSession();

@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useState } from "react";
 //import { recuperacionContrasenia } from "../../persistencia/peticiones";
+import API_BASE_URL from "./config.jsx"
 
 export default function FormEnvioLink() {
   const [nuevosDatos, setNuevosDatos] = useState({
