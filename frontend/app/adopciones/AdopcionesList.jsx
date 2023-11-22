@@ -8,7 +8,7 @@ function AdopcionesList() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   useEffect(() => {
     axios
-      .get("`${apiUrl}/adopcion/obtener")
+      .get(`${apiUrl}/adopcion/obtener`)
       .then((response) => setAdopciones(response.data))
       .catch((error) => console.error(error));
   }, []);
