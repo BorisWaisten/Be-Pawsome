@@ -37,12 +37,10 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
         idPublicacion: publicacionId,
       };
       await axios.post(`${apiUrl}/adopcion/crear`, datos);
-      // Actualizar el estado para indicar que la adopción se ha concretado
-      setAdopcionConcretada((prev) => ({ ...prev, [publicacionId]: true }));
     } catch (error) {
       console.error(error);
     } finally {
-      // Limpiar la confirmación después de concretar adopción
+      // Limpiar la confirmación después de eliminar o cancelar
       setConfirmacionEliminar(null);
     }
   };
@@ -88,11 +86,16 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
                   </div>
                 </div>
                 <button
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
-                  onClick={() => finalizarAdopcion(interesado._id, publicacion._id)}
+                  className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
                   disabled={adopcionConcretada[publicacion._id]}
+                  onClick={() =>
+                    handleVerInteresadosClick(
+                      publicacion.interesados,
+                      publicacion._id
+                    )
+                  }
                 >
-                  Concretar adopción
+                  Ver interesados ( {publicacion.interesados.length} )
                 </button>
                 {showInteresados === publicacion._id &&
                   interesadosDetails[publicacion._id] && (
