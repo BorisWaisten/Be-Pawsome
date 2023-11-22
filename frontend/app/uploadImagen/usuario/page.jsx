@@ -1,8 +1,6 @@
 "use client"
-
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
-
 
 export default function ImagenUsuario({ onImageUpload }) {
     const [uploadData, setUploadData] = useState(null);

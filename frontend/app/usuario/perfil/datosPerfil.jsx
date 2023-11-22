@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-//import ImagenUsuario from "../../uploadImagen/usuario/page";
+import ImagenUsuario from "../../uploadImagen/usuario/page";
 import { signOut, useSession, getCsrfToken } from "next-auth/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -181,7 +181,7 @@ export default function Usuario() {
           />
         </div>
         <div>
-        
+          <ImagenUsuario onImageUpload={handleImageUpload} />
         </div>
         <div>
           <button
