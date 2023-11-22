@@ -21,6 +21,7 @@ class ControllerAdopcion {
       res.status(400).json(error.message);
     }
   };
+  
 
   obtenerAdopciones = async (req, res) => {
     try {

@@ -55,7 +55,7 @@ class ServicioAdopcion {
 
   async obtenerAdopciones() {
     try {
-      const adopciones = await this.repository.obtenerAdopciones();
+      const adopciones = await this.repositoryAdopcion.obtenerAdopciones();
       return adopciones;
     } catch (error) {
       throw new AdopcionRequestError("Error al obtener adopciones: " + error.message);
