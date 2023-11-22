@@ -10,21 +10,33 @@ class ControllerPublicacion {
   }
 
   crearPublicacion = async (req, res) => {
+    try {
+    console.log(req.body.titulo);
     // crear publicacion recibiria del request un titulo y dos objetos a guardar, el usuario y el animal
     const nuevaPublicacion = {
       titulo: req.body.titulo,
       usuario: req.body.usuario,
       animal: req.body.animal,
     };
-    try {
+      console.log("hola");
       const publicacionCreada = await this.servicioPublicacion.crearPublicacion(nuevaPublicacion);
       // devolvemos el objeto publicacionCreada como respuesta
+      console.log("hola 3");
       res.status(201).json(publicacionCreada);
     } catch (error) {
       res.status(400).json(error.message);
     }
   };
-  
+
+    async contarPublicacionesPorUsuario(req, res) {
+    try {
+      const { usuarioId } = req.params;
+      const count = await this.service.contarPublicacionesPorUsuario(usuarioId);
+      res.status(200).json({ count });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 
   obtenerPublicacion = async (req, res) => {
     const idPublicacion = req.params.id;
@@ -124,8 +136,15 @@ class ControllerPublicacion {
       if (!publicacionGuardad) {
         throw new PublicacionNotFoundError(`No se pudo guardar la publicacion en casita`);
       }
+      const agregarInteresado= await this.servicioPublicacion.agregarInteresado(req.body.publicacion._id, idAdoptante);
+      if (!agregarInteresado) {
+        throw new PublicacionRequestError(`No se pudo agregar el interesado en publicacion`);  
+      }  
       // se guardara un array con dos users, en la posicion 0 sera el de la persona interesada en solicitar y en la posicion 1 el del oferente
       const users = await this.servicioPublicacion.solicitar(idAdoptante, idOferente);
+      if (!users) {
+        throw new PublicacionRequestError(`No se pudo solicitar la publicacion`);
+      }
       emailAdoption(users, dataAnimal, fechaCreacion);
       res.status(200).json({"message:" : `Solicitud enviada a ${users[1].mail}`})
     } catch (error) {

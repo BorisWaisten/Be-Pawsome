@@ -12,6 +12,7 @@ const ESTADOPUBLICACION = {
       this.titulo = titulo;
       this.usuario = usuario;
       this.animal = animal;
+      this.interesados = [];
     }
 
     
