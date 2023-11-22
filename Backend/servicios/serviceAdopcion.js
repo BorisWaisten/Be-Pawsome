@@ -3,9 +3,6 @@ import { AdopcionRequestError } from "../errores.js";
 import Adopcion from "../modelos/modeloAdopcion.js";
 import UsuarioRepository from "../repositorios/repositorioUser.js";
 import PublicacionRepository from "../repositorios/repositorioPublicacion.js";
-import { ObjectId } from "mongodb";
-
-
 
 class ServicioAdopcion {
   constructor() {
@@ -14,42 +11,20 @@ class ServicioAdopcion {
     this.repositorioPublicaciones = new PublicacionRepository();
   }
 
-
-  idObjeto = (id) => {
-    try {
-      return new ObjectId(id);
-    } catch (error) {
-      console.error("Error al convertir ID a ObjectId:", error);
-      throw error; // Re-lanzar el error para manejarlo en la capa superior si es necesario
-    }
-  };
-
   async crearAdopcion(idPublicacion,idAdoptante) {
+
+    console.log("datos para adopcion")
+    console.log(idPublicacion + "id publicacion")
+    console.log(idAdoptante + "id adoptante") 
+    const publicacion = await this.PublicacionRepository.obtenerPublicacionPorId(idPublicacion);
+    const adoptante = await this.UsuarioRepository.obtenerUsuarioPorId(idAdoptante);
+    const oferente = await this.UsuarioRepository.obtenerUsuarioPorId(publicacion.animal.oferete._id);
+
+    const adopcion = new Adopcion(oferente, adoptante, publicacion);
     
+
     try {
-      console.log("datos para adopcion")
-      console.log(idPublicacion + "id publicacion")
-      console.log(idAdoptante + "id adoptante") 
-      const publicacion = await this.repositorioPublicaciones.obtenerPublicacionPorId(this.idObjeto(idPublicacion));
-      if (!publicacion) {
-        throw new AdopcionRequestError(`Publicación con ID ${idPublicacion} no encontrada`);
-      }
-      const adoptante = await this.repositorioUsuarios.buscarId(this.idObjeto(idAdoptante));
-      if (!adoptante) {
-        throw new AdopcionRequestError(`Adpotante con ID ${idAdoptante} no encontrado`);
-      }
-      const oferente = await this.repositorioUsuarios.buscarId(this.idObjeto(publicacion.usuario._id));
-      if (!oferente) {
-        throw new AdopcionRequestError(`Oferente no encontrado`);
-      }
-      const adopcion = new Adopcion(oferente, adoptante, publicacion);
       const nuevaAdopcion = await this.repositoryAdopcion.crearAdopcion(adopcion);
-      if (!nuevaAdopcion) {
-        throw new AdopcionRequestError(`Adopcion no realizada`);
-      }
-
-
-
       return nuevaAdopcion;
     } catch (error) {
       throw new AdopcionRequestError("Error al crear adopción: " + error.message);

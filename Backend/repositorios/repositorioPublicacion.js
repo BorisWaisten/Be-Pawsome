@@ -29,7 +29,7 @@ class RepositorioPublicacion {
       const publicacionActualizada = await this.publicacionesCollection.findOneAndUpdate(
         { _id: idPublicacion },
         { $push: { interesados: idUsuario } },
-        { returnOriginal: false }
+        { return: after }
       );
       return publicacionActualizada;
     } catch (error) {
