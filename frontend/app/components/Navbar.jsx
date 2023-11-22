@@ -7,6 +7,7 @@ import React from "react";
 import Logo from "public/logoBePawsome.png";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 export default function Navbar() {
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -56,9 +57,9 @@ export default function Navbar() {
           </Link>
         )}
       </div>
-      <div className=" items-center justify-center mx-60">
+      <div className="flex items-center justify-center md:mx-auto md:ml-4 md:mr-4">
         <Link href="/adopciones">
-          <button className="bg-gradient-to-r from-pink-500 to-blue-500 hover:from-blue-500 hover:to-pink-500 transition-all duration-500 ease-in-out text-white font-bold py-2 px-4 rounded transform hover:scale-110 w-full h-full">
+          <button className="bg-gradient-to-r from-pink-500 to-blue-500 hover:from-blue-500 hover:to-pink-500 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 text-white font-bold py-2 px-4 rounded  w-full h-full">
             Vidas salvadas
           </button>
         </Link>
@@ -96,9 +97,10 @@ export default function Navbar() {
         )}
       </div>
       {menuVisible && session && (
+      
         <div
           className="absolute top-16 right-6 bg-white p-4 rounded shadow flex flex-col"
-          style={{ position: "absolute", marginTop: "60px" }}
+          style={{ position: "absolute", marginTop: "60px", zIndex: 1 }}
         >
           <Link href="/usuario/casita">
             <div className="flex items-center p-2 m-2">
