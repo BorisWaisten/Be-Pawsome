@@ -1,7 +1,7 @@
 const ESTADOPUBLICACION = {
     ACTIVA: 'ACTIVA',
     CADUCADA: 'CADUCADA',
-    CERRADA: 'CERRADA',
+    INACTIVA: 'INACTIVA',
   };
   
   class Publicacion {

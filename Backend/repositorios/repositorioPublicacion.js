@@ -66,8 +66,7 @@ class RepositorioPublicacion {
 
   async actualizarPublicacion(id, nuevosDatos) {
     try {
-      const result = await this.publicacionesCollection.findOneAndUpdate({ _id: id }, { $set: {usuario : nuevosDatos} });
-      
+      const result = await this.publicacionesCollection.findOneAndUpdate({ _id: id }, { $set: nuevosDatos },{ returnDocument: 'after' });
       if (!result.value) {
         return null; // O puedes manejar el caso de no encontrar la publicación de alguna otra manera
       }
