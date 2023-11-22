@@ -8,7 +8,8 @@ const AdopcionesPage = () => {
   useEffect(() => {
     const fetchAdopciones = async () => {
       try {
-        const response = await axios.get('/adopciones'); // Ruta de la API para obtener las adopciones
+        const response = await axios.get('http://localhost:5000/adopcion/'); // Ruta de la API para obtener las adopciones
+        console.log(response.data);
         setAdopciones(response.data);
       } catch (error) {
         console.error(error);
@@ -19,17 +20,22 @@ const AdopcionesPage = () => {
   }, []);
 
   return (
+      <> 
     <div>
-      {adopciones.map((adopcion) => (
-        <div key={adopcion.id} className="publicacion">
-          <h2>{adopcion.nombre}</h2>
-          <img src={adopcion.foto} alt={adopcion.nombre} />
+      <h1>hola </h1>
+      {adopciones.forEach(adopcion => {
+        <div >
+          <h2>{adopcion.adoptante.nombre}</h2>
+          {/*
+          <img src={adopcion.animal.fotos} alt={adopcion.animal.nombre} />
           <p>Oferente: {adopcion.oferente}</p>
           <p>Adoptante: {adopcion.adoptante}</p>
+        */}
           {/* Mostrar más datos del animal y usuarios si es necesario */}
-        </div>
-      ))}
+        </div> 
+      })}
     </div>
+      </>
   );
 };
 
