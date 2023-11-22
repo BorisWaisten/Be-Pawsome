@@ -39,7 +39,7 @@ const CambiarContraseniaForm = () => {
 
     try {
       const response = await axios.post(
-        "https://bepawsome-e858795261d3.herokuapp.com/usuarios/cambiarContrasenia",
+        "`${apiUrl}/usuarios/cambiarContrasenia",
         data,
         {
           headers: {

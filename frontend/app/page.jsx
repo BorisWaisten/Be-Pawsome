@@ -6,18 +6,18 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import PublicacionesList from "./components/Publicacion/PublicacionesList.jsx"
 
-
 export default function page() {
   const { data: session } = useSession();
   const [publicacionesOriginales, setPublicacionesOriginales] = useState([]); // Nuevo estado
   const [publicaciones, setPublicaciones] = useState([]);
   const [datosCargados, setDatosCargados] = useState(false);
   const [query, setQuery] = useState("")
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://bepawsome-e858795261d3.herokuapp.com/publicacion/publicaciones");
+        const response = await fetch(`${apiUrl}/publicacion/publicaciones`);
         const publicacionesData = await response.json();
 
         const idUsuario = session?.user?.userLogueado?._id;
@@ -43,7 +43,7 @@ export default function page() {
   const handleSearch = async (query) => {
     try {
       setQuery(query);
-      const response = await fetch(`https://bepawsome-e858795261d3.herokuapp.com/publicacion/buscar/${query}`);
+      const response = await fetch(`${apiUrl}/publicacion/buscar/${query}`);
       const publicacionesBuscadas = await response.json();
 
       const idUsuario = session?.user?.userLogueado?._id;

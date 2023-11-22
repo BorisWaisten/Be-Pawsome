@@ -8,8 +8,10 @@ import { signIn } from "next-auth/react";
 
 const login = async (datos) => {
   try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
     const response = await axios.post(
-      "https://bepawsome-e858795261d3.herokuapp.com/usuarios/login",
+      `${apiUrl}/usuarios/login`,
       datos
     );
     return response.data;

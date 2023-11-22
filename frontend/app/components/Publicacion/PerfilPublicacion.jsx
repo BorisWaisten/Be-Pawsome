@@ -12,6 +12,7 @@ function PerfilPublicacion({ publicacion }) {
   const [mensajeError, setMensajeError] = useState(null);
   const [cargando, setCargando] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const router = useRouter();
   function handlePrevImage() {
@@ -37,7 +38,7 @@ function PerfilPublicacion({ publicacion }) {
         publicacion: publicacion,
       };
       const respuesta = await axios.post(
-        "https://bepawsome-e858795261d3.herokuapp.com/publicacion/solicitar",
+        `${apiUrl}/publicacion/solicitar`,
         datos
       );
       setCargando(true);

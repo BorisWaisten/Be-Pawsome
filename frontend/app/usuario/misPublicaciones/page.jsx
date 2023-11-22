@@ -8,12 +8,12 @@ const Page = () => {
   const { data: session } = useSession();
   const [usuario, setUsuario] = useState(null);
   const [publicaciones, setPublicaciones] = useState([]);
-
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const idUsuario = session?.user?.userLogueado._id;
 
   const cargarUsuario = async () => {
     try {
-      const response = await axios.get(`https://bepawsome-e858795261d3.herokuapp.com/publicacion/publicacionesUsuario/${idUsuario}`);
+      const response = await axios.get(`${apiUrl}/publicacion/publicacionesUsuario/${idUsuario}`);
       console.log(response.data);
       setPublicaciones(response.data);
       setUsuario(session?.user?.userLogueado);
