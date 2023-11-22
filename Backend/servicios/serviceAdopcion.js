@@ -5,6 +5,7 @@ import UsuarioRepository from "../repositorios/repositorioUser.js";
 import PublicacionRepository from "../repositorios/repositorioPublicacion.js";
 import AnimalRepository from "../repositorios/repositorioAnimal.js";
 import { ObjectId } from "mongodb";
+import pushEmail from "../helpers/emailAdopcionRealizada.js";
 
 
 
@@ -66,6 +67,17 @@ class ServicioAdopcion {
     }
   }
 
+
+  async mandarMailAdopcion(idPublicacion,idAdoptante){
+    try {
+      const adoptante = await this.repositorioUsuarios.buscarId(this.idObjeto(idAdoptante));
+      const publicacion = await this.repositorioPublicaciones.obtenerPublicacionPorId(this.idObjeto(idPublicacion));
+
+      pushEmail(adoptante,publicacion)
+    } catch (error) {
+      
+    }
+  }
 
 
   async obtenerAdopciones() {

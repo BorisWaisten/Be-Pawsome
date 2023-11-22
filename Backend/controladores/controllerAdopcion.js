@@ -1,6 +1,5 @@
 import ServicioAdopcion from "../servicios/serviceAdopcion.js";
 import { AdopcionRequestError, AdopcionNotFoundError } from "../errores.js";
-
 class ControllerAdopcion {
   constructor() {
     this.servicioAdopcion = new ServicioAdopcion();
@@ -16,12 +15,23 @@ class ControllerAdopcion {
     console.log(idAdoptante + "id adoptante")
     try {
       const adopcionCreada = await this.servicioAdopcion.crearAdopcion(idPublicacion,idAdoptante);
+      if(adopcionCreada){
+        this.mandarMailAdopcion(idPublicacion,idAdoptante)
+      }
       res.status(201).json(adopcionCreada);
     } catch (error) {
       res.status(400).json(error.message);
     }
   };
   
+
+  mandarMailAdopcion = async (idPublicacion,idAdoptante)=>{
+    try {
+       await this.servicioAdopcion.mandarMailAdopcion(idPublicacion,idAdoptante)
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
 
   obtenerAdopciones = async (req, res) => {
     try {
