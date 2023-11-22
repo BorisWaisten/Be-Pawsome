@@ -47,6 +47,9 @@ class ServicioAdopcion {
       if (!nuevaAdopcion) {
         throw new AdopcionRequestError(`Adopcion no realizada`);
       }
+
+
+
       return nuevaAdopcion;
     } catch (error) {
       throw new AdopcionRequestError("Error al crear adopción: " + error.message);
