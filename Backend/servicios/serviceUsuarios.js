@@ -196,7 +196,7 @@ class ServicioUsuario{
         if(!user){
           throw new UsuarioNotFoundError("El usuario no encontrado")
         }
-        user.casita.publicaciones.push(publicacion)
+        user.casita.publicaciones.push(publicacion._id)
         const userEditado = await this.model.editarUsuario(this.idObjeto(id), user);
         if(!userEditado){
           throw new UsuarioNotFoundError("El usuario no se pudo modificar");

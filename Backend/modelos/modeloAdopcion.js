@@ -1,8 +1,8 @@
 class Adopcion {
-    constructor(oferente, adoptante, publicacion) {
-      this.oferente = oferente;
-      this.adoptante = adoptante;
-      this.animal = publicacion.animal;
+    constructor(idOferente, idAdoptante, publicacion) {
+      this.idOferente = idOferente;
+      this.idAdoptante = idAdoptante;
+      this.idAnimal = publicacion.idAnimal;
       this.fechaAdopcion = new Date().getDate;
     }
   }
