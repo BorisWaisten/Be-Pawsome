@@ -105,7 +105,6 @@ class ControllerUsuario{
       const imagenPerfil = req.body.imagenPerfil;
       try {
         const user = await this.servicioUsuario.editarImagenPerfil(idUsuario ,imagenPerfil);
-
         res.status(200).json(user);
       }catch(error){
         res.status(400).json(error.message);
@@ -116,10 +115,11 @@ class ControllerUsuario{
       const idUsuario = req.params.id;
       const usuario = req.body;
       try {
+      const user = await this.servicioUsuario.editarUsuario(idUsuario, usuario);
       
-      const user = await this.servicioUsuario.editarUsuario(idUsuario, usuario); 
-
-      
+      if(user){
+        await this.servicioPublicacion.actualizarPublicacionesDelUsuario(user);
+      }      
       res.status(200).json(user);
       }catch(error){
         res.status(400).json(error.message);
@@ -130,6 +130,7 @@ class ControllerUsuario{
       const idUsuario = req.params.id;
       try {
         const user = await this.servicioUsuario.eliminarUsuario(idUsuario);
+        await this.servicioPublicacion.eliminarPublicacionesPorUsuario(idUsuario)
         res.status(200).json(user);
       }catch(error){
         res.status(400).json(error.message);

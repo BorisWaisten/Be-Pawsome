@@ -25,22 +25,26 @@ const CrearPublicacion = () => {
     ubicacion: '',
     historiaClinica: '',
   });
-    
-    useEffect(() => {
+  
+  const user = session?.user?.userLogueado;
+  const [error, setError] = useState(null); // Move the declaration to the top
+  
+  useEffect(() => {
+      
       const cargarUsuario = async () => {
-        try {
-          if (session) {
-            setUsuario(session.user);
-          }
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setLoading(false);
-        }
-      };
-    
-      cargarUsuario();
-    }, [session]);
+            try {
+            if (user) {
+                setUsuario(user);
+            }
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+    };
+  
+    cargarUsuario();
+  }, [session]);
 
   const handlePublicacionSubmit = async (e) => {
     e.preventDefault();
@@ -78,7 +82,13 @@ const CrearPublicacion = () => {
       // Puedes manejar la respuesta del servidor según tus necesidades.
     } catch (error) {
       console.error('Error al crear la publicación:', error);
-      // Puedes manejar los errores de la solicitud aquí.
+      if (error.response && error.response.status === 400) {
+        // Si la respuesta es un error de solicitud (Bad Request), actualiza el estado con el mensaje de error
+        setError(error.response.data);
+      } else {
+        // Si es otro tipo de error, puedes manejarlo de otra manera o simplemente mostrar un mensaje genérico
+        setError('Error al procesar la solicitud. Por favor, inténtalo de nuevo.');
+      }
     }
   };
   
@@ -107,6 +117,7 @@ const CrearPublicacion = () => {
     <main>
       {/* Pasar el estado local y el método de actualización como propiedades */}
       <CreatePublicacion formData={formData} updateFormData={updateFormData} handleSubmit={handlePublicacionSubmit} />
+      {error && <div>Error: {error}</div>}
     </main>
   );
 };

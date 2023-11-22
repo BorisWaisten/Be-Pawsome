@@ -36,6 +36,7 @@ const SolicitudesDeUsuario = ({ publicaciones, idUsuario, actualizarPublicacione
 
   return (
     <div>
+      <h1 className="mt-3 text-center justify-center">Mis solicitudes</h1>
       <ul className="divide-y divide-violet-200">
         {Array.isArray(publicaciones) &&
           publicaciones.map((publicacion) => (
@@ -54,6 +55,9 @@ const SolicitudesDeUsuario = ({ publicaciones, idUsuario, actualizarPublicacione
                   <div className="text-sm text-black-500">
                     {publicacion.animal.descripcion}
                   </div>
+                </div>
+                <div className="text-sm text-black-500">
+                  {publicacion.estadoPublicacion}
                 </div>
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

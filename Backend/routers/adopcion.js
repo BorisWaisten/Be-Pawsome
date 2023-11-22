@@ -9,9 +9,9 @@ class RouterAdopcion {
 
   start() {
     this.router.post("/crear", this.controlador.crearAdopcion);
-    //this.router.get("/obtener/:idUsuario", this.controlador.obtenerAdopcionPorUsuario);
     this.router.put("/actualizar/:idUsuario", this.controlador.actualizarAdopcion);
     this.router.delete("/eliminar/:idUsuario", this.controlador.eliminarAdopcion);
+    this.router.get("/",this.controlador.obtenerAdopciones);
     return this.router;
   }
 }

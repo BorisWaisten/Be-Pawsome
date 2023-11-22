@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import SolicitudesDeUsuario from "../../components/Solicitudes/SolicitudesDeUsuario.jsx";
+import SolicitudesDeUsuario from "../../components/Solicitudes/SolicitudesDeUsuario";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import { forEach } from "lodash";
 
 const Casita = () => {
     const { data: session } = useSession();
@@ -10,24 +11,34 @@ const Casita = () => {
     const [apiError, setApiError] = useState(null);
 
 
-    useEffect(() => {
-        const cargarDatos = async () => {
-            try {
-                if (session && session.user) {
-                    const idUsuario = session.user.id;
-                    const response = await axios.get(`http://localhost:5000/usuarios/${idUsuario}`);
-                    const usuarioData = response.data;
-                    
-                    if (usuarioData) {
-                        console.log("Usuario:", usuarioData);
-                        setUsuario(usuarioData);
-                        setPublicaciones(usuarioData.casita.publicaciones);
+    const cargarDatos = async () => {
+        try {
+            const responseUsuario = await axios.get(`http://localhost:5000/usuarios/${idUsuario}`);
+            const responsePublicacion = await axios.get(`http://localhost:5000/publicacion/publicaciones`);
+            const usuarioData = responseUsuario.data;
+            const publicacionesData= responsePublicacion.data;
+            
+            if (usuarioData) {
+                setUsuario(usuarioData);
+                const publicacionFiltrada = [];
+    
+                publicacionesData.forEach(p => {
+                    if (usuarioData.casita.publicaciones) {
+                        const array = usuarioData.casita.publicaciones;
+                        array.forEach(e => {
+                            if (p._id === e._id) {
+                                publicacionFiltrada.push(p);
+                            }
+                        });
                     }
-                }
-            } catch (error) {
-                setApiError(error.response.data);
+                });
+    
+                setPublicaciones(publicacionFiltrada);
             }
-        };
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
         cargarDatos();
     }, [session]);
@@ -39,16 +50,9 @@ const Casita = () => {
     };
 
     return (
-        <div className="text-center">
-            {usuario && (
-                <h1>Solicitudes Realizadas</h1>
-            )}
-            <SolicitudesDeUsuario publicaciones={publicaciones} idUsuario={session?.user?.id} actualizarPublicaciones={actualizarPublicaciones} />
-            {apiError && (
-        <div className="error card my-5">
-          <p>{apiError}</p>
-        </div>
-      )}
+        <div>
+           
+            <SolicitudesDeUsuario publicaciones={publicaciones} idUsuario={idUsuario} actualizarPublicaciones={actualizarPublicaciones} />
         </div>
     );
 };

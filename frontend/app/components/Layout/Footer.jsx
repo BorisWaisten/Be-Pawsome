@@ -1,31 +1,20 @@
-
-//fixed bottom-0 w-full original 
-//sticky bottom-0 z-50
-
-
-//sticky top-[100vh]
-
-
-//html, body { height: 100%;}
-
-
-//position: sticky;
-//top: 100vh;
-
 export default function Footer() {
- 
-return (
-    <div id="seccion_footer" className="sticky mt-96 scroll-mt-10 top-[100vh] w-full bg-neutral-200 text-center dark:bg-neutral-700 lg:text-left">
-      <div className="p-4 text-center text-neutral-700 dark:text-neutral-200">
-        <p>© 2023 Copyright: GALAJO ¿Qué puedo hacer en caso de maltrato o crueldad con animales?</p>
-        <a
-          className="text-neutral-800 dark:text-neutral-400"
-          href="https://www.argentina.gob.ar/normativa/nacional/ley-14346-153011/texto"
-        >
-          <p className="font-bold m-2">Ir a Proteccion de los animales </p>
-        </a>
-      
+  return (
+    <footer className="bg-purple-100 text-neutral-800 dark:text-neutral-300 p-6 mt-40">
+      <div className="container mx-auto flex flex-wrap items-center justify-between">
+        <div className="w-full md:w-1/3 md:order-2 text-center md:text-right">
+          <a
+            className="text-purple-400 dark:text-purple-400 hover:text-purple-500 transition-colors duration-300"
+            href="https://www.argentina.gob.ar/normativa/nacional/ley-14346-153011/texto"
+          >
+            Ir a Protección de los animales
+          </a>
+        </div>
+        <div className="w-full md:w-2/3 md:order-1 md:text-left text-center mt-4 md:mt-0">
+          <p>© 2023 Copyright: GALAJO</p>
+          <p>¿Qué puedo hacer en caso de maltrato o crueldad con animales?</p>
+        </div>
       </div>
-    </div>
+    </footer>
   );
 }

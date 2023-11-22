@@ -11,6 +11,7 @@ class RouterCasita {
     this.router.post("/agregar-publicacion/:idPublicacion", this.controladorCasita.agregarPublicacion);
     this.router.delete("/eliminar-publicacion/:idPublicacion", this.controladorCasita.eliminarPublicacion);
     this.router.put("/lo-adopte/:idAnimal", this.controladorCasita.loAdopte);
+   
     return this.router;
   }
 }

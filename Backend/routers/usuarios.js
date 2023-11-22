@@ -33,10 +33,8 @@ class RouterUsuario {
     this.router.post("/loginGoogle", this.controlador.loginGoogle);
 
     this.router.get("/:id", this.controlador.obtenerUsuario);
-   
     this.router.put("/:id", this.controlador.editarUsuario);
     this.router.put('/editarImagen/:id',this.controlador.editarImagenPerfil);
-
     this.router.delete("/:id", this.controlador.eliminarUsuario);
    
     //rutas de recuperacion de contrasenia

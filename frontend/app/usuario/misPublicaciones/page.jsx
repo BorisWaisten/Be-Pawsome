@@ -38,15 +38,12 @@ const Page = () => {
 
   useEffect(() => {
     cargarUsuario();
+    console.log(session); // Imprime la información de la sesión
+    console.log(usuario); // Imprime la información del usuario
   }, [session]);
-
+  
   return (
-    <div className="text-center">
-      {usuario && (
-        <h1>
-          Tus Publicaciones, {usuario.nombre} {usuario.apellido}
-        </h1>
-      )}
+    <div>
       <PublicacionesDeUsuario publicaciones={publicaciones} />
     {/* Sin publicaciones */}
     {mensajeSinPublicaciones && (

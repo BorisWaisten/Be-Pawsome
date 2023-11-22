@@ -124,10 +124,7 @@ class ServicioUsuario{
     editarUsuario = async (idUsuario, usuario) => {
       try {
         UserRequest.validacionEdit(usuario);
-    
-
         const userEditado = await this.model.editarUsuario(this.idObjeto(idUsuario), usuario);
-    
         if (!userEditado) {
           throw new UsuarioNotFoundError("El usuario no se pudo modificar");
         }

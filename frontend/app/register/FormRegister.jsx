@@ -19,7 +19,9 @@ function Registrar() {
   });
 
   const [apiError, setApiError] = useState(null);
-  
+  const [successMessage, setSuccessMessage] = useState(null);
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -32,8 +34,10 @@ function Registrar() {
           },
         }
       );
-      console.log(response.data); // Maneja la respuesta del servidor según tus necesidades, por ejemplo, muestra un mensaje de éxito al usuario.
-      router.push("/signIn"); //.then(() => window.location.reload()); // Si registro correcamtente lo mando a la pagina de home
+      setSuccessMessage('¡Registro exitoso!');
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
     } catch (error) {
       setApiError(error.response.data);
       //console.log(apiError);
@@ -51,7 +55,7 @@ function Registrar() {
 
   return (
     <>
-      <h2 className="text-2xl font-bold mb-4">Registrarse</h2>
+      <h2 className="text-2xl font-bold mb-4 justify-center items-center flex">Registrarse</h2>
       <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
         <form onSubmit={handleSubmit} className="flex flex-col">
           <div className="mb-4">
@@ -69,7 +73,7 @@ function Registrar() {
               onChange={handleChange}
               onFocus={() => setApiError(null)}
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border border-purple-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -87,7 +91,7 @@ function Registrar() {
               onChange={handleChange}
               onFocus={() => setApiError(null)}
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className=" border-purple-400 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -105,7 +109,7 @@ function Registrar() {
               onChange={handleChange}
               onFocus={() => setApiError(null)}
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="  border-purple-400 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -123,7 +127,7 @@ function Registrar() {
               onChange={handleChange}
               onFocus={() => setApiError(null)}
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className=" border-purple-400 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -141,7 +145,7 @@ function Registrar() {
               onChange={handleChange}
               onFocus={() => setApiError(null)}
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="  border-purple-400 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -159,13 +163,13 @@ function Registrar() {
               onChange={handleChange}
               onFocus={() => setApiError(null)}
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="  border-purple-400 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
             <label
               htmlFor="provincia"
-              className="block text-gray-700 font-bold mb-2"
+              className="  border-purple-400 block text-gray-700 font-bold mb-2"
             >
               Provincia:
             </label>
@@ -177,7 +181,7 @@ function Registrar() {
               onChange={handleChange}
               onFocus={() => setApiError(null)}
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="  border-purple-400 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -195,7 +199,7 @@ function Registrar() {
               onChange={handleChange}
               onFocus={() => setApiError(null)}
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className=" border-purple-400 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -213,7 +217,7 @@ function Registrar() {
               onChange={handleChange}
               onFocus={() => setApiError(null)}
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className=" border-purple-400 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <button
@@ -227,6 +231,11 @@ function Registrar() {
       {apiError && (
         <div className="error card my-5">
           <p>{apiError}</p>
+        </div>
+      )}
+      {successMessage && (
+        <div className="success-message card my-5">
+          <p>{successMessage}</p>
         </div>
       )}
     </>
