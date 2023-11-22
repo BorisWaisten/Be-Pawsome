@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import ImagenAnimal from "../../uploadImagen/animal/page";
+//import ImagenAnimal from "../../uploadImagen/animal/page";
 
 const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
   const [localFormData, setFormData] = useState({
@@ -160,9 +160,7 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
           />
         </label>
         <div className="block mb-2 font-bold text-gray-700">
-        <ImagenAnimal
-          onImageUpload={handleImageUpload} // Pasa la función como prop
-        />
+        
         </div>
         <div className="flex items-center justify-center w-full">
           <button
