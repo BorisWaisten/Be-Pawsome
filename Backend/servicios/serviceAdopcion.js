@@ -3,6 +3,7 @@ import { AdopcionRequestError } from "../errores.js";
 import Adopcion from "../modelos/modeloAdopcion.js";
 import UsuarioRepository from "../repositorios/repositorioUser.js";
 import PublicacionRepository from "../repositorios/repositorioPublicacion.js";
+import AnimalRepository from "../repositorios/repositorioAnimal.js";
 import { ObjectId } from "mongodb";
 
 
@@ -12,6 +13,7 @@ class ServicioAdopcion {
     this.repositoryAdopcion = new AdopcionRepository();
     this.repositorioUsuarios = new UsuarioRepository();
     this.repositorioPublicaciones = new PublicacionRepository();
+    this.repositorioAnimal = new AnimalRepository();
   }
 
 
@@ -30,13 +32,13 @@ class ServicioAdopcion {
       console.log("datos para adopcion")
       console.log(idPublicacion + "id publicacion")
       console.log(idAdoptante + "id adoptante") 
+      const adoptante = await this.repositorioUsuarios.editarUsuario(this.idObjeto(idAdoptante));
+      if (!adoptante) {
+        throw new AdopcionRequestError(`Adpotante con ID ${idAdoptante} no encontrado`);
+      }
       const publicacion = await this.repositorioPublicaciones.obtenerPublicacionPorId(this.idObjeto(idPublicacion));
       if (!publicacion) {
         throw new AdopcionRequestError(`Publicación con ID ${idPublicacion} no encontrada`);
-      }
-      const adoptante = await this.repositorioUsuarios.buscarId(this.idObjeto(idAdoptante));
-      if (!adoptante) {
-        throw new AdopcionRequestError(`Adpotante con ID ${idAdoptante} no encontrado`);
       }
       const oferente = await this.repositorioUsuarios.buscarId(this.idObjeto(publicacion.usuario._id));
       if (!oferente) {
@@ -47,11 +49,24 @@ class ServicioAdopcion {
       if (!nuevaAdopcion) {
         throw new AdopcionRequestError(`Adopcion no realizada`);
       }
-      return nuevaAdopcion;
+      
+      const animalActualizado = await this.repositorioAnimal.guardarUsuarioAdoptante(this.idObjeto(publicacion.animal._id), adoptante)
+      if (!animalActualizado) {
+        throw new AdopcionRequestError(`Animal no actualizado`);
+      }
+      const datos = {
+        estadoPublicacion: "INACTIVA",
+        animal:animalActualizado
+      }
+      const publicacionActualizada = await this.repositorioPublicaciones.actualizarPublicacion(this.idObjeto(idPublicacion),datos)
+
+      return {nuevaAdopcion, publicacionActualizada};
     } catch (error) {
       throw new AdopcionRequestError("Error al crear adopción: " + error.message);
     }
   }
+
+
 
   async obtenerAdopciones() {
     try {

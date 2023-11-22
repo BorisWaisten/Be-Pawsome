@@ -4,9 +4,9 @@ import axios from "axios";
 const PublicacionesDeUsuario = ({ publicaciones }) => {
   const [confirmacionEliminar, setConfirmacionEliminar] = useState(null);
   const [interesadosDetails, setInteresadosDetails] = useState([]);
-  const [showInteresados, setShowInteresados] = useState(false);
+  const [showInteresados, setShowInteresados] = useState(null); // Cambiado a null
 
-  const getInteresadosDetails = async (interesadosIds) => {
+  const getInteresadosDetails = async (interesadosIds, publicacionId) => {
     const details = await Promise.all(
       interesadosIds.map(async (id) => {
         const response = await axios.get(
@@ -15,16 +15,16 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
         return response.data;
       })
     );
-    setInteresadosDetails(details);
-    console.log("mis interesados ", interesadosDetails);
+    setInteresadosDetails({ ...interesadosDetails, [publicacionId]: details });
+    console.log("mis interesados ", details);
   };
 
-  const handleVerInteresadosClick = (interesadosIds) => {
-    if (showInteresados) {
-      setShowInteresados(false);
+  const handleVerInteresadosClick = (interesadosIds, publicacionId) => {
+    if (showInteresados === publicacionId) {
+      setShowInteresados(null);
     } else {
-      getInteresadosDetails(interesadosIds);
-      setShowInteresados(true);
+      getInteresadosDetails(interesadosIds, publicacionId);
+      setShowInteresados(publicacionId);
     }
   };
 
@@ -59,7 +59,6 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
       window.location.reload();
     }
   };
-
   return (
     <div>
       <h1 className="mt-3 items-center justify-center flex">
@@ -87,15 +86,18 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
                 <button
                   className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
                   onClick={() =>
-                    handleVerInteresadosClick(publicacion.interesados)
+                    handleVerInteresadosClick(
+                      publicacion.interesados,
+                      publicacion._id
+                    )
                   }
                 >
                   Ver interesados ( {publicacion.interesados.length} )
                 </button>
-                {showInteresados &&
-                  interesadosDetails.map(() => (
+                {showInteresados === publicacion._id &&
+                  interesadosDetails[publicacion._id] && (
                     <div className="w-full lg:w-1/5 mx-auto">
-                      {interesadosDetails.map((interesado) => (
+                      {interesadosDetails[publicacion._id].map((interesado) => (
                         <li key={interesado._id}>
                           <div className="bg-white shadow rounded-lg p-6 my-4">
                             <p className="text-gray-700 font-semibold">
@@ -129,7 +131,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
                         </li>
                       ))}
                     </div>
-                  ))}
+                  )}
                 <button
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded relative"
                   onClick={() => confirmarEliminar(publicacion._id)}
