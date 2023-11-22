@@ -4,10 +4,7 @@ import PublicacionesDeUsuario from "../../components/Publicacion/PublicacionesDe
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
-
-
 const Page = () => {
-    
   const { data: session } = useSession();
   const [usuario, setUsuario] = useState(null);
   const [publicaciones, setPublicaciones] = useState([]);
@@ -27,11 +24,12 @@ const Page = () => {
 
   useEffect(() => {
     cargarUsuario();
-  }, []);
-
+    console.log(session); // Imprime la información de la sesión
+    console.log(usuario); // Imprime la información del usuario
+  }, [session]);
+  
   return (
     <div>
-
       <PublicacionesDeUsuario publicaciones={publicaciones} />
     </div>
   );

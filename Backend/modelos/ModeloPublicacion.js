@@ -1,7 +1,7 @@
 const ESTADOPUBLICACION = {
     ACTIVA: 'ACTIVA',
     CADUCADA: 'CADUCADA',
-    CERRADA: 'CERRADA',
+    INACTIVA: 'INACTIVA',
   };
   
   class Publicacion {
@@ -12,6 +12,7 @@ const ESTADOPUBLICACION = {
       this.titulo = titulo;
       this.usuario = usuario;
       this.animal = animal;
+      this.interesados = [];
     }
 
     

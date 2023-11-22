@@ -51,14 +51,15 @@ class ServicioUsuario{
 
           const user = await this.model.login(usuario);
           
+        
+          if (!user) {            
+            throw new InvalidCredentialsError("El email " + usuario.mail + " no se encuentra registrado!");
+          }
+      
           if (user.bloqueado ) {
             throw new InvalidCredentialsError("Cuenta bloqueada. Por favor, restablece tu contraseña.");
           }
 
-          if (!user) {
-            throw new InvalidCredentialsError("El email " + usuario.mail + " no se encuentra registrado!");
-          }
-      
           const isPasswordValid = bcrypt.compareSync(usuario.password, user.password);
       
           if (!isPasswordValid) {
@@ -110,10 +111,7 @@ class ServicioUsuario{
     editarUsuario = async (idUsuario, usuario) => {
       try {
         UserRequest.validacionEdit(usuario);
-    
-
         const userEditado = await this.model.editarUsuario(this.idObjeto(idUsuario), usuario);
-    
         if (!userEditado) {
           throw new UsuarioNotFoundError("El usuario no se pudo modificar");
         }

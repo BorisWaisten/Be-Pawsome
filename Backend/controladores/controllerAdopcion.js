@@ -7,21 +7,30 @@ class ControllerAdopcion {
   }
 
   crearAdopcion = async (req, res) => {
-    const nuevaAdopcion = {
-      idUsuario: req.body.idUsuario,
-      idAnimal: req.body.idAnimal,
-      fechaAdopcion: req.body.fechaAdopcion,
-      estado: req.body.estado,
-    };
+    
+    const idPublicacion=req.body.idPublicacion
+    const idAdoptante=req.body.idInteresado
 
+    console.log("datos para adopcion")
+    console.log(idPublicacion + "id publicacion")
+    console.log(idAdoptante + "id adoptante")
     try {
-      const adopcionCreada = await this.servicioAdopcion.crearAdopcion(nuevaAdopcion);
+      const adopcionCreada = await this.servicioAdopcion.crearAdopcion(idPublicacion,idAdoptante);
       res.status(201).json(adopcionCreada);
     } catch (error) {
       res.status(400).json(error.message);
     }
   };
+  
 
+  obtenerAdopciones = async (req, res) => {
+    try {
+      const adopciones = await this.servicioAdopcion.obtenerAdopciones();
+      res.status(200).json(adopciones);
+    } catch (error) {
+      res.status(404).json(error.message);
+    }
+  }
   obtenerAdopcion = async (req, res) => {
     const idUsuario = req.params.idUsuario;
     try {
