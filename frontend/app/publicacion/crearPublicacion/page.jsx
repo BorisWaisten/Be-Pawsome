@@ -64,15 +64,15 @@ const CrearPublicacion = () => {
           pesoEnKg: formData.pesoEnKg,
           ubicacion: formData.ubicacion,
           historiaClinica: formData.historiaClinica,
-          oferente: usuario,
+          idOferente: usuario._id,
       }
 
       const animalResponse = await axios.post(`${API_BASE_URL}animal/crear`, datosAnimal);
      
       const datosPublicacion = {
           titulo: formData.titulo,
-          usuario: usuario,
-          animal: animalResponse.data,
+          usuario: usuario._id,
+          animal: animalResponse.data._id,
       }
 
       // Luego, utilizar la respuesta del animal para crear la publicación

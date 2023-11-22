@@ -17,7 +17,7 @@ class ControllerAnimal {
       sexo: req.body.sexo,
       pesoEnKg: req.body.pesoEnKg,
       ubicacion: req.body.ubicacion,
-      oferente: req.body.oferente,
+      idOferente: req.body.idOferente,
       historiaClinica: req.body.historiaClinica,
     };
     try {

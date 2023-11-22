@@ -41,8 +41,8 @@ class RepositorioPublicacion {
     try {
       const nuevaPublicacion = new Publicacion(
         publicacion.titulo,
-        publicacion.usuario,
-        publicacion.animal,
+        publicacion.idUsuario,
+        publicacion.idAnimal,
       );
        await this.publicacionesCollection.insertOne(nuevaPublicacion);
       return nuevaPublicacion; 

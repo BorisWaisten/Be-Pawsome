@@ -15,8 +15,8 @@ class ControllerPublicacion {
     // crear publicacion recibiria del request un titulo y dos objetos a guardar, el usuario y el animal
     const nuevaPublicacion = {
       titulo: req.body.titulo,
-      usuario: req.body.usuario,
-      animal: req.body.animal,
+      idUsuario: req.body.idUsuario,
+      idAnimal: req.body.idAnimal,
     };
       console.log("hola");
       const publicacionCreada = await this.servicioPublicacion.crearPublicacion(nuevaPublicacion);
