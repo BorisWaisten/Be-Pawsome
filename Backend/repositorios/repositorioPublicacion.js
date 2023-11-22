@@ -50,7 +50,15 @@ class RepositorioPublicacion {
       throw new DatabaseError("Error al crear publicación: " + error);
     }
   }
-  
+
+   async contarPublicacionesPorUsuario(usuarioId) {
+    try {
+      const count = await this.publicacionesCollection.countDocuments({ usuario: usuarioId });
+      return count;
+    } catch (error) {
+      throw new Error(`Error al contar las publicaciones del usuario en el repositorio: ${error.message}`);
+    }
+  }
 
   async obtenerPublicacionPorId(id) {
     return await this.publicacionesCollection.findOne({ _id: id });

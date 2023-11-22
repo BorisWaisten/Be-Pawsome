@@ -27,12 +27,12 @@ class ServicioPublicacion {
       console.log("hola 2");
       console.log(nuevaPublicacion);
       // Contar las publicaciones del usuario
-      // const countPublicaciones = await this.servicioPublicacion.contarPublicacionesPorUsuario(nuevaPublicacion.usuario);
+      const countPublicaciones = await this.repository.contarPublicacionesPorUsuario(nuevaPublicacion.usuario);
   
-      // // Verificar si el usuario tiene más de 10 publicaciones
-      // if (countPublicaciones > 10) {
-      //   return { message: 'El usuario ha alcanzado el límite de 10 publicaciones.' };
-      // }
+      // Verificar si el usuario tiene más de 10 publicaciones
+      if (countPublicaciones >= 10) {
+        throw new Error('El usuario ha alcanzado el límite de 10 publicaciones.');
+      }
   
       // Crear la publicación si el usuario no ha alcanzado el límite
       const publicacionCreada = await this.repository.crearPublicacion(nuevaPublicacion);

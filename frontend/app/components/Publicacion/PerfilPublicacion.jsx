@@ -8,6 +8,10 @@ function PerfilPublicacion({ publicacion }) {
   const { data: session } = useSession();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [mostrarDetalles, setMostrarDetalles] = useState(false);
+  const [mensajeExito, setMensajeExito] = useState(null);
+  const [mensajeError, setMensajeError] = useState(null);
+  const [cargando, setCargando] = useState(false);
+
   const router = useRouter();
   function handlePrevImage() {
     setCurrentImageIndex((prevIndex) =>
@@ -31,13 +35,34 @@ function PerfilPublicacion({ publicacion }) {
         idAdoptante: session?.user?.userLogueado._id,
         publicacion: publicacion,
       };
-      const mensajeSolicitud = await axios.post(
+      const respuesta = await axios.post(
         "http://localhost:5000/publicacion/solicitar",
         datos
       );
-      return mensajeSolicitud;
+      setCargando(true);
+      // Verificar si la solicitud fue exitosa antes de mostrar el mensaje
+      if (respuesta.status === 200) {
+        // Actualizar el estado para mostrar el mensaje de éxito
+        setMensajeExito("¡Tu perro fue agregado a CASITA correctamente!");
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
+      }
+
+      return respuesta;
     } catch (error) {
-      console.log(error);
+      // Capturar el error específico relacionado con "El animal ya está en Casita"
+      if (error.response && error.response.data.error === "El animal ya está en Casita.") {
+        // Mostrar un mensaje al usuario indicando que el animal ya está en Casita
+        setMensajeExito("¡Este perro ya está en CASITA!");
+      
+      } else {
+        // Mostrar otros errores en la consola para depuración
+        console.error(error);
+        // Establecer el mensaje de error para mostrar al usuario
+        setMensajeError("Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.");
+        setCargando(false);
+      }
     }
   }
 
@@ -47,13 +72,13 @@ function PerfilPublicacion({ publicacion }) {
       <div className="relative w-full md:w-1/2 flex flex-col">
         {publicacion && publicacion.animal && publicacion.animal.fotos
           ? publicacion.animal.fotos.map((foto, index) => (
-              <img
-                key={index}
-                className="rounded-lg w-full h-auto object-cover mb-4"
-                src={foto}
-                alt={`Foto ${index + 1}`}
-              />
-            ))
+            <img
+              key={index}
+              className="rounded-lg w-full h-auto object-cover mb-4"
+              src={foto}
+              alt={`Foto ${index + 1}`}
+            />
+          ))
           : ""}
       </div>
       {/* Columna de detalles */}
@@ -62,8 +87,9 @@ function PerfilPublicacion({ publicacion }) {
         <button
           className="bg-blue-500 hover:bg-violet-500 text-white font-bold py-2 px-4 rounded mx-auto mt-auto mb-4"
           onClick={agregarACasita}
+          disabled={cargando}  // Deshabilita el botón si está cargando
         >
-          Quiero adoptarlo
+          {cargando ? 'En casita!...' : 'Quiero adoptarlo'}
         </button>
         <p className="font-bold mb-2 text-lg">
           Nombre: {publicacion.animal.nombre}
@@ -80,6 +106,16 @@ function PerfilPublicacion({ publicacion }) {
           Usuario Oferente: {publicacion.usuario.nombre}
         </p>
       </div>
+      {mensajeExito && (
+        <div className="mensaje-exito">
+          {mensajeExito}
+        </div>
+      )}
+      {mensajeExito === null && (
+        <div className="mensaje-error">
+          {mensajeError}
+        </div>
+      )}
     </div>
   );
 }

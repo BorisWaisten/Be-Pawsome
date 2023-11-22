@@ -19,7 +19,9 @@ function Registrar() {
   });
 
   const [apiError, setApiError] = useState(null);
-  
+  const [successMessage, setSuccessMessage] = useState(null);
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -32,8 +34,10 @@ function Registrar() {
           },
         }
       );
-      console.log(response.data); // Maneja la respuesta del servidor según tus necesidades, por ejemplo, muestra un mensaje de éxito al usuario.
-      router.push("/signIn"); //.then(() => window.location.reload()); // Si registro correcamtente lo mando a la pagina de home
+      setSuccessMessage('¡Registro exitoso!');
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
     } catch (error) {
       setApiError(error.response.data);
       //console.log(apiError);
@@ -227,6 +231,11 @@ function Registrar() {
       {apiError && (
         <div className="error card my-5">
           <p>{apiError}</p>
+        </div>
+      )}
+      {successMessage && (
+        <div className="success-message card my-5">
+          <p>{successMessage}</p>
         </div>
       )}
     </>

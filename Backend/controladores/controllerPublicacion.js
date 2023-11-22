@@ -27,7 +27,16 @@ class ControllerPublicacion {
       res.status(400).json(error.message);
     }
   };
-  
+
+    async contarPublicacionesPorUsuario(req, res) {
+    try {
+      const { usuarioId } = req.params;
+      const count = await this.service.contarPublicacionesPorUsuario(usuarioId);
+      res.status(200).json({ count });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 
   obtenerPublicacion = async (req, res) => {
     const idPublicacion = req.params.id;

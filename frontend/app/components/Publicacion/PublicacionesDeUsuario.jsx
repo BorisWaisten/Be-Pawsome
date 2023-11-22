@@ -49,14 +49,14 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
 
   const eliminarPublicacion = async (publicacionId) => {
     try {
-      await axios.delete(
-        `http://localhost:5000/publicacion/eliminar/${publicacionId}`
-      );
+      await axios.delete(`http://localhost:5000/publicacion/eliminar/${publicacionId}`);
     } catch (error) {
       console.error(error);
     } finally {
       // Limpiar la confirmación después de eliminar o cancelar
       setConfirmacionEliminar(null);
+      // Recargar la página
+      window.location.reload();
     }
   };
 

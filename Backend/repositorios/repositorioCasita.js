@@ -32,11 +32,13 @@ class RepositorioCasita {
 
   async agregarPublicacion(idPublicacion) {
     try {
+      //Si el animal no está en Casita, agregarlo
       await this.casitaCollection.insertOne({ publicacionId: idPublicacion });
     } catch (error) {
       throw new DatabaseError("Error al agregar publicación a Casita: " + error.message);
     }
   }
+  
 
   async eliminarPublicacion(idPublicacion) {
     try {
