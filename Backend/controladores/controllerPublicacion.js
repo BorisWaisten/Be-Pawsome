@@ -120,23 +120,21 @@ class ControllerPublicacion {
       const idAdoptante = req.body.idAdoptante;
       const idOferente = req.body.publicacion.idUsuario;
       const fechaCreacion = req.body.publicacion.fechaCreacion;
-      const idAnimal = req.body.publicacion.idAnimal;
-      const publicacionGuardada = await this.servicioUsuario.guardarPublicacion(idAdoptante, req.body.publicacion);
-      if (!publicacionGuardada) {
+      //dataAnimal es el objeto completo del animal, se envia asi para sacar sus propiedades para enviarselas al oferente por mail
+      const dataAnimal = req.body.publicacion.animal;
+      //guardo la publicacion en la casita del adoptante
+      const publicacionGuardad = await this.servicioUsuario.guardarPublicacion(idAdoptante, req.body.publicacion);
+      const agregarInteresado= await this.servicioPublicacion.agregarInteresado(req.body.publicacion._id, idAdoptante);
+      console.log(agregarInteresado)
+      if (!publicacionGuardad) {
         throw new PublicacionNotFoundError(`No se pudo guardar la publicacion en casita`);
       }
-      const agregarInteresado= await this.servicioPublicacion.agregarInteresado(publicacionGuardada._id, idAdoptante);
-      console.log(agregarInteresado);
-      if (!agregarInteresado) {
-        throw new PublicacionRequestError(`No se pudo agregar el interesado en publicacion`);  
-      }  
       // se guardara un array con dos users, en la posicion 0 sera el de la persona interesada en solicitar y en la posicion 1 el del oferente
       const users = await this.servicioPublicacion.solicitar(idAdoptante, idOferente);
-      if (!users) {
-        throw new PublicacionRequestError(`No se pudo solicitar la publicacion`);
-      }
-      emailAdoption(users, idAnimal, fechaCreacion);
+      emailAdoption(users, dataAnimal, fechaCreacion);
       res.status(200).json({"message:" : `Solicitud enviada a ${users[1].mail}`})
+      
+
     } catch (error) {
       res.status(404).json(error.message);
     }
