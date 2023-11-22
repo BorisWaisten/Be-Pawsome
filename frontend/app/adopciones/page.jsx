@@ -20,23 +20,20 @@ const AdopcionesPage = () => {
   }, []);
 
   return (
-      <> 
     <div>
-      <h1>hola </h1>
-      {adopciones.forEach(adopcion => {
+      {Array.isArray(adopciones) && 
+      adopciones.map(adopcion => (
         <div >
           <h2>{adopcion.adoptante.nombre}</h2>
-          {/*
-          <img src={adopcion.animal.fotos} alt={adopcion.animal.nombre} />
+          <img src={adopcion.animal.fotos[0]} alt={adopcion.animal.nombre} />
           <p>Oferente: {adopcion.oferente}</p>
-          <p>Adoptante: {adopcion.adoptante}</p>
-        */}
+          <p>Adoptante: {adopcion.adoptante.nombre}</p> {/* Asegúrate de acceder a la propiedad correcta del adoptante */}
           {/* Mostrar más datos del animal y usuarios si es necesario */}
-        </div> 
-      })}
+        </div>
+      ))}
     </div>
-      </>
   );
+  
 };
 
 export default AdopcionesPage;

@@ -57,7 +57,14 @@ const SolicitudesDeUsuario = ({ publicaciones, idUsuario, actualizarPublicacione
                   </div>
                 </div>
                 <div className="text-sm text-black-500">
-                  {publicacion.estadoPublicacion}
+                  {publicacion.estadoPublicacion === 'ACTIVA' ? (
+                    'Estado: Activa'
+                  ) : (
+                    <div>
+                      <p>Estado: Inactiva</p>
+                      <p>Animal Adoptado</p>
+                    </div>
+                  )}
                 </div>
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
