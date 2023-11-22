@@ -171,7 +171,6 @@ const CreatePublicacion = ({ handleSubmit, formData, updateFormData }) => {
           >
             Crear publicacion
           </button>
-          
         </div>
       </form>
     </>
