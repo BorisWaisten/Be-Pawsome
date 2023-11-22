@@ -78,7 +78,7 @@ export default function Usuario() {
 
   useEffect(() => {
     cargarUsuario();
-  }, [session]);
+  }, []);
 
   const handleEditarClick = () => {
     setModalVisible(true); // Mostrar el modal al hacer clic en "Editar"
