@@ -67,14 +67,7 @@ export default function page() {
   }, [query, publicacionesOriginales]);
 
 
-  if (!datosCargados) {
-    // Mostrar un mensaje de carga o un spinner mientras se cargan los datos
-    return <p>Cargando...</p>;
-  }
-  if (!datosCargados) {
-    // Mostrar un mensaje de carga o un spinner mientras se cargan los datos
-    return <p>Cargando...</p>;
-  }
+
 
   return (
       <>
