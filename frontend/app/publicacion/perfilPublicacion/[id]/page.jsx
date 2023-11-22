@@ -1,4 +1,5 @@
 // PerfilPublicacionPage.jsx
+"use client";
 
 import PerfilPublicacion from "../../../components/Publicacion/PerfilPublicacion";
 import { useParams } from "next/navigation";
