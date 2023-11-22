@@ -117,7 +117,7 @@ const CrearPublicacion = () => {
     <main>
       {/* Pasar el estado local y el método de actualización como propiedades */}
       <CreatePublicacion formData={formData} updateFormData={updateFormData} handleSubmit={handlePublicacionSubmit} />
-      {error && <div>Error: {error}</div>}
+      {error && <div className='m-2 p-2 bg-red-500 text-white'>{error}</div>}
     </main>
   );
 };

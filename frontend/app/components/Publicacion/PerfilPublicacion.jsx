@@ -131,9 +131,9 @@ function PerfilPublicacion({ publicacion }) {
           Usuario Oferente: {publicacion.usuario.nombre}
         </p>
       </div>
-      {mensajeExito && <div className="mensaje-exito">{mensajeExito}</div>}
+      {mensajeExito && <div className="mensaje-exito bg-green-300 text-black m-auto ">{mensajeExito}</div>}
       {mensajeExito === null && (
-        <div className="mensaje-error">{mensajeError}</div>
+        <div className="mensaje-error bg-red-200 text-white m-auto">{mensajeError}</div>
       )}
     </div>
   );
