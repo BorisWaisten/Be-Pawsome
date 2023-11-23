@@ -38,6 +38,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
         idPublicacion: publicacionId,
       };
       await axios.post(`${apiUrl}/adopcion/crear`, datos);
+      setAdopcionConcretada((prev) => ({ ...prev, [publicacionId]: true }));
     } catch (error) {
       console.error(error);
     } finally {
