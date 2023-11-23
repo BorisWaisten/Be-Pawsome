@@ -4,12 +4,12 @@ import PublicacionesDeUsuario from "../../components/Publicacion/PublicacionesDe
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
-const Page = ({ idUsuario }) => {
+const Page = () => {
   const { data: session } = useSession();
   const [usuario, setUsuario] = useState(null);
   const [publicaciones, setPublicaciones] = useState([]);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
+  const idUsuario = session?.user?.userLogueado._id;
 
   const cargarUsuario = async (idUsuario) => {
     try {
