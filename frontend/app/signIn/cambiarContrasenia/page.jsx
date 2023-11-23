@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 
-
 const CambiarContraseniaForm = () => {
   const token = useSearchParams().get('token');
   const router = useRouter();
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [nuevosDatos, setNuevosDatos] = useState({
     mail: "",
     password: "",
