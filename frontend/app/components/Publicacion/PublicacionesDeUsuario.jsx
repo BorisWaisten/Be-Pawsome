@@ -127,6 +127,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
                                   publicacion._id,
                                 )
                               }
+                              disabled={adopcionConcretada[publicacion._id]}
                             >
                               Concretar adopción
                             </button>
