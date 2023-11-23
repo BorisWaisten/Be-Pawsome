@@ -30,7 +30,7 @@ const Page = () => {
   
   return (
     <div>
-      <PublicacionesDeUsuario publicaciones={publicaciones} />
+      <PublicacionesDeUsuario publicaciones={publicaciones} idUsuario={idUsuario} />
     </div>
   );
 };

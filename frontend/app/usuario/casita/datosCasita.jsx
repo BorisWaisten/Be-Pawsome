@@ -53,7 +53,6 @@ const Casita = () => {
 
     return (
         <div>
-           
             <SolicitudesDeUsuario publicaciones={publicaciones} idUsuario={idUsuario} actualizarPublicaciones={actualizarPublicaciones} />
         </div>
     );
