@@ -8,8 +8,8 @@ const Casita = () => {
     const { data: session } = useSession();
     const [usuario, setUsuario] = useState(null);
     const [publicaciones, setPublicaciones] = useState([]);
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const idUsuario = session?.user?.userLogueado._id;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
     const cargarDatos = async () => {

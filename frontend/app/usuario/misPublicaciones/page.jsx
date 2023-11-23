@@ -4,14 +4,14 @@ import PublicacionesDeUsuario from "../../components/Publicacion/PublicacionesDe
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
-const Page = () => {
+const Page = (idUsuario) => {
   const { data: session } = useSession();
   const [usuario, setUsuario] = useState(null);
   const [publicaciones, setPublicaciones] = useState([]);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const idUsuario = session?.user?.userLogueado._id;
 
-  const cargarUsuario = async () => {
+  const cargarUsuario = async (idUsuario) => {
     try {
       const response = await axios.get(`${apiUrl}/publicacion/publicacionesUsuario/${idUsuario}`);
       console.log(response.data);
@@ -25,12 +25,12 @@ const Page = () => {
   useEffect(() => {
     cargarUsuario();
     console.log(session); // Imprime la información de la sesión
-    console.log(usuario); // Imprime la información del usuario
+    console.log(idUsuario); // Imprime la información del usuario
   }, [session]);
   
   return (
     <div>
-      <PublicacionesDeUsuario publicaciones={publicaciones} idUsuario={idUsuario} />
+      <PublicacionesDeUsuario publicaciones={publicaciones} idUsuario={idUsuario}/>
     </div>
   );
 };
