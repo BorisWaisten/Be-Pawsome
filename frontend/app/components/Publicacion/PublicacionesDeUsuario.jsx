@@ -6,6 +6,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
   const [interesadosDetails, setInteresadosDetails] = useState([]);
   const [showInteresados, setShowInteresados] = useState(null); // Cambiado a null
   const [adopcionConcretada, setAdopcionConcretada] = useState({});
+
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const getInteresadosDetails = async (interesadosIds, publicacionId) => {
@@ -87,7 +88,6 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
                 </div>
                 <button
                   className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-                  disabled={adopcionConcretada[publicacion._id]}
                   onClick={() =>
                     handleVerInteresadosClick(
                       publicacion.interesados,
