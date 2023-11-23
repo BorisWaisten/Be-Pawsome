@@ -4,7 +4,7 @@ import PublicacionesDeUsuario from "../../components/Publicacion/PublicacionesDe
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
-const Page = () => {
+const Page = (idUsuario) => {
   const { data: session } = useSession();
   const [usuario, setUsuario] = useState(null);
   const [publicaciones, setPublicaciones] = useState([]);
