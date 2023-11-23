@@ -45,7 +45,7 @@ const CrearPublicacion = () => {
     };
   
     cargarUsuario();
-  }, []);
+  }, [session]);
 
   const handlePublicacionSubmit = async (e) => {
     e.preventDefault();

@@ -26,7 +26,7 @@ const Page = () => {
     cargarUsuario();
     console.log(session); // Imprime la información de la sesión
     console.log(usuario); // Imprime la información del usuario
-  }, []);
+  }, [session]);
   
   return (
     <div>
