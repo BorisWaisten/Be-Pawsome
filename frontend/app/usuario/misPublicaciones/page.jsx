@@ -9,7 +9,7 @@ const Page = (idUsuario) => {
   const [usuario, setUsuario] = useState(null);
   const [publicaciones, setPublicaciones] = useState([]);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const idUsuario = session?.user?.userLogueado._id;
+
 
   const cargarUsuario = async (idUsuario) => {
     try {
