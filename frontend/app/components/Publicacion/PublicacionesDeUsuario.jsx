@@ -5,6 +5,8 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
   const [confirmacionEliminar, setConfirmacionEliminar] = useState(null);
   const [interesadosDetails, setInteresadosDetails] = useState([]);
   const [showInteresados, setShowInteresados] = useState(null); // Cambiado a null
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isAdoptionConfirmed, setIsAdoptionConfirmed] = useState(false);
 
   const getInteresadosDetails = async (interesadosIds, publicacionId) => {
     const details = await Promise.all(
@@ -34,7 +36,12 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
         idInteresado: interesadoId,
         idPublicacion: publicacionId,
       };
-      await axios.post("https://bepawsome-e858795261d3.herokuapp.com/adopcion/crear", datos);
+      await axios.post(
+        "https://bepawsome-e858795261d3.herokuapp.com/adopcion/crear",
+        datos
+      );
+      setIsButtonDisabled(true);
+      setIsAdoptionConfirmed(true);
     } catch (error) {
       console.error(error);
     } finally {
@@ -49,7 +56,9 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
 
   const eliminarPublicacion = async (publicacionId) => {
     try {
-      await axios.delete(`https://bepawsome-e858795261d3.herokuapp.com/publicacion/eliminar/${publicacionId}`);
+      await axios.delete(
+        `https://bepawsome-e858795261d3.herokuapp.com/publicacion/eliminar/${publicacionId}`
+      );
     } catch (error) {
       console.error(error);
     } finally {
@@ -121,12 +130,18 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
                               onClick={() =>
                                 finalizarAdopcion(
                                   interesado._id,
-                                  publicacion._id,
+                                  publicacion._id
                                 )
                               }
+                              disabled={isButtonDisabled}
                             >
                               Concretar adopción
                             </button>
+                            {isAdoptionConfirmed && (
+                              <div className="mt-4 p-4 bg-green-100 border-l-4 border-green-500 text-green-700">
+                                ¡La adopción se ha concretado con éxito!
+                              </div>
+                            )}
                           </div>
                         </li>
                       ))}
