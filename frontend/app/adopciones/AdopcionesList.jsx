@@ -5,10 +5,10 @@ import AdopcionCard from "./AdopcionCard";
 
 function AdopcionesList() {
   const [adopciones, setAdopciones] = useState(null);
-
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   useEffect(() => {
     axios
-      .get("https://bepawsome-e858795261d3.herokuapp.com/adopcion/obtener")
+      .get(`${apiUrl}/adopcion/obtener`)
       .then((response) => setAdopciones(response.data))
       .catch((error) => console.error(error));
   }, []);

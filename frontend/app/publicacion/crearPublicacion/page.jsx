@@ -10,6 +10,7 @@ const CrearPublicacion = () => {
   const { data: session } = useSession();
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
    // Nuevo estado local para formData
@@ -44,7 +45,7 @@ const CrearPublicacion = () => {
     };
   
     cargarUsuario();
-  }, []);
+  }, [session]);
 
   const handlePublicacionSubmit = async (e) => {
     e.preventDefault();
@@ -66,7 +67,7 @@ const CrearPublicacion = () => {
           oferente: usuario,
       }
 
-      const animalResponse = await axios.post("https://bepawsome-e858795261d3.herokuapp.com/animal/crear", datosAnimal);
+      const animalResponse = await axios.post(`${apiUrl}/animal/crear`, datosAnimal);
      
       const datosPublicacion = {
           titulo: formData.titulo,
@@ -75,7 +76,7 @@ const CrearPublicacion = () => {
       }
 
       // Luego, utilizar la respuesta del animal para crear la publicación
-      const responsePublicacion = await axios.post("https://bepawsome-e858795261d3.herokuapp.com/publicacion/crear", datosPublicacion);
+      const responsePublicacion = await axios.post(`${apiUrl}/publicacion/crear`, datosPublicacion);
       
       console.log('Publicación creada:', responsePublicacion);
       router.push("/");

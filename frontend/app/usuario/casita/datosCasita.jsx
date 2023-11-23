@@ -8,14 +8,14 @@ const Casita = () => {
     const { data: session } = useSession();
     const [usuario, setUsuario] = useState(null);
     const [publicaciones, setPublicaciones] = useState([]);
-
     const idUsuario = session?.user?.userLogueado._id;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
     const cargarDatos = async () => {
         try {
-            const responseUsuario = await axios.get(`https://bepawsome-e858795261d3.herokuapp.com/usuarios/${idUsuario}`);
-            const responsePublicacion = await axios.get(`https://bepawsome-e858795261d3.herokuapp.com/publicacion/publicaciones`);
+            const responseUsuario = await axios.get(`${apiUrl}/usuarios/${idUsuario}`);
+            const responsePublicacion = await axios.get(`${apiUrl}/publicacion/publicaciones`);
             const usuarioData = responseUsuario.data;
             const publicacionesData= responsePublicacion.data;
             
@@ -53,7 +53,6 @@ const Casita = () => {
 
     return (
         <div>
-           
             <SolicitudesDeUsuario publicaciones={publicaciones} idUsuario={idUsuario} actualizarPublicaciones={actualizarPublicaciones} />
         </div>
     );

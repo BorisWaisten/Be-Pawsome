@@ -5,12 +5,15 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
   const [confirmacionEliminar, setConfirmacionEliminar] = useState(null);
   const [interesadosDetails, setInteresadosDetails] = useState([]);
   const [showInteresados, setShowInteresados] = useState(null); // Cambiado a null
+  const [adopcionConcretada, setAdopcionConcretada] = useState({});
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const getInteresadosDetails = async (interesadosIds, publicacionId) => {
     const details = await Promise.all(
       interesadosIds.map(async (id) => {
         const response = await axios.get(
-          `https://bepawsome-e858795261d3.herokuapp.com/usuarios/${id}`
+          `${apiUrl}/usuarios/${id}`
         );
         return response.data;
       })
@@ -34,7 +37,8 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
         idInteresado: interesadoId,
         idPublicacion: publicacionId,
       };
-      await axios.post("https://bepawsome-e858795261d3.herokuapp.com/adopcion/crear", datos);
+      await axios.post(`${apiUrl}/adopcion/crear`, datos);
+      setAdopcionConcretada((prev) => ({ ...prev, [publicacionId]: true }));
     } catch (error) {
       console.error(error);
     } finally {
@@ -49,7 +53,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
 
   const eliminarPublicacion = async (publicacionId) => {
     try {
-      await axios.delete(`https://bepawsome-e858795261d3.herokuapp.com/publicacion/eliminar/${publicacionId}`);
+      await axios.delete(`${apiUrl}/publicacion/eliminar/${publicacionId}`);
     } catch (error) {
       console.error(error);
     } finally {
@@ -124,6 +128,7 @@ const PublicacionesDeUsuario = ({ publicaciones }) => {
                                   publicacion._id,
                                 )
                               }
+                              disabled={adopcionConcretada[publicacion._id]}
                             >
                               Concretar adopción
                             </button>

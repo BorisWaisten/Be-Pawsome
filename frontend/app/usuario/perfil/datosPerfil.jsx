@@ -12,7 +12,7 @@ export default function Usuario() {
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false); // Estado para mostrar/ocultar el modal
   const [confirmarEliminacion, setConfirmarEliminacion] = useState(false);
-
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const idUsuario = session?.user?.userLogueado._id;
 
   const handleEliminarUsuarioClick = () => {
@@ -24,19 +24,19 @@ export default function Usuario() {
       // Eliminar publicaciones del usuario
 
       const publicacionesUsuario = await axios.get(
-        `https://bepawsome-e858795261d3.herokuapp.com/publicacion/publicacionesUsuario/${idUsuario}`
+        `${apiUrl}/publicacion/publicacionesUsuario/${idUsuario}`
       );
 
       if (
         publicacionesUsuario.data.message !== "Sin publicaciones disponibles"
       ) {
         await axios.delete(
-          `https://bepawsome-e858795261d3.herokuapp.com/publicacion/usuario/${idUsuario}`
+          `${apiUrl}/publicacion/usuario/${idUsuario}`
         );
       }
 
       // Eliminar el usuario
-      await axios.delete(`https://bepawsome-e858795261d3.herokuapp.com/usuarios/${idUsuario}`);
+      await axios.delete(`${apiUrl}/usuarios/${idUsuario}`);
 
       // Cierra el modal de confirmación después de eliminar el usuario y sus publicaciones
       setConfirmarEliminacion(false);
@@ -78,7 +78,7 @@ export default function Usuario() {
 
   useEffect(() => {
     cargarUsuario();
-  }, []);
+  }, [session]);
 
   const handleEditarClick = () => {
     setModalVisible(true); // Mostrar el modal al hacer clic en "Editar"
@@ -96,7 +96,7 @@ export default function Usuario() {
     // Guardar la imagen en el backend al mismo tiempo
     try {
       const usuarioEditado = await axios.put(
-        `https://bepawsome-e858795261d3.herokuapp.com/usuarios/editarImagen/${idUsuario}`,
+        `${apiUrl}/usuarios/editarImagen/${idUsuario}`,
         {
           imagenPerfil: secureUrl,
         }
@@ -131,7 +131,7 @@ export default function Usuario() {
       } = nuevosDatos;
 
       const usuarioEditado = await axios.put(
-        `https://bepawsome-e858795261d3.herokuapp.com/usuarios/${idUsuario}`,
+        `${apiUrl}/usuarios/${idUsuario}`,
         datosNecesarios
       );
       // Esta ruta depende de tu configuración en next-auth

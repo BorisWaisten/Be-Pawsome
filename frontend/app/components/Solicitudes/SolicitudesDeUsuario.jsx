@@ -3,6 +3,7 @@ import axios from "axios";
 
 
 const SolicitudesDeUsuario = ({ publicaciones, idUsuario, actualizarPublicaciones }) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     const confirmarEliminar = async (publicacionId) => {
         const confirmacion = window.confirm(
@@ -18,7 +19,7 @@ const SolicitudesDeUsuario = ({ publicaciones, idUsuario, actualizarPublicacione
         try {
           // Hacer una solicitud DELETE para eliminar la solicitud en el backend
           // Implementa esta función usando fetch o axios
-          const solicitudEliminada = await axios.delete(`https://bepawsome-e858795261d3.herokuapp.com/usuarios/eliminarSolicitud/${idUsuario}`, {
+          const solicitudEliminada = await axios.delete(`${apiUrl}/usuarios/eliminarSolicitud/${idUsuario}`, {
             data: { publicacionId }, // Pasar publicacionId en el cuerpo de la solicitud
           });
           if (solicitudEliminada) {
